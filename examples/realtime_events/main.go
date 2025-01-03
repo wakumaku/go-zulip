@@ -107,7 +107,7 @@ func main() {
 
 				} else if ev.EventType() == events.AlertWordsType {
 					alertWords := ev.(*events.AlertWords)
-					log.Printf("!AlertWords ID: %d, Words: %s", alertWords.Id, alertWords.AlertWords)
+					log.Printf("!AlertWords ID: %d, Words: %s", alertWords.ID, alertWords.AlertWords)
 
 				} else if ev.EventType() == events.RealmUserType {
 					realmUser := ev.(*events.RealmUser)
