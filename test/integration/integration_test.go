@@ -97,7 +97,7 @@ func TestIntegrationSuite(t *testing.T) {
 	adminInvitationSvc := invitations.NewService(adminClient)
 	respCreateReusableLink, err := adminInvitationSvc.CreateReusableInvitationLink(ctx,
 		invitations.IncludeRealmDefaultSubscriptions(true),
-		invitations.InviteAs(zulip.RoleMember),
+		invitations.InviteAs(zulip.MemberRole),
 		invitations.InviteExpiresInMinutes(15),
 		invitations.StreamIds([]int{1, 2}),
 	)
