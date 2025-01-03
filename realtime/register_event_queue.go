@@ -24,12 +24,12 @@ type registerEventQueueData struct {
 	ZulipVersion      string `json:"zulip_version"`
 }
 
-func (aer *RegisterEventQueueResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (r *RegisterEventQueueResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &r.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.registerEventQueueData); err != nil {
+	if err := json.Unmarshal(b, &r.registerEventQueueData); err != nil {
 		return err
 	}
 

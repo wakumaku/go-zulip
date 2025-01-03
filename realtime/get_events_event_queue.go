@@ -19,8 +19,8 @@ type getEventsEventQueueData struct {
 	Events []events.Event
 }
 
-func (geeqr *GetEventsEventQueueResponse) UnmarshalJSON(data []byte) error {
-	if err := json.Unmarshal(data, &geeqr.APIResponseBase); err != nil {
+func (g *GetEventsEventQueueResponse) UnmarshalJSON(data []byte) error {
+	if err := json.Unmarshal(data, &g.APIResponseBase); err != nil {
 		return err
 	}
 
@@ -80,7 +80,7 @@ func (geeqr *GetEventsEventQueueResponse) UnmarshalJSON(data []byte) error {
 			return err
 		}
 
-		geeqr.Events = append(geeqr.Events, ev)
+		g.Events = append(g.Events, ev)
 	}
 
 	return nil

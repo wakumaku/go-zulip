@@ -17,12 +17,12 @@ type deleteEventQueueData struct {
 	QueueId string `json:"queue_id"`
 }
 
-func (aer *DeleteEventQueueResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (d *DeleteEventQueueResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &d.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.deleteEventQueueData); err != nil {
+	if err := json.Unmarshal(b, &d.deleteEventQueueData); err != nil {
 		return err
 	}
 
