@@ -6,6 +6,6 @@ type Service struct {
 	client zulip.RESTClient
 }
 
-func NewService(client zulip.RESTClient) *Service {
-	return &Service{client: client}
+func NewService(c zulip.RESTClient) *Service {
+	return &Service{client: c}
 }
