@@ -22,6 +22,10 @@ import (
 )
 
 func TestIntegrationSuite(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
+
 	zulipEmail := os.Getenv("ZULIP_EMAIL")
 	zulipAPIKey := os.Getenv("ZULIP_API_KEY")
 	zulipSite := os.Getenv("ZULIP_SITE")
