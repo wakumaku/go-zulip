@@ -8,7 +8,7 @@ import (
 const MessageType EventType = "message"
 
 type Message struct {
-	Id      int         `json:"id"`
+	ID      int         `json:"id"`
 	Type    EventType   `json:"type"`
 	Message MessageData `json:"message"`
 	Flags   []string    `json:"flags"`
@@ -78,7 +78,7 @@ type TopicLinks struct {
 }
 
 func (e *Message) EventID() int {
-	return e.Id
+	return e.ID
 }
 
 func (e *Message) EventType() EventType {

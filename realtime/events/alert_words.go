@@ -3,7 +3,7 @@ package events
 const AlertWordsType EventType = "alert_words"
 
 type AlertWords struct {
-	Id   int       `json:"id"`
+	ID   int       `json:"id"`
 	Type EventType `json:"type"`
 	AlertWordsData
 }
@@ -13,7 +13,7 @@ type AlertWordsData struct {
 }
 
 func (e *AlertWords) EventID() int {
-	return e.Id
+	return e.ID
 }
 
 func (e *AlertWords) EventType() EventType {

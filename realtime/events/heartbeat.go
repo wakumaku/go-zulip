@@ -3,12 +3,12 @@ package events
 const HeartbeatType EventType = "heartbeat"
 
 type Heartbeat struct {
-	Id   int       `json:"id"`
+	ID   int       `json:"id"`
 	Type EventType `json:"type"`
 }
 
 func (e *Heartbeat) EventID() int {
-	return e.Id
+	return e.ID
 }
 
 func (e *Heartbeat) EventType() EventType {
