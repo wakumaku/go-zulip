@@ -1,0 +1,193 @@
+{
+    "events": [
+        {
+            "flags": [],
+            "id": 0,
+            "message": {
+                "avatar_url": null,
+                "client": "go-zulip",
+                "content": "Sending a message so its captured by a registered queue",
+                "content_type": "text/x-markdown",
+                "display_recipient": "general",
+                "id": 1208,
+                "is_me_message": false,
+                "reactions": [],
+                "recipient_id": 10,
+                "sender_email": "usera__235550@zulip.test",
+                "sender_full_name": "User A",
+                "sender_id": 85,
+                "sender_realm_str": "",
+                "stream_id": 3,
+                "subject": "greetings",
+                "submessages": [],
+                "timestamp": 1733702151,
+                "topic_links": [],
+                "type": "stream"
+            },
+            "type": "message"
+        },
+        {
+            "attachment": {
+                "create_time": 1594825414000,
+                "id": 1,
+                "messages": [],
+                "name": "zulip.txt",
+                "path_id": "2/ce/2Xpnnwgh8JWKxBXtTfD6BHKV/zulip.txt",
+                "size": 6
+            },
+            "id": 0,
+            "op": "add",
+            "type": "attachment",
+            "upload_space_used": 6
+        },
+        {
+            "attachment": {
+                "create_time": 1594825414000,
+                "id": 1,
+                "messages": [],
+                "name": "zulip.txt",
+                "path_id": "2/ce/2Xpnnwgh8JWKxBXtTfD6BHKV/zulip.txt",
+                "size": 6
+            },
+            "id": 0,
+            "op": "update",
+            "type": "attachment",
+            "upload_space_used": 6
+        },
+        {
+            "attachment": {
+                "id": 1
+            },
+            "id": 0,
+            "op": "remove",
+            "type": "attachment",
+            "upload_space_used": 0
+        },
+        {
+            "id": 0,
+            "type": "heartbeat"
+        },
+        {
+            "email": "user10@zulip.testserver",
+            "id": 0,
+            "presence": {
+                "website": {
+                    "client": "website",
+                    "pushable": false,
+                    "status": "idle",
+                    "timestamp": 1594825445
+                }
+            },
+            "server_timestamp": 1594825445.3200784,
+            "type": "presence",
+            "user_id": 10
+        },
+        {
+            "id": 0,
+            "op": "update",
+            "realm_emoji": {
+                "1": {
+                    "author_id": 11,
+                    "deactivated": false,
+                    "id": "1",
+                    "name": "green_tick",
+                    "source_url": "/user_avatars/2/emoji/images/1.png"
+                },
+                "2": {
+                    "author_id": 11,
+                    "deactivated": true,
+                    "id": "2",
+                    "name": "my_emoji",
+                    "source_url": "/user_avatars/2/emoji/images/2.png"
+                }
+            },
+            "type": "realm_emoji"
+        },
+        {
+            "content": "{\"type\":\"vote\",\"key\":\"58,1\",\"vote\":1}",
+            "id": 28,
+            "message_id": 970461,
+            "msg_type": "widget",
+            "sender_id": 58,
+            "submessage_id": 4737,
+            "type": "submessage"
+        },
+        {
+            "id": 0,
+            "message_type": "direct",
+            "op": "start",
+            "recipients": [
+                {
+                    "email": "user8@zulip.testserver",
+                    "user_id": 8
+                },
+                {
+                    "email": "user10@zulip.testserver",
+                    "user_id": 10
+                }
+            ],
+            "sender": {
+                "email": "user10@zulip.testserver",
+                "user_id": 10
+            },
+            "type": "typing"
+        },
+        {
+            "id": 0,
+            "message_type": "direct",
+            "op": "stop",
+            "recipients": [
+                {
+                    "email": "user8@zulip.testserver",
+                    "user_id": 8
+                },
+                {
+                    "email": "user10@zulip.testserver",
+                    "user_id": 10
+                }
+            ],
+            "sender": {
+                "email": "user10@zulip.testserver",
+                "user_id": 10
+            },
+            "type": "typing"
+        },
+        {
+            "content": "new content",
+            "edit_timestamp": 1594825451,
+            "flags": [],
+            "id": 0,
+            "is_me_message": false,
+            "message_id": 58,
+            "message_ids": [
+                58,
+                57
+            ],
+            "orig_content": "hello",
+            "orig_rendered_content": "<p>hello</p>",
+            "orig_subject": "test",
+            "propagate_mode": "change_all",
+            "rendered_content": "<p>new content</p>",
+            "rendering_only": false,
+            "stream_id": 5,
+            "stream_name": "Verona",
+            "subject": "new_topic",
+            "topic_links": [],
+            "type": "update_message",
+            "user_id": 10
+        },
+        {
+            "alert_words": [
+                "alert_word"
+            ],
+            "id": 0,
+            "type": "alert_words"
+        },
+        {
+            "id": 0,
+            "type": "unknown_event_nobody_knows_about"
+        }
+    ],
+    "msg": "",
+    "result": "success"
+}

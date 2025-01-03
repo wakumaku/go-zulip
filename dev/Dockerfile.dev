@@ -1,0 +1,16 @@
+FROM caddy:2.8.4-alpine AS caddy
+FROM golang:1.23.4-alpine AS dev
+
+COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
+
+RUN apk add --no-cache \
+    curl \
+    git \
+    gcc \
+    musl-dev
+
+RUN go install github.com/air-verse/air@latest
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
+    sh -s -- -b $(go env GOPATH)/bin v1.62.2
+
+ENV GOFLAGS="-buildvcs=false"

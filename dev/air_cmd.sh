@@ -1,0 +1,1 @@
+go build -buildvcs=false -o /go-zulip/dev/tmp/main /go-zulip/examples/realtime_events*
