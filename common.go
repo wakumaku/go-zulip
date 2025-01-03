@@ -3,17 +3,17 @@ package zulip
 type ReactionType string
 
 const (
-	ReactionUnicodeEmoji    ReactionType = "unicode_emoji"
-	ReactionRealmEmoji      ReactionType = "realm_emoji"
-	ReactionZulipExtraEmoji ReactionType = "zulip_extra_emoji"
+	UnicodeEmojiType    ReactionType = "unicode_emoji"
+	RealmEmojiType      ReactionType = "realm_emoji"
+	ZulipExtraEmojiType ReactionType = "zulip_extra_emoji"
 )
 
 type OrganizationRoleLevel int
 
 const (
-	RoleOwner         OrganizationRoleLevel = 100
-	RoleAdministrator OrganizationRoleLevel = 200
-	RoleModerator     OrganizationRoleLevel = 300
-	RoleMember        OrganizationRoleLevel = 400
-	RoleGuest         OrganizationRoleLevel = 600
+	OwnerRole         OrganizationRoleLevel = 100
+	AdministratorRole OrganizationRoleLevel = 200
+	ModeratorRole     OrganizationRoleLevel = 300
+	MemberRole        OrganizationRoleLevel = 400
+	GuestRole         OrganizationRoleLevel = 600
 )
