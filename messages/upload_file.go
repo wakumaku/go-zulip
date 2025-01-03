@@ -23,12 +23,12 @@ type uploadFileResponseData struct {
 	URL      string `json:"url"`
 }
 
-func (aer *UploadFileResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (u *UploadFileResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &u.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.uploadFileResponseData); err != nil {
+	if err := json.Unmarshal(b, &u.uploadFileResponseData); err != nil {
 		return err
 	}
 

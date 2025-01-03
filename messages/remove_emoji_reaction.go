@@ -23,28 +23,28 @@ type removeEmojiReactionOptions struct {
 type RemoveEmojiReactionOption func(*removeEmojiReactionOptions) error
 
 func RemoveEmojiReactionEmojiName(emojiName string) RemoveEmojiReactionOption {
-	return func(aero *removeEmojiReactionOptions) error {
+	return func(o *removeEmojiReactionOptions) error {
 		if strings.TrimSpace(emojiName) == "" {
 			return errors.New("emoji name is empty")
 		}
-		aero.emojiName = emojiName
+		o.emojiName = emojiName
 		return nil
 	}
 }
 
 func RemoveEmojiReactionEmojiCode(emojiCode string) RemoveEmojiReactionOption {
-	return func(aero *removeEmojiReactionOptions) error {
+	return func(o *removeEmojiReactionOptions) error {
 		if strings.TrimSpace(emojiCode) == "" {
 			return errors.New("emoji code is empty")
 		}
-		aero.emojiCode = emojiCode
+		o.emojiCode = emojiCode
 		return nil
 	}
 }
 
 func RemoveEmojiReactionReactionType(reactionType zulip.ReactionType) RemoveEmojiReactionOption {
-	return func(aero *removeEmojiReactionOptions) error {
-		aero.reactionType = reactionType
+	return func(o *removeEmojiReactionOptions) error {
+		o.reactionType = reactionType
 		return nil
 	}
 }

@@ -12,8 +12,8 @@ type UpdateStatusResponse struct {
 	zulip.APIResponseBase
 }
 
-func (aer *UpdateStatusResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *UpdateStatusResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 

@@ -16,8 +16,8 @@ type UploadCustomEmojiResponse struct {
 	zulip.APIResponseBase
 }
 
-func (aer *UploadCustomEmojiResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (u *UploadCustomEmojiResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &u.APIResponseBase); err != nil {
 		return err
 	}
 

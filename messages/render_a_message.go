@@ -17,12 +17,12 @@ type renderAMessageResponseData struct {
 	Rendered string `json:"rendered"`
 }
 
-func (aer *RenderAMessageResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (r *RenderAMessageResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &r.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.renderAMessageResponseData); err != nil {
+	if err := json.Unmarshal(b, &r.renderAMessageResponseData); err != nil {
 		return err
 	}
 

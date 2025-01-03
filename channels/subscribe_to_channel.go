@@ -21,12 +21,12 @@ type subscribeToChannelResponseData struct {
 	AlreadySubscribed map[string][]string `json:"already_subscribed"`
 }
 
-func (aer *SubscribeToChannelResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (s *SubscribeToChannelResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &s.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.subscribeToChannelResponseData); err != nil {
+	if err := json.Unmarshal(b, &s.subscribeToChannelResponseData); err != nil {
 		return err
 	}
 
@@ -39,6 +39,7 @@ type subscribeToChannelOptions struct{}
 type SubscribeToChannelOption func(*subscribeToChannelOptions)
 
 // SubscribeTo is the type of the channel to subscribe to.
+// If the channel does not exist, it will be created with the given description.
 type SubscribeTo struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`

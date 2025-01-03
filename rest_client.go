@@ -48,25 +48,25 @@ type clientOptions struct {
 type ClientOption func(*clientOptions) error
 
 func WithHTTPClient(client *http.Client) ClientOption {
-	return func(rco *clientOptions) error {
+	return func(o *clientOptions) error {
 		if client == nil {
 			return errors.New("http client is nil")
 		}
-		rco.httpClient = client
+		o.httpClient = client
 		return nil
 	}
 }
 
 func WithPrintRequestData() ClientOption {
-	return func(rco *clientOptions) error {
-		rco.printRequestData = true
+	return func(o *clientOptions) error {
+		o.printRequestData = true
 		return nil
 	}
 }
 
 func WithPrintRawResponse() ClientOption {
-	return func(rco *clientOptions) error {
-		rco.printRawResponse = true
+	return func(o *clientOptions) error {
+		o.printRawResponse = true
 		return nil
 	}
 }
@@ -101,13 +101,13 @@ type clientSendRequestOptions struct {
 type ClientSendRequestOption func(*clientSendRequestOptions)
 
 func WithTimeout(duration time.Duration) ClientSendRequestOption {
-	return func(rco *clientSendRequestOptions) {
-		rco.timeout = duration
+	return func(o *clientSendRequestOptions) {
+		o.timeout = duration
 	}
 }
 
 // DoRequest is the main function to send requests to Zulip's API.
-func (rc *Client) DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...ClientSendRequestOption) error {
+func (c *Client) DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...ClientSendRequestOption) error {
 	options := clientSendRequestOptions{
 		timeout: RESTClientDefaultTimeout,
 	}
@@ -126,8 +126,8 @@ func (rc *Client) DoRequest(ctx context.Context, method, path string, data map[s
 		body = strings.NewReader(formDataEncoded)
 	}
 
-	fullURLPath := rc.baseURL + path
-	if rc.printRequestData {
+	fullURLPath := c.baseURL + path
+	if c.printRequestData {
 		log.Printf("DEBUG: [%s] %s - %s", method, fullURLPath, formDataEncoded)
 	}
 
@@ -143,12 +143,12 @@ func (rc *Client) DoRequest(ctx context.Context, method, path string, data map[s
 		return fmt.Errorf("creating send request: %w", err)
 	}
 
-	req.Header.Set("User-Agent", rc.userAgent)
+	req.Header.Set("User-Agent", c.userAgent)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Add("Accept", "application/json")
-	req.SetBasicAuth(rc.userEmail, rc.userAPIKey)
+	req.SetBasicAuth(c.userEmail, c.userAPIKey)
 
-	resp, err := rc.httpClient.Do(req)
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("send request: %w", err)
 	}
@@ -158,7 +158,7 @@ func (rc *Client) DoRequest(ctx context.Context, method, path string, data map[s
 		return fmt.Errorf("cannot read response body: %s", err)
 	}
 
-	if rc.printRawResponse {
+	if c.printRawResponse {
 		jsonResponse, _ := response.MarshalJSON()
 		log.Printf("DEBUG: %s", jsonResponse)
 	}
@@ -170,7 +170,7 @@ func (rc *Client) DoRequest(ctx context.Context, method, path string, data map[s
 }
 
 // DoFileRequest is the main function to send requests to Zulip's API with a file. For file and emoji uploads.
-func (rc *Client) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...ClientSendRequestOption) error {
+func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...ClientSendRequestOption) error {
 	options := clientSendRequestOptions{
 		timeout: RESTClientDefaultTimeout,
 	}
@@ -205,8 +205,8 @@ func (rc *Client) DoFileRequest(ctx context.Context, method, path string, fileNa
 	reqCtx, reqCancel := context.WithTimeout(ctx, options.timeout)
 	defer reqCancel()
 
-	fullURLPath := rc.baseURL + path
-	if rc.printRequestData {
+	fullURLPath := c.baseURL + path
+	if c.printRequestData {
 		log.Printf("DEBUG: [%s] %s - %s", method, fullURLPath, writer.FormDataContentType())
 	}
 
@@ -215,18 +215,18 @@ func (rc *Client) DoFileRequest(ctx context.Context, method, path string, fileNa
 		return fmt.Errorf("creating send request: %w", err)
 	}
 
-	req.Header.Set("User-Agent", rc.userAgent)
+	req.Header.Set("User-Agent", c.userAgent)
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 	req.Header.Add("Accept", "application/json")
-	req.SetBasicAuth(rc.userEmail, rc.userAPIKey)
+	req.SetBasicAuth(c.userEmail, c.userAPIKey)
 
-	resp, err := rc.httpClient.Do(req)
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("send request: %w", err)
 	}
 	defer resp.Body.Close()
 
-	if rc.printRawResponse {
+	if c.printRawResponse {
 		bodyBytes, _ := io.ReadAll(resp.Body)
 		log.Printf("DEBUG: Raw response: %s", string(bodyBytes))
 		resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))

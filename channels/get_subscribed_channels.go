@@ -31,12 +31,12 @@ type getSubscribedChannelsResponseData struct {
 	} `json:"subscriptions"`
 }
 
-func (aer *GetSubscribedChannelsResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *GetSubscribedChannelsResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.getSubscribedChannelsResponseData); err != nil {
+	if err := json.Unmarshal(b, &g.getSubscribedChannelsResponseData); err != nil {
 		return err
 	}
 
@@ -53,9 +53,9 @@ type getSubscribedChannelsOptions struct {
 type GetSubscribedChannelsOption func(*getSubscribedChannelsOptions)
 
 func IncludeSubscribersList(includeSubscribers bool) GetSubscribedChannelsOption {
-	return func(gsc *getSubscribedChannelsOptions) {
-		gsc.includeSubscribers.fieldName = "include_subscribers"
-		gsc.includeSubscribers.value = &includeSubscribers
+	return func(o *getSubscribedChannelsOptions) {
+		o.includeSubscribers.fieldName = "include_subscribers"
+		o.includeSubscribers.value = &includeSubscribers
 	}
 }
 

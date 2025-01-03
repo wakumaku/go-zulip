@@ -56,65 +56,65 @@ type APIResponseBase struct {
 }
 
 // HTTPCode returns the HTTP status code of the response.
-func (aer APIResponseBase) HTTPCode() int {
-	return aer.httpCode
+func (a APIResponseBase) HTTPCode() int {
+	return a.httpCode
 }
 
 // HTTPHeaders returns the HTTP headers of the response.
-func (aer APIResponseBase) HTTPHeaders() http.Header {
-	return aer.httpHeaders
+func (a APIResponseBase) HTTPHeaders() http.Header {
+	return a.httpHeaders
 }
 
 // SetHTTPCode sets the HTTP status code of the response.
-func (aer *APIResponseBase) SetHTTPCode(code int) {
-	aer.httpCode = code
+func (a *APIResponseBase) SetHTTPCode(code int) {
+	a.httpCode = code
 }
 
 // SetHTTPHeaders sets the HTTP headers of the response.
-func (aer *APIResponseBase) SetHTTPHeaders(headers http.Header) {
-	aer.httpHeaders = headers.Clone()
+func (a *APIResponseBase) SetHTTPHeaders(headers http.Header) {
+	a.httpHeaders = headers.Clone()
 }
 
-func (aer APIResponseBase) XRateLimitRemaining() string {
-	return aer.httpHeaders.Get(XRateLimitRemaining)
+func (a APIResponseBase) XRateLimitRemaining() string {
+	return a.httpHeaders.Get(XRateLimitRemaining)
 }
 
-func (aer APIResponseBase) XRateLimitLimit() string {
-	return aer.httpHeaders.Get(XRateLimitLimit)
+func (a APIResponseBase) XRateLimitLimit() string {
+	return a.httpHeaders.Get(XRateLimitLimit)
 }
 
-func (aer APIResponseBase) XRateLimitReset() string {
-	return aer.httpHeaders.Get(XRateLimitReset)
+func (a APIResponseBase) XRateLimitReset() string {
+	return a.httpHeaders.Get(XRateLimitReset)
 }
 
 // Msg returns the human-readable error message string.
-func (aer APIResponseBase) Msg() string {
-	return aer.msg
+func (a APIResponseBase) Msg() string {
+	return a.msg
 }
 
 // Result returns either "error" or "success".
-func (aer APIResponseBase) Result() string {
-	return aer.result
+func (a APIResponseBase) Result() string {
+	return a.result
 }
 
 // Code returns a machine-readable error string.
-func (aer APIResponseBase) Code() string {
-	return aer.code
+func (a APIResponseBase) Code() string {
+	return a.code
 }
 
 // IsError returns true if the result is an error.
-func (aer APIResponseBase) IsError() bool {
-	return aer.result == ResultError
+func (a APIResponseBase) IsError() bool {
+	return a.result == ResultError
 }
 
 // IsSuccess returns true if the result is a success.
-func (aer APIResponseBase) IsSuccess() bool {
-	return aer.result == ResultSuccess
+func (a APIResponseBase) IsSuccess() bool {
+	return a.result == ResultSuccess
 }
 
 // FieldValue returns the value of a field in the response.
-func (aer APIResponseBase) FieldValue(field string) (any, error) {
-	if v, found := aer.allFields[field]; found {
+func (a APIResponseBase) FieldValue(field string) (any, error) {
+	if v, found := a.allFields[field]; found {
 		return v, nil
 	}
 
@@ -122,11 +122,11 @@ func (aer APIResponseBase) FieldValue(field string) (any, error) {
 }
 
 // AllFields returns all the fields in the response.
-func (aer APIResponseBase) AllFields() map[string]any {
-	return aer.allFields
+func (a APIResponseBase) AllFields() map[string]any {
+	return a.allFields
 }
 
-func (aer *APIResponseBase) UnmarshalJSON(b []byte) error {
+func (a *APIResponseBase) UnmarshalJSON(b []byte) error {
 	if string(b) == "null" || string(b) == `""` {
 		return nil
 	}
@@ -160,7 +160,7 @@ func (aer *APIResponseBase) UnmarshalJSON(b []byte) error {
 		}
 	}
 
-	*aer = APIResponseBase{
+	*a = APIResponseBase{
 		code:      code,
 		msg:       msg,
 		result:    result,
@@ -170,6 +170,6 @@ func (aer *APIResponseBase) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (aer APIResponseBase) MarshalJSON() ([]byte, error) {
-	return json.Marshal(aer.allFields)
+func (a APIResponseBase) MarshalJSON() ([]byte, error) {
+	return json.Marshal(a.allFields)
 }

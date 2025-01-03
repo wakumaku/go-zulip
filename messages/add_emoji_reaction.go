@@ -22,18 +22,18 @@ type addEmojiReactionOptions struct {
 type AddEmojiReactionOption func(*addEmojiReactionOptions) error
 
 func AddEmojiReactionEmojiCode(emojiCode string) AddEmojiReactionOption {
-	return func(aero *addEmojiReactionOptions) error {
+	return func(o *addEmojiReactionOptions) error {
 		if strings.TrimSpace(emojiCode) == "" {
 			return errors.New("emoji code is empty")
 		}
-		aero.emojiCode = emojiCode
+		o.emojiCode = emojiCode
 		return nil
 	}
 }
 
 func AddEmojiReactionReactionType(reactionType zulip.ReactionType) AddEmojiReactionOption {
-	return func(aero *addEmojiReactionOptions) error {
-		aero.reactionType = reactionType
+	return func(o *addEmojiReactionOptions) error {
+		o.reactionType = reactionType
 		return nil
 	}
 }

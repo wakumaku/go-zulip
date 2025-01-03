@@ -18,12 +18,12 @@ type getUserResponseData struct {
 	User getUserMeResponseData `json:"user"`
 }
 
-func (aer *GetUserResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *GetUserResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.getUserResponseData); err != nil {
+	if err := json.Unmarshal(b, &g.getUserResponseData); err != nil {
 		return err
 	}
 

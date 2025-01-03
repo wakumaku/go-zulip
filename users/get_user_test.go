@@ -74,7 +74,7 @@ func TestGetUser(t *testing.T) {
 	assert.Equal(t, false, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)
 	assert.Equal(t, "hamlet@zulip.com", resp.User.Email)
-	assert.Equal(t, zulip.RoleMember, resp.User.Role) // 400
+	assert.Equal(t, zulip.MemberRole, resp.User.Role) // 400
 
 	// validate the parameters sent are correct
 	assert.Equal(t, "/api/v1/users/10", client.(*mockClient).path)
@@ -145,7 +145,7 @@ func TestGetUserByEmail(t *testing.T) {
 	assert.Equal(t, false, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)
 	assert.Equal(t, "hamlet@zulip.com", resp.User.Email)
-	assert.Equal(t, zulip.RoleMember, resp.User.Role) // 400
+	assert.Equal(t, zulip.MemberRole, resp.User.Role) // 400
 
 	// validate the parameters sent are correct
 	assert.Equal(t, "/api/v1/users/hamlet@zulip.com", client.(*mockClient).path)

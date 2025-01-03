@@ -17,12 +17,12 @@ type createUserResponseData struct {
 	UserID int `json:"user_id"`
 }
 
-func (aer *CreateUserResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (c *CreateUserResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &c.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.createUserResponseData); err != nil {
+	if err := json.Unmarshal(b, &c.createUserResponseData); err != nil {
 		return err
 	}
 

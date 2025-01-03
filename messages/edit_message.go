@@ -53,57 +53,57 @@ type EditMessageOption func(*editMessageOptions) error
 
 // MoveToTopic The topic to move the message(s) to, to request changing the topic.
 func MoveToTopic(name string) EditMessageOption {
-	return func(emo *editMessageOptions) error {
+	return func(o *editMessageOptions) error {
 		if strings.TrimSpace(name) == "" {
 			return errors.New("topic 'name' is empty")
 		}
-		emo.topic.fieldName = "topic"
-		emo.topic.value = &name
+		o.topic.fieldName = "topic"
+		o.topic.value = &name
 		return nil
 	}
 }
 
 // SetPropagateMode Which message(s) should be edited
 func SetPropagateMode(change PropagateMode) EditMessageOption {
-	return func(emo *editMessageOptions) error {
-		emo.propagateMode.fieldName = "propagate_mode"
-		emo.propagateMode.value = &change
+	return func(o *editMessageOptions) error {
+		o.propagateMode.fieldName = "propagate_mode"
+		o.propagateMode.value = &change
 		return nil
 	}
 }
 
 // SendNotificationToOldThread Whether to send an automated message to the old topic to notify users where the messages were moved to.
 func SendNotificationToOldThread(yes bool) EditMessageOption {
-	return func(emo *editMessageOptions) error {
-		emo.sendNotificationToOldThread.fieldName = "send_notification_to_old_thread"
-		emo.sendNotificationToOldThread.value = &yes
+	return func(o *editMessageOptions) error {
+		o.sendNotificationToOldThread.fieldName = "send_notification_to_old_thread"
+		o.sendNotificationToOldThread.value = &yes
 		return nil
 	}
 }
 
 // SendNotificationToNewThread Whether to send an automated message to the new topic to notify users where the messages came from.
 func SendNotificationToNewThread(yes bool) EditMessageOption {
-	return func(emo *editMessageOptions) error {
-		emo.sendNotificationToNewThread.fieldName = "send_notification_to_new_thread"
-		emo.sendNotificationToNewThread.value = &yes
+	return func(o *editMessageOptions) error {
+		o.sendNotificationToNewThread.fieldName = "send_notification_to_new_thread"
+		o.sendNotificationToNewThread.value = &yes
 		return nil
 	}
 }
 
 // NewContent The updated content of the target message.
 func NewContent(content string) EditMessageOption {
-	return func(emo *editMessageOptions) error {
-		emo.content.fieldName = "content"
-		emo.content.value = &content
+	return func(o *editMessageOptions) error {
+		o.content.fieldName = "content"
+		o.content.value = &content
 		return nil
 	}
 }
 
 // SetStreamID The channel ID to move the message(s) to, to request moving messages to another channel.
 func SetStreamID(id int) EditMessageOption {
-	return func(emo *editMessageOptions) error {
-		emo.streamID.fieldName = "stream_id"
-		emo.streamID.value = &id
+	return func(o *editMessageOptions) error {
+		o.streamID.fieldName = "stream_id"
+		o.streamID.value = &id
 		return nil
 	}
 }
@@ -124,12 +124,12 @@ type editMessageResponseData struct {
 	} `json:"detached_uploads"`
 }
 
-func (aer *EditMessageResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (e *EditMessageResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &e.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.editMessageResponseData); err != nil {
+	if err := json.Unmarshal(b, &e.editMessageResponseData); err != nil {
 		return err
 	}
 

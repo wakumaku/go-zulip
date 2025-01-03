@@ -19,12 +19,12 @@ type createReusableInvitationLinkData struct {
 	InviteLink string `json:"invite_link"`
 }
 
-func (aer *CreateReusableInvitationLinkResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (c *CreateReusableInvitationLinkResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &c.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.createReusableInvitationLinkData); err != nil {
+	if err := json.Unmarshal(b, &c.createReusableInvitationLinkData); err != nil {
 		return err
 	}
 
@@ -41,26 +41,26 @@ type createReusableInvitationLinkOptions struct {
 type CreateReusableInvitationLinkOption func(*createReusableInvitationLinkOptions)
 
 func InviteExpiresInMinutes(minutes int) CreateReusableInvitationLinkOption {
-	return func(crilo *createReusableInvitationLinkOptions) {
-		crilo.InviteExpiresInMinutes = &minutes
+	return func(o *createReusableInvitationLinkOptions) {
+		o.InviteExpiresInMinutes = &minutes
 	}
 }
 
 func InviteAs(roleLevel zulip.OrganizationRoleLevel) CreateReusableInvitationLinkOption {
-	return func(crilo *createReusableInvitationLinkOptions) {
-		crilo.InviteAs = &roleLevel
+	return func(o *createReusableInvitationLinkOptions) {
+		o.InviteAs = &roleLevel
 	}
 }
 
 func StreamIds(ids []int) CreateReusableInvitationLinkOption {
-	return func(crilo *createReusableInvitationLinkOptions) {
-		crilo.StreamIds = &ids
+	return func(o *createReusableInvitationLinkOptions) {
+		o.StreamIds = &ids
 	}
 }
 
 func IncludeRealmDefaultSubscriptions(include bool) CreateReusableInvitationLinkOption {
-	return func(crilo *createReusableInvitationLinkOptions) {
-		crilo.IncludeRealmDefaultSubscriptions = &include
+	return func(o *createReusableInvitationLinkOptions) {
+		o.IncludeRealmDefaultSubscriptions = &include
 	}
 }
 

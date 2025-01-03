@@ -19,12 +19,12 @@ type fetchAPIKeyData struct {
 	Email  string `json:"email"`
 }
 
-func (aer *FetchAPIKeyResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (f *FetchAPIKeyResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &f.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.fetchAPIKeyData); err != nil {
+	if err := json.Unmarshal(b, &f.fetchAPIKeyData); err != nil {
 		return err
 	}
 

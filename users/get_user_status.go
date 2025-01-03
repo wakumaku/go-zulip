@@ -23,12 +23,12 @@ type getUserStatusResponseData struct {
 	} `json:"status"`
 }
 
-func (aer *GetUserStatusResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *GetUserStatusResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.getUserStatusResponseData); err != nil {
+	if err := json.Unmarshal(b, &g.getUserStatusResponseData); err != nil {
 		return err
 	}
 

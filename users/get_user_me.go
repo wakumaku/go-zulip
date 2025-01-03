@@ -35,12 +35,12 @@ type getUserMeResponseData struct {
 	} `json:"profile_data"`
 }
 
-func (aer *GetUserMeResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *GetUserMeResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.getUserMeResponseData); err != nil {
+	if err := json.Unmarshal(b, &g.getUserMeResponseData); err != nil {
 		return err
 	}
 

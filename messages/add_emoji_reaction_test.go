@@ -20,14 +20,14 @@ func TestAddEmojiReaction(t *testing.T) {
 	msg := map[string]any{
 		"emoji_name":    "smile",
 		"emoji_code":    "1f604",
-		"reaction_type": zulip.ReactionUnicodeEmoji,
+		"reaction_type": zulip.UnicodeEmojiType,
 	}
 
 	resp, err := messagesSvc.AddEmojiReaction(context.Background(),
 		25,
 		"smile",
 		messages.AddEmojiReactionEmojiCode("1f604"),
-		messages.AddEmojiReactionReactionType(zulip.ReactionUnicodeEmoji),
+		messages.AddEmojiReactionReactionType(zulip.UnicodeEmojiType),
 	)
 	assert.NoError(t, err)
 	assert.Equal(t, true, resp.IsSuccess())

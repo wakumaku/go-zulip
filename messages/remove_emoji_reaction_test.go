@@ -20,14 +20,14 @@ func TestRemoveEmojiReaction(t *testing.T) {
 	msg := map[string]any{
 		"emoji_name":    "smile",
 		"emoji_code":    "1f604",
-		"reaction_type": zulip.ReactionUnicodeEmoji,
+		"reaction_type": zulip.UnicodeEmojiType,
 	}
 
 	resp, err := messagesSvc.RemoveEmojiReaction(context.Background(),
 		105,
 		messages.RemoveEmojiReactionEmojiName("smile"),
 		messages.RemoveEmojiReactionEmojiCode("1f604"),
-		messages.RemoveEmojiReactionReactionType(zulip.ReactionUnicodeEmoji),
+		messages.RemoveEmojiReactionReactionType(zulip.UnicodeEmojiType),
 	)
 	assert.NoError(t, err)
 	assert.Equal(t, true, resp.IsSuccess())

@@ -30,7 +30,7 @@ func TestUpdateStatus(t *testing.T) {
 	msg := map[string]interface{}{
 		"emoji_code":    "1f697",
 		"emoji_name":    "car",
-		"reaction_type": zulip.ReactionUnicodeEmoji,
+		"reaction_type": zulip.UnicodeEmojiType,
 		"status_text":   "on vacation",
 	}
 	assert.Equal(t, msg, client.(*mockClient).paramsSent)

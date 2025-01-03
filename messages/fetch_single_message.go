@@ -19,12 +19,12 @@ type fetchSingleMessageResponseData struct {
 	RawContent string  `json:"raw_content"`
 }
 
-func (aer *FetchSingleMessageResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (f *FetchSingleMessageResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &f.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.fetchSingleMessageResponseData); err != nil {
+	if err := json.Unmarshal(b, &f.fetchSingleMessageResponseData); err != nil {
 		return err
 	}
 
@@ -41,9 +41,9 @@ type fetchSingleMessageOptions struct {
 type FetchSingleMessageOption func(*fetchSingleMessageOptions)
 
 func ApplyMarkdownSingleMessage(applyMarkdown bool) FetchSingleMessageOption {
-	return func(fsmo *fetchSingleMessageOptions) {
-		fsmo.applyMarkdown.fieldName = "apply_markdown"
-		fsmo.applyMarkdown.value = &applyMarkdown
+	return func(o *fetchSingleMessageOptions) {
+		o.applyMarkdown.fieldName = "apply_markdown"
+		o.applyMarkdown.value = &applyMarkdown
 	}
 }
 

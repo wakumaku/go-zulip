@@ -24,12 +24,12 @@ type getMessagesResponseData struct {
 	Messages       []Message `json:"messages"`
 }
 
-func (aer *GetMessagesResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (g *GetMessagesResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &g.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.getMessagesResponseData); err != nil {
+	if err := json.Unmarshal(b, &g.getMessagesResponseData); err != nil {
 		return err
 	}
 
@@ -91,18 +91,18 @@ type DisplayRecipientObject struct {
 	IsMirrorDummy bool   `json:"is_mirror_dummy"`
 }
 
-func (dr *DisplayRecipient) UnmarshalJSON(b []byte) error {
+func (d *DisplayRecipient) UnmarshalJSON(b []byte) error {
 	var displayRecipient string
 	if err := json.Unmarshal(b, &displayRecipient); err == nil {
-		dr.IsChannel = true
-		dr.Channel = displayRecipient
+		d.IsChannel = true
+		d.Channel = displayRecipient
 		return nil
 	}
 
 	var displayRecipientObject []DisplayRecipientObject
 	if err := json.Unmarshal(b, &displayRecipientObject); err == nil {
-		dr.IsChannel = false
-		dr.Users = displayRecipientObject
+		d.IsChannel = false
+		d.Users = displayRecipientObject
 		return nil
 	}
 
@@ -153,58 +153,58 @@ type getMessageOptions struct {
 type GetMessageOption func(*getMessageOptions)
 
 func Anchor(anchor string) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.anchor.fieldName = "anchor"
-		gmo.anchor.value = &anchor
+	return func(o *getMessageOptions) {
+		o.anchor.fieldName = "anchor"
+		o.anchor.value = &anchor
 	}
 }
 
 func IncludeAnchor(includeAnchor bool) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.includeAnchor.fieldName = "include_anchor"
-		gmo.includeAnchor.value = &includeAnchor
+	return func(o *getMessageOptions) {
+		o.includeAnchor.fieldName = "include_anchor"
+		o.includeAnchor.value = &includeAnchor
 	}
 }
 
 func NumBefore(numBefore int) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.numBefore.fieldName = "num_before"
-		gmo.numBefore.value = &numBefore
+	return func(o *getMessageOptions) {
+		o.numBefore.fieldName = "num_before"
+		o.numBefore.value = &numBefore
 	}
 }
 
 func NumAfter(numAfter int) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.numAfter.fieldName = "num_after"
-		gmo.numAfter.value = &numAfter
+	return func(o *getMessageOptions) {
+		o.numAfter.fieldName = "num_after"
+		o.numAfter.value = &numAfter
 	}
 }
 
 func NarrowMessage(narrow zulip.Narrower) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.narrow.fieldName = "narrow"
-		gmo.narrow.value = narrow
+	return func(o *getMessageOptions) {
+		o.narrow.fieldName = "narrow"
+		o.narrow.value = narrow
 	}
 }
 
 func ClientGravatarMessage(clientGravatar bool) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.clientGravatar.fieldName = "client_gravatar"
-		gmo.clientGravatar.value = &clientGravatar
+	return func(o *getMessageOptions) {
+		o.clientGravatar.fieldName = "client_gravatar"
+		o.clientGravatar.value = &clientGravatar
 	}
 }
 
 func ApplyMarkdownMessage(applyMarkdown bool) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.applyMarkdown.fieldName = "apply_markdown"
-		gmo.applyMarkdown.value = &applyMarkdown
+	return func(o *getMessageOptions) {
+		o.applyMarkdown.fieldName = "apply_markdown"
+		o.applyMarkdown.value = &applyMarkdown
 	}
 }
 
 func MessageIDs(messageIDs []int) GetMessageOption {
-	return func(gmo *getMessageOptions) {
-		gmo.messageIDs.fieldName = "message_ids"
-		gmo.messageIDs.value = messageIDs
+	return func(o *getMessageOptions) {
+		o.messageIDs.fieldName = "message_ids"
+		o.messageIDs.value = messageIDs
 	}
 }
 

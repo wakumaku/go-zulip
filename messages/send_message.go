@@ -37,21 +37,21 @@ type SendMessageRecipient interface {
 
 type ToChannelID int
 
-func (cid ToChannelID) Recipient() any {
-	return cid
+func (t ToChannelID) Recipient() any {
+	return t
 }
 
-func (cid ToChannelID) SendMessageType() SendMessageType {
+func (t ToChannelID) SendMessageType() SendMessageType {
 	return ToChannel
 }
 
 type ToChannelName string
 
-func (cid ToChannelName) Recipient() any {
-	return cid
+func (t ToChannelName) Recipient() any {
+	return t
 }
 
-func (cid ToChannelName) SendMessageType() SendMessageType {
+func (t ToChannelName) SendMessageType() SendMessageType {
 	return ToChannel
 }
 
@@ -60,16 +60,16 @@ type toChannelTopic struct {
 	toTopic       string
 }
 
-func (tct toChannelTopic) Recipient() any {
-	return tct.channelNameID.Recipient()
+func (t toChannelTopic) Recipient() any {
+	return t.channelNameID.Recipient()
 }
 
-func (tct toChannelTopic) SendMessageType() SendMessageType {
+func (t toChannelTopic) SendMessageType() SendMessageType {
 	return ToChannel
 }
 
-func (tct toChannelTopic) Topic() string {
-	return tct.toTopic
+func (t toChannelTopic) Topic() string {
+	return t.toTopic
 }
 
 func ToChannelTopic(channelNameID SendMessageRecipient, topic string) SendMessageRecipient {
@@ -81,41 +81,41 @@ func ToChannelTopic(channelNameID SendMessageRecipient, topic string) SendMessag
 
 type ToUserID int
 
-func (cid ToUserID) Recipient() any {
-	return cid
+func (t ToUserID) Recipient() any {
+	return t
 }
 
-func (cid ToUserID) SendMessageType() SendMessageType {
+func (t ToUserID) SendMessageType() SendMessageType {
 	return ToDirect
 }
 
 type ToUserIDs []int
 
-func (cids ToUserIDs) Recipient() any {
-	return cids
+func (t ToUserIDs) Recipient() any {
+	return t
 }
 
-func (cid ToUserIDs) SendMessageType() SendMessageType {
+func (t ToUserIDs) SendMessageType() SendMessageType {
 	return ToDirect
 }
 
 type ToUserName string
 
-func (cid ToUserName) Recipient() any {
-	return cid
+func (t ToUserName) Recipient() any {
+	return t
 }
 
-func (cid ToUserName) SendMessageType() SendMessageType {
+func (t ToUserName) SendMessageType() SendMessageType {
 	return ToDirect
 }
 
 type ToUserNames []string
 
-func (cids ToUserNames) Recipient() any {
-	return cids
+func (t ToUserNames) Recipient() any {
+	return t
 }
 
-func (cid ToUserNames) SendMessageType() SendMessageType {
+func (t ToUserNames) SendMessageType() SendMessageType {
 	return ToDirect
 }
 
@@ -137,12 +137,12 @@ type SendMessageOption func(*sendMessageOptions) error
 // ToTopic The topic of the message. Only required for channel
 // messages ("type": "stream" or "type": "channel"), ignored otherwise.
 func ToTopic(name string) SendMessageOption {
-	return func(smo *sendMessageOptions) error {
+	return func(o *sendMessageOptions) error {
 		if strings.TrimSpace(name) == "" {
 			return errors.New("topic 'name' is empty")
 		}
-		smo.topic.fieldName = "topic"
-		smo.topic.value = &name
+		o.topic.fieldName = "topic"
+		o.topic.value = &name
 		return nil
 	}
 }
@@ -150,9 +150,9 @@ func ToTopic(name string) SendMessageOption {
 // ReadBySender Whether the message should be initially marked read by its sender. If
 // unspecified, the server uses a heuristic based on the client name.
 func ReadBySender(asRead bool) SendMessageOption {
-	return func(smo *sendMessageOptions) error {
-		smo.readBySender.fieldName = "read_by_sender"
-		smo.readBySender.value = &asRead
+	return func(o *sendMessageOptions) error {
+		o.readBySender.fieldName = "read_by_sender"
+		o.readBySender.value = &asRead
 		return nil
 	}
 }
@@ -167,12 +167,12 @@ type sendMessageResponseData struct {
 	AutomaticNewVisibilityPolicy int `json:"automatic_new_visibility_policy"`
 }
 
-func (aer *SendMessageResponse) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &aer.APIResponseBase); err != nil {
+func (s *SendMessageResponse) UnmarshalJSON(b []byte) error {
+	if err := json.Unmarshal(b, &s.APIResponseBase); err != nil {
 		return err
 	}
 
-	if err := json.Unmarshal(b, &aer.sendMessageResponseData); err != nil {
+	if err := json.Unmarshal(b, &s.sendMessageResponseData); err != nil {
 		return err
 	}
 
