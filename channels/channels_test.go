@@ -18,14 +18,14 @@ type mockClient struct {
 	paramsSent map[string]any // sort of spy for testing input parameters
 }
 
-func (mc *mockClient) DoRequest(ctx context.Context, method, path string, data map[string]any, response zulip.APIResponse, opts ...zulip.ClientSendRequestOption) error {
+func (mc *mockClient) DoRequest(ctx context.Context, method, path string, data map[string]any, response zulip.APIResponse, opts ...zulip.DoRequestOption) error {
 	mc.method = method
 	mc.path = path
 	mc.paramsSent = data
 	return json.Unmarshal([]byte(mc.response), response)
 }
 
-func (mc *mockClient) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response zulip.APIResponse, opts ...zulip.ClientSendRequestOption) error {
+func (mc *mockClient) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response zulip.APIResponse, opts ...zulip.DoRequestOption) error {
 	return errors.New("not implemented")
 }
 

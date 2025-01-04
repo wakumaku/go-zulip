@@ -19,8 +19,8 @@ import (
 )
 
 type RESTClient interface {
-	DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...ClientSendRequestOption) error
-	DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...ClientSendRequestOption) error
+	DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...DoRequestOption) error
+	DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...DoRequestOption) error
 }
 
 // Client is the main HTTP Client to interact with Zulip's API
@@ -41,6 +41,7 @@ const (
 
 type clientOptions struct {
 	httpClient       *http.Client
+	userAgent        string
 	printRequestData bool
 	printRawResponse bool
 }
@@ -53,6 +54,13 @@ func WithHTTPClient(client *http.Client) ClientOption {
 			return errors.New("http client is nil")
 		}
 		o.httpClient = client
+		return nil
+	}
+}
+
+func WithCustomUserAgent(userAgent string) ClientOption {
+	return func(o *clientOptions) error {
+		o.userAgent = userAgent
 		return nil
 	}
 }
@@ -74,6 +82,7 @@ func WithPrintRawResponse() ClientOption {
 func NewClient(baseURL, email, apikey string, options ...ClientOption) (*Client, error) {
 	opts := clientOptions{
 		httpClient:       &http.Client{},
+		userAgent:        DefaultUserAgentName + "/" + Version,
 		printRequestData: false,
 		printRawResponse: false,
 	}
@@ -85,7 +94,7 @@ func NewClient(baseURL, email, apikey string, options ...ClientOption) (*Client,
 
 	return &Client{
 		baseURL:          baseURL,
-		userAgent:        AgentName + "/" + Version,
+		userAgent:        opts.userAgent,
 		userEmail:        email,
 		userAPIKey:       apikey,
 		httpClient:       opts.httpClient,
@@ -98,16 +107,16 @@ type clientSendRequestOptions struct {
 	timeout time.Duration
 }
 
-type ClientSendRequestOption func(*clientSendRequestOptions)
+type DoRequestOption func(*clientSendRequestOptions)
 
-func WithTimeout(duration time.Duration) ClientSendRequestOption {
+func WithTimeout(duration time.Duration) DoRequestOption {
 	return func(o *clientSendRequestOptions) {
 		o.timeout = duration
 	}
 }
 
 // DoRequest is the main function to send requests to Zulip's API.
-func (c *Client) DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...ClientSendRequestOption) error {
+func (c *Client) DoRequest(ctx context.Context, method, path string, data map[string]any, response APIResponse, opts ...DoRequestOption) error {
 	options := clientSendRequestOptions{
 		timeout: RESTClientDefaultTimeout,
 	}
@@ -170,7 +179,7 @@ func (c *Client) DoRequest(ctx context.Context, method, path string, data map[st
 }
 
 // DoFileRequest is the main function to send requests to Zulip's API with a file. For file and emoji uploads.
-func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...ClientSendRequestOption) error {
+func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileName string, file io.Reader, response APIResponse, opts ...DoRequestOption) error {
 	options := clientSendRequestOptions{
 		timeout: RESTClientDefaultTimeout,
 	}
@@ -186,7 +195,12 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 		fmt.Sprintf(`form-data; name="%s"; filename="%s"`,
 			"filename",
 			filepath.Base(fileName)))
-	h.Set("Content-Type", mime.TypeByExtension(filepath.Ext(fileName)))
+
+	mimeType := mime.TypeByExtension(filepath.Ext(fileName))
+	if mimeType == "" {
+		mimeType = "application/octet-stream"
+	}
+	h.Set("Content-Type", mimeType)
 
 	part, err := writer.CreatePart(h)
 	if err != nil {
