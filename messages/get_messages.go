@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/wakumaku/go-zulip"
+	"github.com/wakumaku/go-zulip/narrow"
 )
 
 type GetMessagesResponse struct {
@@ -128,7 +129,7 @@ type getMessageOptions struct {
 	}
 	narrow struct {
 		fieldName string
-		value     zulip.Narrower
+		value     narrow.Filter
 	}
 	clientGravatar struct {
 		fieldName string
@@ -180,7 +181,7 @@ func NumAfter(numAfter int) GetMessageOption {
 	}
 }
 
-func NarrowMessage(narrow zulip.Narrower) GetMessageOption {
+func NarrowMessage(narrow narrow.Filter) GetMessageOption {
 	return func(o *getMessageOptions) {
 		o.narrow.fieldName = "narrow"
 		o.narrow.value = narrow

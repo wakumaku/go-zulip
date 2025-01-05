@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/channels"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/narrow"
 	"github.com/wakumaku/go-zulip/realtime"
 	"github.com/wakumaku/go-zulip/realtime/events"
 	"github.com/wakumaku/go-zulip/users"
@@ -50,8 +50,8 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 	// Register a queue for the bot, will receive only messages from the subscribed channel
 	queueRegisterResp, err := b.RealtimeSVC.RegisterEvetQueue(ctx,
 		realtime.EventTypes(events.MessageType),
-		realtime.NarrowEvents(zulip.Narrower{}.
-			Add(zulip.Stream, channel),
+		realtime.NarrowEvents(narrow.NewFilter().
+			Add(narrow.New(narrow.Stream, channel)),
 		),
 	)
 	if err != nil {

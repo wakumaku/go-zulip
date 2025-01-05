@@ -58,7 +58,7 @@ func TestRestClientDoRequest(t *testing.T) {
 		requestRecorder.body = body
 
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"result": "success"}`))
+		_, _ = w.Write([]byte(`{"result": "success"}`))
 	})
 
 	mockServer := httptest.NewServer(handlerTest)
@@ -131,7 +131,7 @@ func TestRestClientDoRequestFile(t *testing.T) {
 		requestRecorder.body = body
 
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"result": "success"}`))
+		_, _ = w.Write([]byte(`{"result": "success"}`))
 	})
 
 	mockServer := httptest.NewServer(handlerTest)

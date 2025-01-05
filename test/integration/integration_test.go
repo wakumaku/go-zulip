@@ -14,6 +14,7 @@ import (
 	"github.com/wakumaku/go-zulip/channels"
 	"github.com/wakumaku/go-zulip/invitations"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/narrow"
 	"github.com/wakumaku/go-zulip/org"
 	"github.com/wakumaku/go-zulip/realtime"
 	"github.com/wakumaku/go-zulip/realtime/events"
@@ -259,8 +260,8 @@ func TestIntegrationSuite(t *testing.T) {
 		messages.Anchor("newest"),
 		messages.NumBefore(1),
 		messages.NumAfter(1),
-		messages.NarrowMessage(zulip.Narrower{}.
-			Add(zulip.Id, messageToBeGetLater.ID),
+		messages.NarrowMessage(narrow.NewFilter().
+			Add(narrow.New(narrow.Id, messageToBeGetLater.ID)),
 		),
 		messages.ApplyMarkdownMessage(false),
 	)
@@ -273,12 +274,13 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, "general", respGetMessage.Messages[0].DisplayRecipient.Channel)
 
 	// Testing narrower with multiple conditions
-	narrowMultiple := zulip.Narrower{}.
-		Add(zulip.Channel, "general").
-		AddNegated(zulip.IsUnread, nil).
-		Add(zulip.Search, `"Message to be get later"`)
+	narrowMultiple := narrow.NewFilter().
+		Add(narrow.New(narrow.Channel, "general")).
+		Add(narrow.New(narrow.Topic, "greetings")).
+		// Add(narrow.Negate(narrow.IsUnread)).
+		Add(narrow.New(narrow.Search, `Message to be get later`))
 
-	respGetMessage, err = userAMsgSvc.GetMessages(ctx, messages.Anchor("newest"),
+	respGetMessageNarrow, err := userAMsgSvc.GetMessages(ctx, messages.Anchor("newest"),
 		messages.NumBefore(1),
 		messages.NumAfter(1),
 		messages.NarrowMessage(narrowMultiple),
@@ -286,8 +288,13 @@ func TestIntegrationSuite(t *testing.T) {
 	)
 
 	assert.NoError(t, err)
-	assert.Equal(t, respGetMessage.HTTPCode(), http.StatusOK)
-	assert.Equal(t, respGetMessage.Result(), zulip.ResultSuccess)
+	assert.Equal(t, respGetMessageNarrow.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetMessageNarrow.Result(), zulip.ResultSuccess)
+
+	assert.Equal(t, messageToBeGetLater.ID, respGetMessageNarrow.Messages[0].ID)
+	assert.Equal(t, messageToBeGetLaterMessage, respGetMessageNarrow.Messages[0].Content)
+	assert.Equal(t, "general", respGetMessageNarrow.Messages[0].DisplayRecipient.Channel)
+	assert.Equal(t, "greetings", respGetMessageNarrow.Messages[0].Subject)
 
 	// fetch a single message
 	respFetchSingleMessage, err := userAMsgSvc.FetchSingleMessage(ctx, respGetMessage.Messages[0].ID, messages.ApplyMarkdownSingleMessage(false))

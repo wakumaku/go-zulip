@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/narrow"
 )
 
 func TestGetMessages(t *testing.T) {
@@ -93,7 +93,7 @@ func TestGetMessages(t *testing.T) {
 		"include_anchor":  true,
 		"num_before":      1,
 		"num_after":       3,
-		"narrow":          "[{\"operator\":\"channel\",\"operand\":\"Verona\"},{\"operator\":\"sender\",\"operand\":\"iago@zulip.com\"}]",
+		"narrow":          `[{"operator":"channel","operand":"Verona","negated":false},{"operator":"sender","operand":"iago@zulip.com","negated":false}]`,
 		"client_gravatar": true,
 		"apply_markdown":  true,
 		"message_ids":     []int{16, 21},
@@ -104,9 +104,9 @@ func TestGetMessages(t *testing.T) {
 		messages.IncludeAnchor(true),
 		messages.NumBefore(1),
 		messages.NumAfter(3),
-		messages.NarrowMessage(zulip.Narrower{}.
-			Add(zulip.Channel, "Verona").
-			Add(zulip.Sender, "iago@zulip.com")),
+		messages.NarrowMessage(narrow.NewFilter().
+			Add(narrow.New(narrow.Channel, "Verona")).
+			Add(narrow.New(narrow.Sender, "iago@zulip.com"))),
 		messages.ClientGravatarMessage(true),
 		messages.ApplyMarkdownMessage(true),
 		messages.MessageIDs([]int{16, 21}),

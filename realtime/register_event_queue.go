@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/wakumaku/go-zulip"
+	"github.com/wakumaku/go-zulip/narrow"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -60,7 +61,7 @@ type registerEventQueueOptions struct {
 	allPublicStreams         bool
 	clientCapabilities       map[ClientCapability]bool
 	fetchEventTypes          []events.EventType
-	narrow                   zulip.Narrower
+	narrow                   narrow.Filter
 }
 
 type RegisterEventQueueOption func(*registerEventQueueOptions)
@@ -119,7 +120,7 @@ func FetchEventTypes(fetchEventTypes []events.EventType) RegisterEventQueueOptio
 	}
 }
 
-func NarrowEvents(narrow zulip.Narrower) RegisterEventQueueOption {
+func NarrowEvents(narrow narrow.Filter) RegisterEventQueueOption {
 	return func(ro *registerEventQueueOptions) {
 		ro.narrow = narrow
 	}
@@ -144,7 +145,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		allPublicStreams:         false,
 		clientCapabilities:       map[ClientCapability]bool{},
 		fetchEventTypes:          []events.EventType{},
-		narrow:                   zulip.Narrower{},
+		narrow:                   narrow.NewFilter(),
 	}
 
 	for _, opt := range options {
@@ -200,7 +201,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 	}
 
 	if len(opts.narrow) > 0 {
-		narrowJSON, err := opts.narrow.EventsJSON()
+		narrowJSON, err := opts.narrow.MarshalEvent()
 		if err != nil {
 			return nil, fmt.Errorf("marshaling narrow: %w", err)
 		}
