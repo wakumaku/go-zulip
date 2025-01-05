@@ -69,18 +69,21 @@ var (
 	HasReaction   Narrow = New(Has, Reaction)
 )
 
-// Narrow filter is a collection of filters to be applied when searching for
+// Filter is a collection of narrow items to be applied when searching for
 // messages or filtering events
 type Filter []Narrow
 
+// NewFilter creates a new Filter
 func NewFilter() Filter {
 	return make(Filter, 0)
 }
 
+// Add adds a new narrow item to the filter and returns the updated filter
 func (nf Filter) Add(narrow Narrow) Filter {
 	return append(nf, narrow)
 }
 
+// String returns a string representation of the Filter
 func (nf *Filter) String() string {
 	ns := make([]string, len(*nf))
 	for i, n := range *nf {
@@ -90,10 +93,12 @@ func (nf *Filter) String() string {
 	return strings.Join(ns, " ")
 }
 
+// MarshalJSON returns the JSON encoding of the Filter
 func (n Filter) MarshalJSON() ([]byte, error) {
 	return json.Marshal([]Narrow(n))
 }
 
+// MarshalEvent returns the JSON encoding of the Filter for events
 func (n Filter) MarshalEvent() ([]byte, error) {
 	out := make([][]string, 0, len(n))
 	for _, item := range n {
@@ -103,21 +108,24 @@ func (n Filter) MarshalEvent() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-// Narrow
+// Narrow is a struct that represents a single narrow item to be applied when searching for messages or filtering events
 type Narrow struct {
 	Operator Operator `json:"operator"`
 	Operand  Operand  `json:"operand"`
 	Negated  bool     `json:"negated"`
 }
 
+// New creates a new Narrow
 func New(op Operator, val Operand) Narrow {
 	return newNarrow(op, val, false)
 }
 
+// NewNegated creates a new Negated Narrow
 func NewNegated(op Operator, val Operand) Narrow {
 	return newNarrow(op, val, true)
 }
 
+// NewFromString creates a new Narrow from a string
 func NewFromString(s string) Narrow {
 	s = strings.TrimSpace(s)
 
@@ -147,6 +155,7 @@ func newNarrow(op Operator, val Operand, negated bool) Narrow {
 	}
 }
 
+// Negate returns a new Negated Narrow
 func Negate(n Narrow) Narrow {
 	n.negate()
 	return n
@@ -156,7 +165,7 @@ func (n *Narrow) negate() {
 	n.Negated = true
 }
 
-// Stringer
+// String returns a string representation of the Narrow
 func (n *Narrow) String() string {
 	negated := ""
 	if n.Negated {
