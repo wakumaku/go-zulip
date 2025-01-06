@@ -1,6 +1,6 @@
 # go-zulip
 
-### 🚧 WORK IN PROGRESS v0.0.0-dev 🏗️
+### 🚧 WORK IN PROGRESS 🏗️
 
 ### Golang Client Library for Zulip
 
@@ -173,7 +173,7 @@ Check `dev` folder.
 
 ### Documentation
 
-For detailed documentation on all available methods and features, please refer to the GoDoc.
+For detailed documentation on all available methods and features, please refer to the [GoDoc](https://pkg.go.dev/github.com/wakumaku/go-zulip).
 
 ### Contributing
 
