@@ -1,7 +1,5 @@
 # go-zulip
 
-### 🚧 WORK IN PROGRESS 🏗️
-
 ### Golang Client Library for Zulip
 
 `go-zulip` is a Golang client library designed to interact with Zulip's REST API. It allows you to send messages, receive real-time events, and perform various other operations with ease.
@@ -161,7 +159,7 @@ func main() {
 
 ### Other Examples
 
-Check `examples` folder.
+Check [/examples](`examples`) folder.
 
 * **Talking Robots**: two bots talking demonstrating sending messages, reactions and events
 
@@ -169,7 +167,7 @@ Check `examples` folder.
 
 ### Developing
 
-Check `dev` folder.
+Check [/dev](`dev`) folder.
 
 ### Documentation
 
