@@ -375,8 +375,8 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respCreatePrivateChat.Result(), zulip.ResultSuccess)
 
 	// UserA gets its own information
-	uaserAUserSvc := users.NewService(userA)
-	respGetUserMe, err := uaserAUserSvc.GetUserMe(ctx)
+	userAUserSvc := users.NewService(userA)
+	respGetUserMe, err := userAUserSvc.GetUserMe(ctx)
 	assert.NoError(t, err)
 	assert.Equal(t, respGetUserMe.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respGetUserMe.Result(), zulip.ResultSuccess)
@@ -388,6 +388,15 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respGetUser.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respGetUser.Result(), zulip.ResultSuccess)
 	assert.Equal(t, userAEmail, respGetUser.User.Email)
+
+	// Update User A
+	respUpdateUser, err := adminUserSvc.UpdateUser(ctx, respGetUserMe.UserID,
+		users.FullName("User A Updated"),
+	)
+	assert.NoError(t, err)
+	assert.Equal(t, respUpdateUser.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respUpdateUser.Result(), zulip.ResultSuccess)
+	assert.Equal(t, respUpdateUser.Msg(), "")
 
 	// Get ALL Users
 	respGetUsers, err := adminUserSvc.GetUsers(ctx,
@@ -402,7 +411,7 @@ func TestIntegrationSuite(t *testing.T) {
 	// Status Text and Emoji
 	// Set status text and emoji
 	userAStatusText := "I'm busy"
-	respUpdateStatus, err := uaserAUserSvc.UpdateStatus(ctx,
+	respUpdateStatus, err := userAUserSvc.UpdateStatus(ctx,
 		users.StatusText(userAStatusText),
 		users.StatusEmojiName("thumbs_up"),
 		// zulip.StatusEmojiCode("1f389"),
@@ -428,7 +437,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respUploadEmoji.Result(), zulip.ResultSuccess)
 
 	// Set the custom emoji as the user's status emoji
-	respUpdateStatus, err = uaserAUserSvc.UpdateStatus(ctx,
+	respUpdateStatus, err = userAUserSvc.UpdateStatus(ctx,
 		users.StatusText("I'm dancing"),
 		users.StatusEmojiName(emojiName),
 	)
