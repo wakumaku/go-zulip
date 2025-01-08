@@ -177,47 +177,47 @@ Check [/examples](examples) folder.
 	* [x] Remove an emoji reaction
 	* [x] Render a message
 	* [x] Fetch a single message
-	* [] Check if messages match a narrow
-	* [] Get a message's edit history
-	* [] Update personal message flags
-	* [] Update personal message flags for narrow
-	* [] Mark all messages as read
-	* [] Mark messages in a channel as read
-	* [] Mark messages in a topic as read
-	* [] Get a message's read receipts
+	* Check if messages match a narrow
+	* Get a message's edit history
+	* Update personal message flags
+	* Update personal message flags for narrow
+	* Mark all messages as read
+	* Mark messages in a channel as read
+	* Mark messages in a topic as read
+	* Get a message's read receipts
 * **Scheduled messages**
-	* [] Get scheduled messages
-	* [] Create a scheduled message
-	* [] Edit a scheduled message
-	* [] Delete a scheduled message
+	* Get scheduled messages
+	* Create a scheduled message
+	* Edit a scheduled message
+	* Delete a scheduled message
 * **Drafts**
-	* [] Get drafts
-	* [] Create drafts
-	* [] Edit a draft
-	* [] Delete a draft
-	* [] Get all saved snippets
-	* [] Create a saved snippet
-	* [] Delete a saved snippet
+	* Get drafts
+	* Create drafts
+	* Edit a draft
+	* Delete a draft
+	* Get all saved snippets
+	* Create a saved snippet
+	* Delete a saved snippet
 * [**Channels**](channels)
 	* [x] Get subscribed channels
 	* [x] Subscribe to a channel
-	* [] Unsubscribe from a channel
-	* [] Get subscription status
-	* [] Get channel subscribers
-	* [] Update subscription settings
-	* [] Get all channels
-	* [] Get a channel by ID
-	* [] Get channel ID
-	* [] Create a channel
-	* [] Update a channel
-	* [] Archive a channel
-	* [] Get channel's email address
-	* [] Get topics in a channel
-	* [] Topic muting
-	* [] Update personal preferences for a topic
-	* [] Delete a topic
-	* [] Add a default channel
-	* [] Remove a default channel
+	* Unsubscribe from a channel
+	* Get subscription status
+	* Get channel subscribers
+	* Update subscription settings
+	* Get all channels
+	* Get a channel by ID
+	* Get channel ID
+	* Create a channel
+	* Update a channel
+	* Archive a channel
+	* Get channel's email address
+	* Get topics in a channel
+	* Topic muting
+	* Update personal preferences for a topic
+	* Delete a topic
+	* Add a default channel
+	* Remove a default channel
 * [**Users**](users)
 	* [x] Get a user
 	* [x] Get a user by email
@@ -225,59 +225,59 @@ Check [/examples](examples) folder.
 	* [x] Get all users
 	* [x] Create a user
 	* [x] Update a user
-	* [] Update a user by email
-	* [] Deactivate a user
-	* [] Deactivate own user
-	* [] Reactivate a user
+	* Update a user by email
+	* Deactivate a user
+	* Deactivate own user
+	* Reactivate a user
 	* [x] Get a user's status
 	* [x] Update your status
-	* [] Set "typing" status
-	* [] Get a user's presence
-	* [] Get presence of all users
-	* [] Update your presence
-	* [] Get attachments
-	* [] Delete an attachment
-	* [] Update settings
-	* [] Get user groups
-	* [] Create a user group
-	* [] Update a user group
-	* [] Deactivate a user group
-	* [] Update user group members
-	* [] Update subgroups of a user group
-	* [] Get user group membership status
-	* [] Get user group members
-	* [] Get subgroups of a user group
-	* [] Mute a user
-	* [] Unmute a user
-	* [] Get all alert words
-	* [] Add alert words
-	* [] Remove alert words
+	* Set "typing" status
+	* Get a user's presence
+	* Get presence of all users
+	* Update your presence
+	* Get attachments
+	* Delete an attachment
+	* Update settings
+	* Get user groups
+	* Create a user group
+	* Update a user group
+	* Deactivate a user group
+	* Update user group members
+	* Update subgroups of a user group
+	* Get user group membership status
+	* Get user group members
+	* Get subgroups of a user group
+	* Mute a user
+	* Unmute a user
+	* Get all alert words
+	* Add alert words
+	* Remove alert words
 * [**Invitations**](invitations)
-	* [] Get all invitations
-	* [] Send invitations
+	* Get all invitations
+	* Send invitations
 	* [x] Create a reusable invitation link
-	* [] Resend an email invitation
-	* [] Revoke an email invitation
-	* [] Revoke a reusable invitation link
+	* Resend an email invitation
+	* Revoke an email invitation
+	* Revoke a reusable invitation link
 * [**Server & organizations**](org)
-	* [] Get server settings
-	* [] Get linkifiers
-	* [] Add a linkifier
-	* [] Update a linkifier
-	* [] Remove a linkifier
-	* [] Reorder linkifiers
-	* [] Add a code playground
-	* [] Remove a code playground
-	* [] Get all custom emoji
+	* Get server settings
+	* Get linkifiers
+	* Add a linkifier
+	* Update a linkifier
+	* Remove a linkifier
+	* Reorder linkifiers
+	* Add a code playground
+	* Remove a code playground
+	* Get all custom emoji
 	* [x] Upload custom emoji
-	* [] Deactivate custom emoji
-	* [] Get all custom profile fields
-	* [] Reorder custom profile fields
-	* [] Create a custom profile field
-	* [] Update realm-level defaults of user settings
-	* [] Get all data exports
-	* [] Create a data export
-	* [] Get data export consent state
+	* Deactivate custom emoji
+	* Get all custom profile fields
+	* Reorder custom profile fields
+	* Create a custom profile field
+	* Update realm-level defaults of user settings
+	* Get all data exports
+	* Create a data export
+	* Get data export consent state
 * [**Real-time events**](realtime)
 	* [x] Register an event queue
 	* [x] Get events from an event queue
@@ -285,12 +285,12 @@ Check [/examples](examples) folder.
 * [**Specialty endpoints**](specialty)
 	* [x] Fetch an API key (production)
 	* [x] Fetch an API key (development only)
-	* [] Send a test notification to mobile device(s)
-	* [] Add an APNs device token
-	* [] Remove an APNs device token
-	* [] Add an FCM registration token
-	* [] Remove an FCM registration token
-	* [] Create BigBlueButton video call
+	* Send a test notification to mobile device(s)
+	* Add an APNs device token
+	* Remove an APNs device token
+	* Add an FCM registration token
+	* Remove an FCM registration token
+	* Create BigBlueButton video call
 
 ### Developing
 
