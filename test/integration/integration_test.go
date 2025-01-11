@@ -4,6 +4,8 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"testing"
@@ -42,10 +44,11 @@ func TestIntegrationSuite(t *testing.T) {
 		},
 	}
 
+	debugLogger := slog.New(slog.NewJSONHandler(io.Discard, &slog.HandlerOptions{Level: slog.LevelDebug}))
+
 	adminClient, err := zulip.NewClient(zulipSite, zulipEmail, zulipAPIKey,
 		zulip.WithHTTPClient(&insecureClient),
-		// zulip.WithPrintRequestData(),
-		// zulip.WithPrintRawResponse(),
+		zulip.WithLogger(debugLogger),
 	)
 	assert.NoError(t, err)
 
@@ -69,6 +72,7 @@ func TestIntegrationSuite(t *testing.T) {
 	// User A Client
 	userA, err := zulip.NewClient(zulipSite, userAEmail, respFetchAPIKeyA.APIKey,
 		zulip.WithHTTPClient(&insecureClient),
+		zulip.WithLogger(debugLogger),
 	)
 	assert.NoError(t, err)
 
@@ -91,8 +95,7 @@ func TestIntegrationSuite(t *testing.T) {
 	// User B Client
 	userB, err := zulip.NewClient(zulipSite, userBEmail, respFetchAPIKeyB.APIKey,
 		zulip.WithHTTPClient(&insecureClient),
-		// zulip.WithPrintRequestData(),
-		// zulip.WithPrintRawResponse(),
+		zulip.WithLogger(debugLogger),
 	)
 	assert.NoError(t, err)
 	adminInvitationSvc := invitations.NewService(adminClient)

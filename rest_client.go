@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
+	"log/slog"
 	"mime"
 	"mime/multipart"
 	"net/http"
@@ -16,6 +16,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type RESTClient interface {
@@ -25,13 +27,12 @@ type RESTClient interface {
 
 // Client is the main HTTP Client to interact with Zulip's API
 type Client struct {
-	baseURL          string
-	userAgent        string
-	userEmail        string
-	userAPIKey       string
-	httpClient       *http.Client
-	printRequestData bool
-	printRawResponse bool
+	baseURL    string
+	userAgent  string
+	userEmail  string
+	userAPIKey string
+	httpClient *http.Client
+	logger     *slog.Logger
 }
 
 const (
@@ -40,10 +41,9 @@ const (
 )
 
 type clientOptions struct {
-	httpClient       *http.Client
-	userAgent        string
-	printRequestData bool
-	printRawResponse bool
+	httpClient *http.Client
+	userAgent  string
+	logger     *slog.Logger
 }
 
 type ClientOption func(*clientOptions) error
@@ -65,16 +65,12 @@ func WithCustomUserAgent(userAgent string) ClientOption {
 	}
 }
 
-func WithPrintRequestData() ClientOption {
+func WithLogger(logger *slog.Logger) ClientOption {
 	return func(o *clientOptions) error {
-		o.printRequestData = true
-		return nil
-	}
-}
-
-func WithPrintRawResponse() ClientOption {
-	return func(o *clientOptions) error {
-		o.printRawResponse = true
+		if logger == nil {
+			return errors.New("logger is nil")
+		}
+		o.logger = logger
 		return nil
 	}
 }
@@ -95,10 +91,9 @@ func NewClientFromConfig(file, section string) (*Client, error) {
 
 func NewClient(site, email, key string, options ...ClientOption) (*Client, error) {
 	opts := clientOptions{
-		httpClient:       &http.Client{},
-		userAgent:        DefaultUserAgentName + "/" + Version,
-		printRequestData: false,
-		printRawResponse: false,
+		httpClient: &http.Client{},
+		userAgent:  DefaultUserAgentName + "/" + Version,
+		logger:     slog.New(slog.NewJSONHandler(io.Discard, &slog.HandlerOptions{Level: slog.LevelError})),
 	}
 	for _, opt := range options {
 		if err := opt(&opts); err != nil {
@@ -107,13 +102,12 @@ func NewClient(site, email, key string, options ...ClientOption) (*Client, error
 	}
 
 	return &Client{
-		baseURL:          site,
-		userAgent:        opts.userAgent,
-		userEmail:        email,
-		userAPIKey:       key,
-		httpClient:       opts.httpClient,
-		printRequestData: opts.printRequestData,
-		printRawResponse: opts.printRawResponse,
+		baseURL:    site,
+		userAgent:  opts.userAgent,
+		userEmail:  email,
+		userAPIKey: key,
+		httpClient: opts.httpClient,
+		logger:     opts.logger,
 	}, nil
 }
 
@@ -150,9 +144,14 @@ func (c *Client) DoRequest(ctx context.Context, method, path string, data map[st
 	}
 
 	fullURLPath := c.baseURL + path
-	if c.printRequestData {
-		log.Printf("DEBUG: [%s] %s - %s", method, fullURLPath, formDataEncoded)
-	}
+
+	requestID := uuid.New().String()
+	reqLog := c.logger.With(slog.String("request_id", requestID))
+
+	reqLog.DebugContext(ctx, "Sending request",
+		slog.String("method", method),
+		slog.String("url", fullURLPath),
+		slog.String("data", formDataEncoded))
 
 	if method == http.MethodGet && len(data) > 0 {
 		fullURLPath += "?" + formDataEncoded
@@ -181,10 +180,16 @@ func (c *Client) DoRequest(ctx context.Context, method, path string, data map[st
 		return fmt.Errorf("cannot read response body: %s", err)
 	}
 
-	if c.printRawResponse {
-		jsonResponse, _ := response.MarshalJSON()
-		log.Printf("DEBUG: %s", jsonResponse)
+	headersGroup := []slog.Attr{}
+	for k, v := range resp.Header {
+		headersGroup = append(headersGroup, slog.String(k, strings.Join(v, ", ")))
 	}
+
+	reqLog.DebugContext(ctx, "Received response",
+		slog.Any("headers", slog.GroupValue(headersGroup...)),
+		slog.String("request_id", requestID),
+		slog.Int("status_code", resp.StatusCode),
+	)
 
 	response.SetHTTPCode(resp.StatusCode)
 	response.SetHTTPHeaders(resp.Header)
@@ -234,9 +239,16 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 	defer reqCancel()
 
 	fullURLPath := c.baseURL + path
-	if c.printRequestData {
-		log.Printf("DEBUG: [%s] %s - %s", method, fullURLPath, writer.FormDataContentType())
-	}
+
+	requestID := uuid.New().String()
+	reqLog := c.logger.With(slog.String("request_id", requestID))
+
+	reqLog.DebugContext(ctx, "Sending file request",
+		slog.String("method", method),
+		slog.String("url", fullURLPath),
+		slog.String("filename", fileName),
+		slog.String("mimetype", mimeType),
+		slog.Int("content_length", requestBody.Len()))
 
 	req, err := http.NewRequestWithContext(reqCtx, method, fullURLPath, &requestBody)
 	if err != nil {
@@ -254,15 +266,19 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 	}
 	defer resp.Body.Close()
 
-	if c.printRawResponse {
-		bodyBytes, _ := io.ReadAll(resp.Body)
-		log.Printf("DEBUG: Raw response: %s", string(bodyBytes))
-		resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-	}
-
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
 		return fmt.Errorf("cannot read response body: %w", err)
 	}
+
+	headersGroup := []slog.Attr{}
+	for k, v := range resp.Header {
+		headersGroup = append(headersGroup, slog.String(k, strings.Join(v, ", ")))
+	}
+
+	reqLog.DebugContext(ctx, "Received response",
+		slog.Any("headers", slog.GroupValue(headersGroup...)),
+		slog.Int("status_code", resp.StatusCode),
+	)
 
 	response.SetHTTPCode(resp.StatusCode)
 	response.SetHTTPHeaders(resp.Header)
