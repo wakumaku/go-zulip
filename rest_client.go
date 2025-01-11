@@ -79,7 +79,21 @@ func WithPrintRawResponse() ClientOption {
 	}
 }
 
-func NewClient(baseURL, email, apikey string, options ...ClientOption) (*Client, error) {
+func NewClientFromConfig(file, section string) (*Client, error) {
+	zuliprc, err := ParseZuliprc(file)
+	if err != nil {
+		return nil, err
+	}
+
+	apiSection, ok := zuliprc[section]
+	if !ok {
+		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", section, file)
+	}
+
+	return NewClient(apiSection.Site, apiSection.Email, apiSection.Key)
+}
+
+func NewClient(site, email, key string, options ...ClientOption) (*Client, error) {
 	opts := clientOptions{
 		httpClient:       &http.Client{},
 		userAgent:        DefaultUserAgentName + "/" + Version,
@@ -93,10 +107,10 @@ func NewClient(baseURL, email, apikey string, options ...ClientOption) (*Client,
 	}
 
 	return &Client{
-		baseURL:          baseURL,
+		baseURL:          site,
 		userAgent:        opts.userAgent,
 		userEmail:        email,
-		userAPIKey:       apikey,
+		userAPIKey:       key,
 		httpClient:       opts.httpClient,
 		printRequestData: opts.printRequestData,
 		printRawResponse: opts.printRawResponse,
