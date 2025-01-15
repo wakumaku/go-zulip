@@ -16,6 +16,7 @@ import (
 	"github.com/wakumaku/go-zulip/channels"
 	"github.com/wakumaku/go-zulip/invitations"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/messages/recipient"
 	"github.com/wakumaku/go-zulip/narrow"
 	"github.com/wakumaku/go-zulip/org"
 	"github.com/wakumaku/go-zulip/realtime"
@@ -78,7 +79,7 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// User A sends a message
 	userAMsgSvc := messages.NewService(userA)
-	userASendMsgResp, err := userAMsgSvc.SendMessage(ctx, messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), "Im User A!")
+	userASendMsgResp, err := userAMsgSvc.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "Im User A!")
 	assert.NoError(t, err)
 	assert.True(t, userASendMsgResp.IsSuccess())
 
@@ -109,18 +110,18 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.True(t, respCreateReusableLink.IsSuccess())
 
 	adminMsgSvc := messages.NewService(adminClient)
-	respSendMessage, err := adminMsgSvc.SendMessage(ctx, messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), "jello güorld")
+	respSendMessage, err := adminMsgSvc.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "jello güorld")
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessage.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSendMessage.Result(), zulip.ResultSuccess)
 
-	respSendMessage, err = adminMsgSvc.SendMessage(ctx, messages.ToChannelName("nonexistent"), "jello güorld", messages.ToTopic("greetings"))
+	respSendMessage, err = adminMsgSvc.SendMessage(ctx, recipient.ToChannel("nonexistent"), "jello güorld", messages.ToTopic("greetings"))
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessage.HTTPCode(), http.StatusBadRequest)
 	assert.Equal(t, respSendMessage.Result(), zulip.ResultError)
 	assert.Equal(t, respSendMessage.Code(), "STREAM_DOES_NOT_EXIST")
 
-	respSendMessage, err = adminMsgSvc.SendMessage(ctx, messages.ToUserName("eeshan@zulip.com"), "jello güorld")
+	respSendMessage, err = adminMsgSvc.SendMessage(ctx, recipient.ToUser("eeshan@zulip.com"), "jello güorld")
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessage.HTTPCode(), http.StatusBadRequest)
 	assert.Equal(t, respSendMessage.Result(), zulip.ResultError)
@@ -138,7 +139,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Contains(t, uploadedFileURL, fileToUpload)
 
 	messageWithPicture := fmt.Sprintf("Here a picture: [this picture](%s) of my castle!", uploadedFileURL)
-	respSendMessageWithPicture, err := adminMsgSvc.SendMessage(ctx, messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), messageWithPicture)
+	respSendMessageWithPicture, err := adminMsgSvc.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", messageWithPicture)
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessageWithPicture.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSendMessageWithPicture.Result(), zulip.ResultSuccess)
@@ -154,7 +155,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Contains(t, uploadedFileURL2, fileToUpload2)
 
 	messageWithPicture2 := fmt.Sprintf("This is an image [%s](%s) :camera:", fileToUpload2, uploadedFileURL2)
-	respSendMessageWithPicture2, err := adminMsgSvc.SendMessage(ctx, messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), messageWithPicture2)
+	respSendMessageWithPicture2, err := adminMsgSvc.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", messageWithPicture2)
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessageWithPicture2.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSendMessageWithPicture2.Result(), zulip.ResultSuccess)
@@ -200,7 +201,7 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// Delete the message
 	// 1. Send the message
-	respSendMessageToDelete, err := adminMsgSvc.SendMessage(ctx, messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), "this message will be deleted")
+	respSendMessageToDelete, err := adminMsgSvc.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "this message will be deleted")
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessageToDelete.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSendMessageToDelete.Result(), zulip.ResultSuccess)
@@ -218,8 +219,8 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// USER A sends some messages...
 	for range 1 {
-		respSendMessageEvent, err := userAMsgSvc.SendMessage(ctx,
-			messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"),
+		respSendMessageEvent, err := userAMsgSvc.SendMessageToChannelTopic(ctx,
+			recipient.ToChannel("general"), "greetings",
 			"Im USER A Sending a message so its captured by a registered queue",
 		)
 
@@ -230,8 +231,8 @@ func TestIntegrationSuite(t *testing.T) {
 	}
 
 	for range 1 {
-		respSendMessageEvent, err := adminMsgSvc.SendMessage(ctx,
-			messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"),
+		respSendMessageEvent, err := adminMsgSvc.SendMessageToChannelTopic(ctx,
+			recipient.ToChannel("general"), "greetings",
 			"Im ADMIN Sending a message so its captured by a registered queue",
 		)
 
@@ -249,8 +250,8 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// Send a message and get it later
 	messageToBeGetLaterMessage := "Message to be get later"
-	messageToBeGetLater, err := userAMsgSvc.SendMessage(ctx,
-		messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"),
+	messageToBeGetLater, err := userAMsgSvc.SendMessageToChannelTopic(ctx,
+		recipient.ToChannel("general"), "greetings",
 		messageToBeGetLaterMessage,
 	)
 
@@ -338,7 +339,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respSubscribeToChannelUserA.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSubscribeToChannelUserA.Result(), zulip.ResultSuccess)
 
-	respSendMessageNewChannel, err := userAMsgSvc.SendMessage(ctx, messages.ToChannelName(newChannelName), "Hello new channel!", messages.ToTopic("ThatsNew"))
+	respSendMessageNewChannel, err := userAMsgSvc.SendMessage(ctx, recipient.ToChannel(newChannelName), "Hello new channel!", messages.ToTopic("ThatsNew"))
 	assert.NoError(t, err)
 	assert.Equal(t, respSendMessageNewChannel.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respSendMessageNewChannel.Result(), zulip.ResultSuccess)
@@ -361,18 +362,18 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// 3 People private chat: Admin, User A, User B
 	// Admin sends a message to User A and User B
-	respCreatePrivateChat, err := adminMsgSvc.SendMessage(ctx, messages.ToUserNames([]string{userAEmail, userBEmail}), "Hello User A and User B!")
+	respCreatePrivateChat, err := adminMsgSvc.SendMessage(ctx, recipient.ToUsers([]string{userAEmail, userBEmail}), "Hello User A and User B!")
 	assert.NoError(t, err)
 	assert.Equal(t, respCreatePrivateChat.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respCreatePrivateChat.Result(), zulip.ResultSuccess)
 	// User A sends a message to Admin and User B
-	respCreatePrivateChat, err = userAMsgSvc.SendMessage(ctx, messages.ToUserNames([]string{zulipEmail, userBEmail}), "Hello Admin and User B!")
+	respCreatePrivateChat, err = userAMsgSvc.SendMessage(ctx, recipient.ToUsers([]string{zulipEmail, userBEmail}), "Hello Admin and User B!")
 	assert.NoError(t, err)
 	assert.Equal(t, respCreatePrivateChat.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respCreatePrivateChat.Result(), zulip.ResultSuccess)
 	// User B sends a message to Admin and User A
 	userBMsgSvc := messages.NewService(userB)
-	respCreatePrivateChat, err = userBMsgSvc.SendMessage(ctx, messages.ToUserNames([]string{zulipEmail, userAEmail}), "Hello Admin and User A!")
+	respCreatePrivateChat, err = userBMsgSvc.SendMessage(ctx, recipient.ToUsers([]string{zulipEmail, userAEmail}), "Hello Admin and User A!")
 	assert.NoError(t, err)
 	assert.Equal(t, respCreatePrivateChat.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respCreatePrivateChat.Result(), zulip.ResultSuccess)
