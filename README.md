@@ -12,147 +12,98 @@ go get github.com/wakumaku/go-zulip
 
 ### Usage
 
+Initialize the client with your Zulip server URL, email, and API key.
+
+```golang
+c, err := zulip.NewClient("https://chat.zulip.org", "email@zulip.org", "0123456789")
+if err != nil {
+	log.Fatal(err)
+}
+```
+
+Or from a `.zuliprc` file
+```golang
+c, err := zulip.NewClientFromZuliprc("path/to/.zuliprc")
+if err != nil {
+	log.Fatal(err)
+}
+```
+
 Sending a message:
 
 ```golang
-package main
+// Create a new message service
+msgSvc := messages.NewService(c)
 
-import (
-    "context"
-    "log"
-    "github.com/wakumaku/go-zulip"
+// Send a message to a channel/topic
+resp, err := msgSvc.SendMessageToChannelTopic(ctx, 
+	recipient.ToChannel("general"), "greetings", 
+	"Hello Zulip!",
 )
 
-func main() {
-    ctx := context.Background()
-    
-    // Initialize client
-    c, err := zulip.NewClient("https://chat.zulip.org", "email@zulip.org", "0123456789")
-    if err != nil {
-        log.Fatal(err)
-    }
+...
 
-    // Send a message to a channel/topic
-	msgSvc := messages.NewService(c)
-    sendMessageResponse, err := msgSvc.SendMessage(ctx, 
-        messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"), 
-        "Hello Zulip!",
-    )
-    if err != nil {
-        log.Fatal(err)
-    }
+// Send a private message to a user
+resp, err := msgSvc.SendMessageToUsers(ctx, 
+	recipient.ToUser("john.doe"), 
+	"Hello John!",
+)
 
-    // Fetch the previous message
-    fetchMessageResponse, err := msgSvc.FetchSingleMessage(ctx, sendMessageResponse.ID)
-    if err != nil {
-        log.Fatal(err)
-    }
+...
 
-    log.Println(fetchMessageResponse.Message.ID, fetchMessageResponse.Message.Content)
-}
+// Send a private message to multiple users
+usernames := []string{"john.doe", "jane.doe"}
+resp, err := msgSvc.SendMessageToUsers(ctx, 
+	recipient.ToUsers(usernames), 
+	"Hello John and Jane!",
+)
+
 ```
 
 Receiving realtime events:
 
 ```golang
-package main
+// Create a new realtime service
+realtimeSvc := realtime.NewService(c)
 
-import (
-	"context"
-	"fmt"
-	"log"
-	"strings"
-
-	"github.com/wakumaku/go-zulip"
-	"github.com/wakumaku/go-zulip/realtime"
-	"github.com/wakumaku/go-zulip/realtime/events"
+// Register a queue passing the events we want to receive
+queue, err := realtimeSvc.RegisterEvetQueue(ctx,
+	realtime.EventTypes(
+		events.AlertWordsType,
+		events.AttachmentType,
+		events.MessageType,
+		events.PresenceType,
+		events.RealmEmojiType,
+		events.RealmUserType,
+		events.SubmessageType,
+		events.TypingType,
+		events.UpdateMessageType,
+	),
+	realtime.AllPublicStreams(true),
 )
+if err != nil {
+	log.Fatalf("error registering event queue: %s", err)
+}
 
-func main() {
-	ctx := context.Background()
+if queue.IsError() {
+	log.Fatalf("%s: %s", queue.Msg(), queue.Code())
+}
 
-	// Initialize client
-	c, err := zulip.NewClient("https://chat.zulip.org", "email@zulip.org", "0123456789")
+log.Printf("QueueId: %s", queue.QueueId)
+
+lastEventID := queue.LastEventId
+
+// Infinite loop polling for new events
+for {
+	// Long polling HTTP Request
+	eventsFromQueue, err := realtimeSvc.GetEventsEventQueue(ctx, queue.QueueId, realtime.LastEventID(lastEventID))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error getting events from queue: %s", err)
 	}
 
-	realtimeSvc := realtime.NewService(c)
-
-	// Register a queue passing the events we want to receive
-	queue, err := realtimeSvc.RegisterEvetQueue(ctx,
-		realtime.EventTypes(
-			events.AlertWordsType,
-			events.AttachmentType,
-			events.MessageType,
-			events.PresenceType,
-			events.RealmEmojiType,
-			events.RealmUserType,
-			events.SubmessageType,
-			events.TypingType,
-			events.UpdateMessageType,
-		),
-		realtime.AllPublicStreams(true),
-	)
-	if err != nil {
-		log.Fatalf("error registering event queue: %s", err)
-	}
-
-	if queue.IsError() {
-		log.Fatalf("%s: %s", queue.Msg(), queue.Code())
-	}
-
-	log.Printf("QueueId: %s", queue.QueueId)
-	log.Println("Waiting for events...")
-
-	lastEventID := queue.LastEventId
-
-	// Infinite loop polling for new events
-	for {
-		// Long polling HTTP Request
-		eventsFromQueue, err := realtimeSvc.GetEventsEventQueue(ctx, queue.QueueId, realtime.LastEventID(lastEventID))
-		if err != nil {
-			log.Fatalf("error getting events from queue: %s", err)
-		}
-
-		for _, e := range eventsFromQueue.Events {
-			var logEntry string
-			// Identify the message type received
-			switch event := e.(type) {
-			case *events.Message:
-				if event.Message.DisplayRecipient.IsChannel {
-					logEntry = fmt.Sprintf("#%s [%s]: %s", event.Message.DisplayRecipient.Channel, event.Message.SenderFullName, event.Message.Content)
-				} else {
-					var users []string
-					for _, user := range event.Message.DisplayRecipient.Users {
-						users = append(users, user.FullName)
-					}
-					logEntry = fmt.Sprintf("@%s: %s", strings.Join(users, ", @"), event.Message.Content)
-				}
-
-			case *events.AlertWords:
-				logEntry = fmt.Sprintf("!AlertWords ID: %d, Words: %s", event.ID, event.AlertWords)
-
-			case *events.RealmUser:
-				logEntry = fmt.Sprintf("@RealmUser ID: %d, Op: %s, FullName: %s", event.ID, event.Op, event.Person.FullName)
-
-			case *events.Presence:
-				logEntry = fmt.Sprintf("*Presence Email: %s, Status: %s", event.Email, event.Presence.Website.Status)
-
-			case *events.RealmEmoji:
-				logEntry = fmt.Sprintf(":RealmEmoji event ID: %d\n", event.ID)
-				for id, emoji := range event.RealmEmoji {
-					logEntry += fmt.Sprintf("  %s: %s, %s\n", id, emoji.Name, emoji.SourceURL)
-				}
-
-			default:
-				logEntry = fmt.Sprintf("#%d %s", e.EventID(), e.EventType())
-			}
-
-			log.Println(logEntry)
-
-			lastEventID = e.EventID()
-		}
+	for _, e := range eventsFromQueue.Events {
+		log.Printf("#%d %s", e.EventID(), e.EventType())
+		lastEventID = e.EventID()
 	}
 }
 ```
