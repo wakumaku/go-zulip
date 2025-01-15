@@ -9,14 +9,16 @@ import (
 	"strings"
 
 	"github.com/wakumaku/go-zulip"
+	"github.com/wakumaku/go-zulip/messages/recipient"
 )
 
-type SendMessageType string
-
+// "direct" for a direct message and "stream" or "channel" for a channel message.
 const (
-	ToChannel SendMessageType = "channel"
-	ToDirect  SendMessageType = "direct"
-	ToStream  SendMessageType = "stream"
+	// In Zulip 9.0 (feature level 248), "channel" was added as an additional value for this parameter to request a channel message.
+	toChannel string = "channel"
+	// toStream  string = "stream"
+	// Direct messages are also known as private messages.
+	toDirect string = "direct"
 	// ToPrivate
 	// Deprecated: In Zulip 7.0 (feature level 174), "direct" was added as the
 	// preferred way to request a direct message, deprecating the original
@@ -24,100 +26,8 @@ const (
 	// messages, clients are encouraged to use to the modern convention with
 	// servers that support it, because support for "private" will eventually
 	// be removed.
-	ToPrivate SendMessageType = "private"
+	// toPrivate string = "private"
 )
-
-// SendMessageRecipient For channel messages, either the name or integer ID of the
-// channel. For direct messages, either a list containing integer user IDs or
-// a list containing string Zulip API email addresses.
-type SendMessageRecipient interface {
-	Recipient() any
-	SendMessageType() SendMessageType
-}
-
-type ToChannelID int
-
-func (t ToChannelID) Recipient() any {
-	return t
-}
-
-func (t ToChannelID) SendMessageType() SendMessageType {
-	return ToChannel
-}
-
-type ToChannelName string
-
-func (t ToChannelName) Recipient() any {
-	return t
-}
-
-func (t ToChannelName) SendMessageType() SendMessageType {
-	return ToChannel
-}
-
-type toChannelTopic struct {
-	channelNameID SendMessageRecipient
-	toTopic       string
-}
-
-func (t toChannelTopic) Recipient() any {
-	return t.channelNameID.Recipient()
-}
-
-func (t toChannelTopic) SendMessageType() SendMessageType {
-	return ToChannel
-}
-
-func (t toChannelTopic) Topic() string {
-	return t.toTopic
-}
-
-func ToChannelTopic(channelNameID SendMessageRecipient, topic string) SendMessageRecipient {
-	return toChannelTopic{
-		channelNameID: channelNameID,
-		toTopic:       topic,
-	}
-}
-
-type ToUserID int
-
-func (t ToUserID) Recipient() any {
-	return t
-}
-
-func (t ToUserID) SendMessageType() SendMessageType {
-	return ToDirect
-}
-
-type ToUserIDs []int
-
-func (t ToUserIDs) Recipient() any {
-	return t
-}
-
-func (t ToUserIDs) SendMessageType() SendMessageType {
-	return ToDirect
-}
-
-type ToUserName string
-
-func (t ToUserName) Recipient() any {
-	return t
-}
-
-func (t ToUserName) SendMessageType() SendMessageType {
-	return ToDirect
-}
-
-type ToUserNames []string
-
-func (t ToUserNames) Recipient() any {
-	return t
-}
-
-func (t ToUserNames) SendMessageType() SendMessageType {
-	return ToDirect
-}
 
 type sendMessageOptions struct {
 	topic struct {
@@ -179,30 +89,42 @@ func (s *SendMessageResponse) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (svc *Service) SendMessage(ctx context.Context, to SendMessageRecipient, content string, options ...SendMessageOption) (*SendMessageResponse, error) {
+func (svc *Service) SendMessageToChannelTopic(ctx context.Context, channel recipient.Channel, topic string, content string, options ...SendMessageOption) (*SendMessageResponse, error) {
+	return svc.SendMessage(ctx, channel, content, append(options, ToTopic(topic))...)
+}
+
+func (svc *Service) SendMessageToUsers(ctx context.Context, users recipient.Direct, content string, options ...SendMessageOption) (*SendMessageResponse, error) {
+	return svc.SendMessage(ctx, users, content, options...)
+}
+
+func (svc *Service) SendMessage(ctx context.Context, to recipient.Recipient, content string, options ...SendMessageOption) (*SendMessageResponse, error) {
 	const (
 		method = http.MethodPost
 		path   = "/api/v1/messages"
 	)
 
-	var toRecipient any
+	var (
+		toRecipient   any
+		recipientType string
+	)
 	switch t := to.(type) {
-	case ToUserIDs, ToUserNames:
-		v, err := json.Marshal(t.Recipient())
+	case recipient.Direct:
+		v, err := json.Marshal(t.To())
 		if err != nil {
 			return nil, err
 		}
 		toRecipient = string(v)
-	case toChannelTopic:
-		toRecipient = t.Recipient()
-		options = append(options, ToTopic(t.Topic()))
+		recipientType = toDirect
+	case recipient.Channel:
+		toRecipient = to.To()
+		recipientType = toChannel
 	default:
-		toRecipient = to.Recipient()
+		return nil, fmt.Errorf("unsupported recipient type: %T", to)
 	}
 
 	msg := map[string]any{
 		"to":      toRecipient,
-		"type":    to.SendMessageType(),
+		"type":    recipientType,
 		"content": content,
 	}
 
