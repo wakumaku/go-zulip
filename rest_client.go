@@ -41,9 +41,10 @@ const (
 )
 
 type clientOptions struct {
-	httpClient *http.Client
-	userAgent  string
-	logger     *slog.Logger
+	httpClient     *http.Client
+	userAgent      string
+	logger         *slog.Logger
+	zuliprcSection string
 }
 
 type ClientOption func(*clientOptions) error
@@ -75,35 +76,30 @@ func WithLogger(logger *slog.Logger) ClientOption {
 	}
 }
 
-type clientZuliprcOptions struct {
-	section string
-}
-
-func WithZuliprcSection(section string) ZuliprcOption {
-	return func(o *clientZuliprcOptions) {
-		o.section = section
+func WithZuliprcSection(section string) ClientOption {
+	return func(o *clientOptions) error {
+		o.zuliprcSection = section
+		return nil
 	}
 }
 
-type ZuliprcOption func(*clientZuliprcOptions)
-
-func NewClientFromZuliprc(filePath string, opts ...ZuliprcOption) (*Client, error) {
+func NewClientFromZuliprc(filePath string, opts ...ClientOption) (*Client, error) {
 	zuliprc, err := ParseZuliprc(filePath)
 	if err != nil {
 		return nil, err
 	}
 
-	options := clientZuliprcOptions{section: "api"}
+	options := clientOptions{zuliprcSection: "api"}
 	for _, opt := range opts {
-		opt(&options)
+		_ = opt(&options)
 	}
 
-	apiSection, ok := zuliprc[options.section]
+	apiSection, ok := zuliprc[options.zuliprcSection]
 	if !ok {
-		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", options.section, filePath)
+		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", options.zuliprcSection, filePath)
 	}
 
-	return NewClient(apiSection.Site, apiSection.Email, apiSection.Key)
+	return NewClient(apiSection.Site, apiSection.Email, apiSection.Key, opts...)
 }
 
 func NewClient(site, email, key string, options ...ClientOption) (*Client, error) {
