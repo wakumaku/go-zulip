@@ -6,6 +6,7 @@ import (
 
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/messages/recipient"
 )
 
 func main() {
@@ -28,7 +29,7 @@ func main() {
 	}
 
 	msgs := messages.NewService(client)
-	resp, err := msgs.SendMessage(context.TODO(), messages.ToChannelName("general"), "Hello from go-zulip!", messages.ToTopic("test"))
+	resp, err := msgs.SendMessage(context.TODO(), recipient.ToChannel("general"), "Hello from go-zulip!", messages.ToTopic("test"))
 	if err != nil {
 		log.Fatalf("Error sending message: %v", err)
 	}
