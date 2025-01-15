@@ -75,15 +75,32 @@ func WithLogger(logger *slog.Logger) ClientOption {
 	}
 }
 
-func NewClientFromConfig(file, section string) (*Client, error) {
-	zuliprc, err := ParseZuliprc(file)
+type clientZuliprcOptions struct {
+	section string
+}
+
+func WithZuliprcSection(section string) ZuliprcOption {
+	return func(o *clientZuliprcOptions) {
+		o.section = section
+	}
+}
+
+type ZuliprcOption func(*clientZuliprcOptions)
+
+func NewClientFromZuliprc(filePath string, opts ...ZuliprcOption) (*Client, error) {
+	zuliprc, err := ParseZuliprc(filePath)
 	if err != nil {
 		return nil, err
 	}
 
-	apiSection, ok := zuliprc[section]
+	options := clientZuliprcOptions{section: "api"}
+	for _, opt := range opts {
+		opt(&options)
+	}
+
+	apiSection, ok := zuliprc[options.section]
 	if !ok {
-		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", section, file)
+		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", options.section, filePath)
 	}
 
 	return NewClient(apiSection.Site, apiSection.Email, apiSection.Key)
