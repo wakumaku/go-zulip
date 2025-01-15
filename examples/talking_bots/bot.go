@@ -9,6 +9,7 @@ import (
 
 	"github.com/wakumaku/go-zulip/channels"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/messages/recipient"
 	"github.com/wakumaku/go-zulip/narrow"
 	"github.com/wakumaku/go-zulip/realtime"
 	"github.com/wakumaku/go-zulip/realtime/events"
@@ -64,9 +65,6 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 	queueID := queueRegisterResp.QueueId
 	lastMessageID := queueRegisterResp.LastEventId
 
-	// sendTo is the channel and topic where the bot will send messages, its always the same channel and topic
-	sendTo := messages.ToChannelTopic(messages.ToChannelName(channel), topic)
-
 	log.Printf("Bot ID: %d - %s (%s) is ready", botID, botName, botEmail)
 
 	messages := b.messageEvents(ctx, queueID, lastMessageID)
@@ -91,7 +89,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 
 			helloThere := fmt.Sprintf("Hello there! Am I alone in #**%s**? My name is @**%s**",
 				channel, botName)
-			sendMsgResp, err := b.MessageSVC.SendMessage(ctx, sendTo, helloThere)
+			sendMsgResp, err := b.MessageSVC.SendMessageToChannelTopic(ctx, recipient.ToChannel(channel), topic, helloThere)
 			if err != nil {
 				return fmt.Errorf("failed to send message: %v", err)
 			}
@@ -100,7 +98,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			}
 
 			// Sends a nice good morning image
-			sendImgResp, err := b.MessageSVC.SendMessage(ctx, sendTo, fmt.Sprintf("[good_morning.png](%s)", uploadedFile.URI))
+			sendImgResp, err := b.MessageSVC.SendMessageToChannelTopic(ctx, recipient.ToChannel(channel), topic, fmt.Sprintf("[good_morning.png](%s)", uploadedFile.URI))
 			if err != nil {
 				return fmt.Errorf("failed to send image message: %v", err)
 			}
@@ -146,7 +144,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 				continue
 			}
 
-			sendMsgResp, err := b.MessageSVC.SendMessage(ctx, sendTo, responseMessage)
+			sendMsgResp, err := b.MessageSVC.SendMessageToChannelTopic(ctx, recipient.ToChannel(channel), topic, responseMessage)
 			if err != nil {
 				return fmt.Errorf("failed to send message: %v", err)
 			}

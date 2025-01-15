@@ -6,6 +6,7 @@ import (
 
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/messages"
+	"github.com/wakumaku/go-zulip/messages/recipient"
 )
 
 func main() {
@@ -19,8 +20,8 @@ func main() {
 
 	// Send a message to a channel/topic
 	msgSvc := messages.NewService(c)
-	sendMessageResponse, err := msgSvc.SendMessage(ctx,
-		messages.ToChannelTopic(messages.ToChannelName("general"), "greetings"),
+	sendMessageResponse, err := msgSvc.SendMessageToChannelTopic(ctx,
+		recipient.ToChannel("general"), "greetings",
 		"Hello Zulip!",
 	)
 	if err != nil {
