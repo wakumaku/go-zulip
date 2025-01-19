@@ -25,11 +25,13 @@ const (
 	Near     Operator = "near"
 	Channel  Operator = "channel"
 	Channels Operator = "channels"
-	Stream   Operator = "stream"
-	Streams  Operator = "streams"
-	Topic    Operator = "topic"
-	Sender   Operator = "sender"
-	Search   Operator = "search"
+	// stream is a legacy alias for "channel"
+	Stream Operator = "stream"
+	// streams is a legacy alias for "channels"
+	Streams Operator = "streams"
+	Topic   Operator = "topic"
+	Sender  Operator = "sender"
+	Search  Operator = "search"
 	// Search the direct message conversation between you and user ID 1234
 	Dm Operator = "dm"
 	// Search all direct messages (1-on-1 and group) that include you and user ID 1234.
@@ -43,7 +45,7 @@ const (
 var (
 	Unread   Operand = "unread"
 	Followed Operand = "followed"
-	// Dm         NarrowOperand = NarrowOperand("dm") // clashes with Dm NarrowOperator
+	// Dm         Operand = "dm" // clashes with Dm Operator
 	Mentioned  Operand = "mentioned"
 	Starred    Operand = "starred"
 	Read       Operand = "read"
