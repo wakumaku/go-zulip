@@ -66,7 +66,7 @@ func TestRestClientDoRequest(t *testing.T) {
 
 	baseURL := mockServer.URL
 
-	client, err := zulip.NewClient(baseURL, email, apiKey,
+	client, err := zulip.NewClient(zulip.Credentials(baseURL, email, apiKey),
 		zulip.WithCustomUserAgent(expectedUserAgent),
 	)
 	assert.NoError(t, err)
@@ -139,7 +139,7 @@ func TestRestClientDoRequestFile(t *testing.T) {
 
 	baseURL := mockServer.URL
 
-	client, err := zulip.NewClient(baseURL, email, apiKey,
+	client, err := zulip.NewClient(zulip.Credentials(baseURL, email, apiKey),
 		zulip.WithCustomUserAgent(expectedUserAgent),
 	)
 	assert.NoError(t, err)

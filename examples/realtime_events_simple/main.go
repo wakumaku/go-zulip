@@ -15,7 +15,8 @@ func main() {
 	ctx := context.Background()
 
 	// Initialize client
-	c, err := zulip.NewClient("https://chat.zulip.org", "email@zulip.org", "0123456789")
+	credentials := zulip.Credentials("https://chat.zulip.org", "email@zulip.org", "0123456789")
+	c, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatal(err)
 	}

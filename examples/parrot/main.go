@@ -34,7 +34,7 @@ func main() {
 		},
 	}
 
-	z, err := zulip.NewClientFromZuliprc("zuliprc", zulip.WithHTTPClient(&insecureClient))
+	z, err := zulip.NewClient(zulip.CredentialsFromZuliprc("zuliprc", "api"), zulip.WithHTTPClient(&insecureClient))
 	if err != nil {
 		panic(err)
 	}

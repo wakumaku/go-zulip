@@ -76,33 +76,12 @@ func WithLogger(logger *slog.Logger) ClientOption {
 	}
 }
 
-func WithZuliprcSection(section string) ClientOption {
-	return func(o *clientOptions) error {
-		o.zuliprcSection = section
-		return nil
-	}
-}
-
-func NewClientFromZuliprc(filePath string, opts ...ClientOption) (*Client, error) {
-	zuliprc, err := ParseZuliprc(filePath)
+func NewClient(credentials CredentialsProvider, options ...ClientOption) (*Client, error) {
+	creds, err := credentials()
 	if err != nil {
 		return nil, err
 	}
 
-	options := clientOptions{zuliprcSection: "api"}
-	for _, opt := range opts {
-		_ = opt(&options)
-	}
-
-	apiSection, ok := zuliprc[options.zuliprcSection]
-	if !ok {
-		return nil, fmt.Errorf("no '%s' section found in zuliprc file '%s'", options.zuliprcSection, filePath)
-	}
-
-	return NewClient(apiSection.Site, apiSection.Email, apiSection.Key, opts...)
-}
-
-func NewClient(site, email, key string, options ...ClientOption) (*Client, error) {
 	opts := clientOptions{
 		httpClient: &http.Client{},
 		userAgent:  DefaultUserAgentName + "/" + Version,
@@ -115,10 +94,10 @@ func NewClient(site, email, key string, options ...ClientOption) (*Client, error
 	}
 
 	return &Client{
-		baseURL:    site,
+		baseURL:    creds.Site,
+		userEmail:  creds.Email,
+		userAPIKey: creds.Key,
 		userAgent:  opts.userAgent,
-		userEmail:  email,
-		userAPIKey: key,
 		httpClient: opts.httpClient,
 		logger:     opts.logger,
 	}, nil

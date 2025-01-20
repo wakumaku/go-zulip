@@ -15,7 +15,8 @@ go get github.com/wakumaku/go-zulip@latest
 Initialize the client with your Zulip server URL, email, and API key.
 
 ```golang
-c, err := zulip.NewClient("https://chat.zulip.org", "email@zulip.org", "0123456789")
+credentials := zulip.Credentials("https://chat.zulip.org", "email@zulip.org", "0123456789")
+c, err := zulip.NewClient(credentials)
 if err != nil {
 	log.Fatal(err)
 }
@@ -23,7 +24,8 @@ if err != nil {
 
 Or from a `.zuliprc` file
 ```golang
-c, err := zulip.NewClientFromZuliprc("path/to/.zuliprc")
+credentials := zulip.CredentialsFromZuliprc("path/to/.zuliprc")
+c, err := zulip.NewClient(credentials)
 if err != nil {
 	log.Fatal(err)
 }

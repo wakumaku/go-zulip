@@ -30,6 +30,9 @@ func main() {
 
 	site := "https://localhost"
 
+	credentialsBotA := zulip.Credentials(site, emailA, apiKeyA)
+	credentialsBotB := zulip.Credentials(site, emailB, apiKeyB)
+
 	// Create an insecure client because of self-signed certificate
 	insecureClient := http.Client{
 		Transport: &http.Transport{
@@ -40,13 +43,13 @@ func main() {
 	}
 
 	// Create a client for user A
-	clientA, err := zulip.NewClient(site, emailA, apiKeyA, zulip.WithHTTPClient(&insecureClient))
+	clientA, err := zulip.NewClient(credentialsBotA, zulip.WithHTTPClient(&insecureClient))
 	if err != nil {
 		log.Fatalf("failed to create zulip client for User A: %v", err)
 	}
 
 	// Create a client for user B
-	clientB, err := zulip.NewClient(site, emailB, apiKeyB, zulip.WithHTTPClient(&insecureClient))
+	clientB, err := zulip.NewClient(credentialsBotB, zulip.WithHTTPClient(&insecureClient))
 	if err != nil {
 		log.Fatalf("failed to create zulip client for User B: %v", err)
 	}

@@ -1,0 +1,14 @@
+[bot1]
+email=bot1@localhost.site
+key=1234567890qwerty
+site=https://localhost
+
+[bot2]
+email=bot2@localhost.site
+key=1234567890qwerty
+site=https://localhost
+
+[bot3]
+email=bot3@localhost.site
+key=1234567890qwerty
+site=https://localhost

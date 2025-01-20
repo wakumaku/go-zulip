@@ -27,7 +27,7 @@ func main() {
 		},
 	}
 
-	z, err := zulip.NewClient(zulipSite, zulipEmail, zulipAPIKey,
+	z, err := zulip.NewClient(zulip.Credentials(zulipSite, zulipEmail, zulipAPIKey),
 		zulip.WithHTTPClient(&insecureClient),
 		// zulip.WithPrintRequestData(),
 		// zulip.WithPrintRawResponse(),

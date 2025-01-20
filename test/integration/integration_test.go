@@ -47,7 +47,7 @@ func TestIntegrationSuite(t *testing.T) {
 
 	debugLogger := slog.New(slog.NewJSONHandler(io.Discard, &slog.HandlerOptions{Level: slog.LevelDebug}))
 
-	adminClient, err := zulip.NewClient(zulipSite, zulipEmail, zulipAPIKey,
+	adminClient, err := zulip.NewClient(zulip.Credentials(zulipSite, zulipEmail, zulipAPIKey),
 		zulip.WithHTTPClient(&insecureClient),
 		zulip.WithLogger(debugLogger),
 	)
@@ -71,7 +71,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.NoError(t, err)
 	assert.True(t, respFetchAPIKeyA.IsSuccess())
 	// User A Client
-	userA, err := zulip.NewClient(zulipSite, userAEmail, respFetchAPIKeyA.APIKey,
+	userA, err := zulip.NewClient(zulip.Credentials(zulipSite, userAEmail, respFetchAPIKeyA.APIKey),
 		zulip.WithHTTPClient(&insecureClient),
 		zulip.WithLogger(debugLogger),
 	)
@@ -94,7 +94,7 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.NoError(t, err)
 	assert.True(t, respFetchAPIKeyB.IsSuccess())
 	// User B Client
-	userB, err := zulip.NewClient(zulipSite, userBEmail, respFetchAPIKeyB.APIKey,
+	userB, err := zulip.NewClient(zulip.Credentials(zulipSite, userBEmail, respFetchAPIKeyB.APIKey),
 		zulip.WithHTTPClient(&insecureClient),
 		zulip.WithLogger(debugLogger),
 	)

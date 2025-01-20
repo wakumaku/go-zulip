@@ -23,7 +23,8 @@ func main() {
 	log.Printf("API Key: %s", apiSection.Key)
 	log.Printf("Site: %s", apiSection.Site)
 
-	client, err := zulip.NewClient(apiSection.Site, apiSection.Email, apiSection.Key)
+	credentials := zulip.Credentials(apiSection.Site, apiSection.Email, apiSection.Key)
+	client, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatalf("Error creating client: %v", err)
 	}

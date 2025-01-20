@@ -45,7 +45,7 @@ func main() {
 		},
 	}
 
-	admin, err := zulip.NewClient(site, email, apiKey,
+	admin, err := zulip.NewClient(zulip.Credentials(site, email, apiKey),
 		zulip.WithHTTPClient(&insecureClient),
 	)
 	if err != nil {

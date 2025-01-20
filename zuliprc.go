@@ -10,7 +10,10 @@ import (
 )
 
 type (
-	Zuliprc     map[string]SectionData
+	// Zuliprc represents the content of a zuliprc file
+	// It is a map of sections, where each section is a map of key-value pairs
+	Zuliprc map[string]SectionData
+	// SectionData represents the key-value pairs of a section in a zuliprc file
 	SectionData struct {
 		Key   string
 		Email string
@@ -25,10 +28,10 @@ func ParseZuliprc(file string) (Zuliprc, error) {
 	}
 
 	r := bytes.NewReader(f)
-	return ParseZuliprcContent(r)
+	return parseZuliprcContent(r)
 }
 
-func ParseZuliprcContent(b io.Reader) (Zuliprc, error) {
+func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 	s := bufio.NewScanner(b)
 
 	rxSection := regexp.MustCompile(`\[(.*)\]`)
@@ -38,7 +41,7 @@ func ParseZuliprcContent(b io.Reader) (Zuliprc, error) {
 
 	z := Zuliprc{}
 	for s.Scan() {
-		line := s.Text()
+		line := strings.TrimSpace(s.Text())
 		if line == "" {
 			continue
 		}
