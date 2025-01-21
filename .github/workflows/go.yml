@@ -1,4 +1,4 @@
-name: Go
+name: Test
 permissions:
   contents: read
   pull-requests: write
