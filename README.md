@@ -4,6 +4,7 @@
 
 `go-zulip` is a Golang client library designed to interact with Zulip's REST API. It allows you to send messages, receive real-time events, and perform various other operations with ease.
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/wakumaku/go-zulip)](https://goreportcard.com/report/github.com/wakumaku/go-zulip)
 [![Build Status](https://github.com/wakumaku/go-zulip/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/wakumaku/go-zulip/actions)
 [![Go Reference](https://pkg.go.dev/badge/github.com/wakumaku/go-zulip.svg)](https://pkg.go.dev/github.com/wakumaku/go-zulip)
 
