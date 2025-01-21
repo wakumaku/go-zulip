@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	// Must be an admin with capabilites to create users
+	// Must be an admin with capabilities to create users
 	email := os.Getenv("ZULIP_EMAIL")
 	apiKey := os.Getenv("ZULIP_API_KEY")
 	site := os.Getenv("ZULIP_SITE")
