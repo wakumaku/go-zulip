@@ -182,7 +182,7 @@ Check [/examples](examples) folder.
 	* [x] Get all users
 	* [x] Create a user
 	* [x] Update a user
-	* Update a user by email
+	* [x] Update a user by email
 	* Deactivate a user
 	* Deactivate own user
 	* Reactivate a user

@@ -86,10 +86,26 @@ func NewEmail(value string) UpdateUserOption {
 
 func (svc *Service) UpdateUser(ctx context.Context, id int, options ...UpdateUserOption) (*UpdateUserResponse, error) {
 	const (
-		path   = "/api/v1/users"
-		method = http.MethodPatch
+		path = "/api/v1/users"
 	)
 	patchPath := fmt.Sprintf("%s/%d", path, id)
+
+	return svc.updateUser(ctx, patchPath, options...)
+}
+
+func (svc *Service) UpdateUserByEmail(ctx context.Context, email string, options ...UpdateUserOption) (*UpdateUserResponse, error) {
+	const (
+		path = "/api/v1/users"
+	)
+	patchPath := fmt.Sprintf("%s/%s", path, email)
+
+	return svc.updateUser(ctx, patchPath, options...)
+}
+
+func (svc *Service) updateUser(ctx context.Context, patchPath string, options ...UpdateUserOption) (*UpdateUserResponse, error) {
+	const (
+		method = http.MethodPatch
+	)
 
 	msg := map[string]any{}
 
