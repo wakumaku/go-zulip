@@ -20,10 +20,10 @@ func main() {
 		log.Fatalf("No 'api' section found in zuliprc file")
 	}
 	log.Printf("Email: %s", apiSection.Email)
-	log.Printf("API Key: %s", apiSection.Key)
+	log.Printf("API Key: %s", apiSection.APIKey)
 	log.Printf("Site: %s", apiSection.Site)
 
-	credentials := zulip.Credentials(apiSection.Site, apiSection.Email, apiSection.Key)
+	credentials := zulip.Credentials(apiSection.Site, apiSection.Email, apiSection.APIKey)
 	client, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatalf("Error creating client: %v", err)

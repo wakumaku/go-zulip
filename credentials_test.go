@@ -11,15 +11,15 @@ import (
 func TestCredentials(t *testing.T) {
 	expectedSite := "the url"
 	expectedEmail := "the email"
-	expectedKey := "the key"
+	expectedAPIKey := "the key"
 
-	credentials := zulip.Credentials(expectedSite, expectedEmail, expectedKey)
+	credentials := zulip.Credentials(expectedSite, expectedEmail, expectedAPIKey)
 
 	c, err := credentials()
 	assert.NoError(t, err)
 	assert.Equal(t, expectedSite, c.Site)
 	assert.Equal(t, expectedEmail, c.Email)
-	assert.Equal(t, expectedKey, c.Key)
+	assert.Equal(t, expectedAPIKey, c.APIKey)
 }
 
 func TestCredentialsFromZuliprc(t *testing.T) {
@@ -40,6 +40,6 @@ site=https://localhost
 	c, err := credentials()
 	assert.NoError(t, err)
 	assert.Equal(t, "user@localhost", c.Email)
-	assert.Equal(t, "apikey", c.Key)
+	assert.Equal(t, "apikey", c.APIKey)
 	assert.Equal(t, "https://localhost", c.Site)
 }

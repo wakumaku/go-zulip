@@ -28,12 +28,12 @@ site=https://localhost
 
 	apiSection := z["api"]
 	assert.Equal(t, "user@localhost", apiSection.Email)
-	assert.Equal(t, "apikey", apiSection.Key)
+	assert.Equal(t, "apikey", apiSection.APIKey)
 	assert.Equal(t, "https://localhost", apiSection.Site)
 
 	unknownSection := z["unknown"]
 	assert.Equal(t, "", unknownSection.Email)
-	assert.Equal(t, "", unknownSection.Key)
+	assert.Equal(t, "", unknownSection.APIKey)
 	assert.Equal(t, "", unknownSection.Site)
 }
 

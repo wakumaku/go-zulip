@@ -95,7 +95,7 @@ func NewClient(credentials CredentialsProvider, options ...ClientOption) (*Clien
 	return &Client{
 		baseURL:    creds.Site,
 		userEmail:  creds.Email,
-		userAPIKey: creds.Key,
+		userAPIKey: creds.APIKey,
 		userAgent:  opts.userAgent,
 		httpClient: opts.httpClient,
 		logger:     opts.logger,

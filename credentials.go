@@ -3,19 +3,19 @@ package zulip
 import "fmt"
 
 type credentials struct {
-	Email string
-	Key   string
-	Site  string
+	Email  string
+	APIKey string
+	Site   string
 }
 
 type CredentialsProvider func() (*credentials, error)
 
-func Credentials(site, email, key string) CredentialsProvider {
+func Credentials(site, email, apiKey string) CredentialsProvider {
 	return func() (*credentials, error) {
 		return &credentials{
-			Email: email,
-			Key:   key,
-			Site:  site,
+			Email:  email,
+			APIKey: apiKey,
+			Site:   site,
 		}, nil
 	}
 }
@@ -33,9 +33,9 @@ func CredentialsFromZuliprc(filePath string, section string) CredentialsProvider
 		}
 
 		return &credentials{
-			Email: apiSection.Email,
-			Key:   apiSection.Key,
-			Site:  apiSection.Site,
+			Email:  apiSection.Email,
+			APIKey: apiSection.APIKey,
+			Site:   apiSection.Site,
 		}, nil
 	}
 }

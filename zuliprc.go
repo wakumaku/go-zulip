@@ -15,9 +15,9 @@ type (
 	Zuliprc map[string]SectionData
 	// SectionData represents the key-value pairs of a section in a zuliprc file
 	SectionData struct {
-		Key   string
-		Email string
-		Site  string
+		Email  string
+		APIKey string
+		Site   string
 	}
 )
 
@@ -63,7 +63,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 			case "email":
 				sectionData.Email = strings.TrimSpace(val)
 			case "key":
-				sectionData.Key = strings.TrimSpace(val)
+				sectionData.APIKey = strings.TrimSpace(val)
 			case "site":
 				sectionData.Site = strings.TrimSpace(val)
 			}
