@@ -41,10 +41,9 @@ const (
 )
 
 type clientOptions struct {
-	httpClient     *http.Client
-	userAgent      string
-	logger         *slog.Logger
-	zuliprcSection string
+	httpClient *http.Client
+	userAgent  string
+	logger     *slog.Logger
 }
 
 type ClientOption func(*clientOptions) error
