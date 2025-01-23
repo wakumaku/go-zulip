@@ -360,6 +360,33 @@ func TestIntegrationSuite(t *testing.T) {
 	}
 	assert.True(t, newChannelFound, "User should be subscribed to the "+newChannelName+" channel")
 
+	// User A subscribes to a new channel
+	respSubscribeToChannelUserA, err = userAChannels.SubscribeToChannel(ctx, []channels.SubscribeTo{{Name: "unsubscriber"}})
+	assert.NoError(t, err)
+	assert.Equal(t, respSubscribeToChannelUserA.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respSubscribeToChannelUserA.Result(), zulip.ResultSuccess)
+
+	// User A unsubscribes from the new channel
+	respUnsubscribeFromChannelUserA, err := userAChannels.UnsubscribeFromChannel(ctx, []string{"unsubscriber"})
+	assert.NoError(t, err)
+	assert.Equal(t, respUnsubscribeFromChannelUserA.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respUnsubscribeFromChannelUserA.Result(), zulip.ResultSuccess)
+
+	// User A validates the unsubscription
+	respGetSubscribedChannelsUserA, err := userAChannels.GetSubscribedChannels(ctx)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetSubscribedChannelsUserA.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetSubscribedChannelsUserA.Result(), zulip.ResultSuccess)
+
+	unsubscriberChannelFound := false
+	for _, subscription := range respGetSubscribedChannelsUserA.Subscriptions {
+		if subscription.Name == "unsubscriber" {
+			unsubscriberChannelFound = true
+			break
+		}
+	}
+	assert.False(t, unsubscriberChannelFound, "User should not be subscribed to the unsubscriber channel")
+
 	// 3 People private chat: Admin, User A, User B
 	// Admin sends a message to User A and User B
 	respCreatePrivateChat, err := adminMsgSvc.SendMessage(ctx, recipient.ToUsers([]string{userAEmail, userBEmail}), "Hello User A and User B!")
