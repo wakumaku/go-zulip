@@ -158,7 +158,7 @@ Check [/examples](examples) folder.
 * [**Channels**](channels)
 	* [x] Get subscribed channels
 	* [x] Subscribe to a channel
-	* Unsubscribe from a channel
+	* [x] Unsubscribe from a channel
 	* Get subscription status
 	* Get channel subscribers
 	* Update subscription settings
