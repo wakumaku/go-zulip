@@ -162,7 +162,7 @@ Check [/examples](examples) folder.
 	* Get all channels
 	* Get a channel by ID
 	* Get channel ID
-	* Create a channel
+	* [x] Create a channel - see Subscribe to a channel
 	* Update a channel
 	* Archive a channel
 	* Get channel's email address
