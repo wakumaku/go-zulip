@@ -427,6 +427,26 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.GreaterOrEqual(t, len(respGetMessageReceipts.UserIDs), 1) // one read receipt
 	assert.Contains(t, respGetMessageReceipts.UserIDs, userAID)      // User A has read the message
 
+	// Admin marks the message as read but applying a narrow
+	markAsReadNarrow := narrow.NewFilter().
+		Add(narrow.New(narrow.Id, respCreatePrivateChat.ID)).              // the message ID
+		Add(narrow.New(narrow.Operator("is"), narrow.Operand("private"))). // private messages
+		Add(narrow.New(narrow.DmIncluding, narrow.Operand(userAID)))       // including User A in the conversation
+
+	respMarkAsReadNarrow, err := adminMsgSvc.UpdatePersonalMessageFlagsNarrow(ctx, "newest", 1, 1,
+		markAsReadNarrow, messages.OperationAdd, messages.FlagRead)
+	assert.NoError(t, err)
+	assert.Equal(t, respMarkAsReadNarrow.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respMarkAsReadNarrow.Result(), zulip.ResultSuccess)
+
+	// User B gets the receipts again and should find Admin's ID
+	respGetMessageReceipts, err = userBMsgSvc.GetMessagesReadReceipts(ctx, respCreatePrivateChat.ID)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetMessageReceipts.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetMessageReceipts.Result(), zulip.ResultSuccess)
+	assert.GreaterOrEqual(t, len(respGetMessageReceipts.UserIDs), 2) // two read receipts
+	assert.Contains(t, respGetMessageReceipts.UserIDs, userAID)      // User A has read the message
+
 	// UserA gets its own information
 	userAUserSvc := users.NewService(userA)
 	respGetUserMe, err := userAUserSvc.GetUserMe(ctx)

@@ -137,7 +137,7 @@ Check [/examples](examples) folder.
 	* Check if messages match a narrow
 	* Get a message's edit history
 	* [x] Update personal message flags
-	* Update personal message flags for narrow
+	* [x] Update personal message flags for narrow
 	* [x] Get a message's read receipts
 * **Scheduled messages**
 	* Get scheduled messages
