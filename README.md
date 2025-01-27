@@ -138,9 +138,6 @@ Check [/examples](examples) folder.
 	* Get a message's edit history
 	* Update personal message flags
 	* Update personal message flags for narrow
-	* Mark all messages as read
-	* Mark messages in a channel as read
-	* Mark messages in a topic as read
 	* [x] Get a message's read receipts
 * **Scheduled messages**
 	* Get scheduled messages
