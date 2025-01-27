@@ -413,6 +413,20 @@ func TestIntegrationSuite(t *testing.T) {
 	// Flaky test, probably no one will have read the message
 	assert.GreaterOrEqual(t, len(respGetMessageReceipts.UserIDs), 0)
 
+	// User A marks the message as read
+	respMarkAsRead, err := userAMsgSvc.UpdatePersonalMessageFlags(ctx, []int{respCreatePrivateChat.ID}, messages.OperationAdd, messages.FlagRead)
+	assert.NoError(t, err)
+	assert.Equal(t, respMarkAsRead.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respMarkAsRead.Result(), zulip.ResultSuccess)
+
+	// User B gets the receipts again and should find User A's ID
+	respGetMessageReceipts, err = userBMsgSvc.GetMessagesReadReceipts(ctx, respCreatePrivateChat.ID)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetMessageReceipts.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetMessageReceipts.Result(), zulip.ResultSuccess)
+	assert.GreaterOrEqual(t, len(respGetMessageReceipts.UserIDs), 1) // one read receipt
+	assert.Contains(t, respGetMessageReceipts.UserIDs, userAID)      // User A has read the message
+
 	// UserA gets its own information
 	userAUserSvc := users.NewService(userA)
 	respGetUserMe, err := userAUserSvc.GetUserMe(ctx)
