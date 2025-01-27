@@ -141,7 +141,7 @@ Check [/examples](examples) folder.
 	* Mark all messages as read
 	* Mark messages in a channel as read
 	* Mark messages in a topic as read
-	* Get a message's read receipts
+	* [x] Get a message's read receipts
 * **Scheduled messages**
 	* Get scheduled messages
 	* Create a scheduled message

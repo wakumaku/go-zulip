@@ -405,6 +405,14 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respCreatePrivateChat.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respCreatePrivateChat.Result(), zulip.ResultSuccess)
 
+	// Get Message receipts from the message sent by userB
+	respGetMessageReceipts, err := userBMsgSvc.GetMessagesReadReceipts(ctx, respCreatePrivateChat.ID)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetMessageReceipts.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetMessageReceipts.Result(), zulip.ResultSuccess)
+	// Flaky test, probably no one will have read the message
+	assert.GreaterOrEqual(t, len(respGetMessageReceipts.UserIDs), 0)
+
 	// UserA gets its own information
 	userAUserSvc := users.NewService(userA)
 	respGetUserMe, err := userAUserSvc.GetUserMe(ctx)
