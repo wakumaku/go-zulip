@@ -188,7 +188,7 @@ Check [/examples](examples) folder.
 	* Set "typing" status
 	* Get a user's presence
 	* Get presence of all users
-	* Update your presence
+	* [x] Update your presence
 	* Get attachments
 	* Delete an attachment
 	* Update settings
