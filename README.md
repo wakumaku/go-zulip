@@ -186,7 +186,7 @@ Check [/examples](examples) folder.
 	* [x] Get a user's status
 	* [x] Update your status
 	* Set "typing" status
-	* Get a user's presence
+	* [x] Get a user's presence
 	* Get presence of all users
 	* [x] Update your presence
 	* Get attachments
