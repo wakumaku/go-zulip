@@ -518,5 +518,27 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respUpdateStatus.HTTPCode(), http.StatusOK)
 	assert.Equal(t, respUpdateStatus.Result(), zulip.ResultSuccess)
 
+	// User B updates his presence to active
+	userBUserSvc := users.NewService(userB)
+	respUpdatePresence, err := userBUserSvc.UpdateUserPresence(ctx, users.UserPresenceActive)
+	assert.NoError(t, err)
+	assert.Equal(t, respUpdatePresence.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respUpdatePresence.Result(), zulip.ResultSuccess)
+
+	// User A gets presence from User B
+	respGetUserPresence, err := userAUserSvc.GetUserPresence(ctx, userBEmail)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetUserPresence.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetUserPresence.Result(), zulip.ResultSuccess)
+	assert.Equal(t, "active", respGetUserPresence.Presence.Aggregated.Status)
+
+	// Admin Get all users presence and checks User B presence in the list
+	respGetUserPresenceAll, err := adminUserSvc.GetUserPresenceAll(ctx)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetUserPresenceAll.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetUserPresenceAll.Result(), zulip.ResultSuccess)
+	assert.Contains(t, respGetUserPresenceAll.Presences, userBEmail)
+	assert.Equal(t, "active", respGetUserPresenceAll.Presences[userBEmail].Aggregated.Status)
+
 	// spew.Dump("ok")
 }
