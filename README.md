@@ -236,6 +236,51 @@ Check [/examples](examples) folder.
 	* [x] Register an event queue
 	* [x] Get events from an event queue
 	* [x] Delete an event queue
+	* Event Types
+		* [x] AlertWords
+		* [x] Attachment: add, removem update
+		* CustomProfileFields
+		* DefaultStreamGroups
+		* DefaultStreams
+		* DeleteMessage
+		* Drafts: add, remove, update
+		* HasZoomToken
+		* [x] Heartbeat
+		* InvitesChanged
+		* [x] Message
+		* MutedTopics
+		* MutedUsers
+		* OnboardingSteps
+		* [x] Presence
+		* Reaction: add, remove
+		* Realm: deactivated , update , updatedict
+		* RealmBot: add, delete, remove, update
+		* RealmDomains: add, change, remove
+		* [x] RealmEmoji: update
+		* RealmExport
+		* RealmExportConsent
+		* RealmFilters
+		* RealmLinkifiers
+		* RealmPlaygrounds
+		* [x] RealmUser: add, remove, update
+		* RealmUserSettingsDefaults: update
+		* Restart
+		* SavedSnippets: add, remove
+		* ScheduledMessages: add, remove, update
+		* Stream: create, delete, update
+		* [x] Submessage
+		* Subscription: add, peeradd, peerremove, remove, update
+		* [x] Typing: start, stop
+		* UpdateDisplaySettings
+		* UpdateGlobalNotifications
+		* [x] UpdateMessage
+		* UpdateMessageFlags: add, remove
+		* UserGroup: add, addmembers, addsubgroups, remove, removemembers, removesubgroups, update
+		* UserSettings: update
+		* UserStatus
+		* UserTopic
+		* WebReloadClient
+
 * [**Specialty endpoints**](specialty)
 	* [x] Fetch an API key (production)
 	* [x] Fetch an API key (development only)
