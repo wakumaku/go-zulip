@@ -29,7 +29,7 @@ func (d *DeleteEventQueueResponse) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (svc *Service) DeleteEvetQueue(ctx context.Context, queueID string) (*DeleteEventQueueResponse, error) {
+func (svc *Service) DeleteEventQueue(ctx context.Context, queueID string) (*DeleteEventQueueResponse, error) {
 	const (
 		method = http.MethodDelete
 		path   = "/api/v1/events"
