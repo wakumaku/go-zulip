@@ -277,7 +277,7 @@ Check [/examples](examples) folder.
 		* UpdateMessageFlags: add, remove
 		* UserGroup: add, addmembers, addsubgroups, remove, removemembers, removesubgroups, update
 		* UserSettings: update
-		* UserStatus
+		* [x] UserStatus
 		* UserTopic
 		* WebReloadClient
 
