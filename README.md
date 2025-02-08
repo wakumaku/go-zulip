@@ -239,7 +239,7 @@ Check [/examples](examples) folder.
 	* Event Types
 		* [x] AlertWords
 		* [x] Attachment: add, removem update
-		* CustomProfileFields
+		* [x] CustomProfileFields
 		* DefaultStreamGroups
 		* DefaultStreams
 		* DeleteMessage
