@@ -49,7 +49,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 		if rxSection.MatchString(line) {
 			section := rxSection.FindStringSubmatch(line)[1]
 			z[section] = SectionData{}
-			currentSection = section
+			currentSection = strings.TrimSpace(section)
 			continue
 		}
 
