@@ -9,7 +9,7 @@ services:
     command: >
       /bin/sh -c "
       /usr/bin/caddy reverse-proxy --from https://localhost --to https://zulip --insecure &
-      air -c ./dev/.air.toml
+      go tool air -c ./dev/.air.toml
       "
     restart: unless-stopped
     working_dir: /go-zulip
