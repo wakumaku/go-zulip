@@ -27,7 +27,7 @@ services:
       MEMCACHED_SASL_PWDB: "/home/memcache/memcached-sasl-db"
       MEMCACHED_PASSWORD: "REPLACE_WITH_SECURE_MEMCACHED_PASSWORD"
   rabbitmq:
-    image: "rabbitmq:3.12.14"
+    image: "rabbitmq:4.0.7"
     restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_USER: "zulip"
@@ -48,14 +48,14 @@ services:
     volumes:
       - "redis:/data:rw"
   zulip:
-    image: "zulip/docker-zulip:9.4-0"
+    image: "zulip/docker-zulip:10.0-0"
     restart: unless-stopped
     # build:
     #   context: .
     #   args:
     #     ## Change these if you want to build zulip from a different repo/branch
     #     ZULIP_GIT_URL: https://github.com/zulip/zulip.git
-    #     ZULIP_GIT_REF: "9.4"
+    #     ZULIP_GIT_REF: "10.0"
     #     ## Set this up if you plan to use your own CA certificate bundle for building
     #     # CUSTOM_CA_CERTIFICATES:
     # ports:
@@ -81,8 +81,6 @@ services:
       SECRETS_redis_password: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
       SECRETS_secret_key: "REPLACE_WITH_SECURE_SECRET_KEY"
       SETTING_EXTERNAL_HOST: "localhost"
-      # SETTING_EXTERNAL_HOST: "zulip"
-      # SETTING_EXTERNAL_HOST: "localhost.localdomain"
       SETTING_ZULIP_ADMINISTRATOR: "admin@example.com"
       SETTING_EMAIL_HOST: "" # e.g. smtp.example.com
       SETTING_EMAIL_HOST_USER: "noreply@example.com"
@@ -107,20 +105,19 @@ services:
       ##   https://zulip.readthedocs.io/en/latest/production/upload-backends.html
       ##
       ## If you want to use the S3 backend, you must set
-      ## SETTINGS_LOCAL_UPLOADS_DIR to None as well as configuring the
+      ## SETTING_LOCAL_UPLOADS_DIR to None as well as configuring the
       ## other fields.
-      # SETTINGS_LOCAL_UPLOADS_DIR: "None"
-      # SETTINGS_S3_AUTH_UPLOADS_BUCKET: ""
-      # SETTINGS_S3_AVATAR_BUCKET: ""
-      # SETTINGS_S3_ENDPOINT_URL: "None"
-      # SETTINGS_S3_REGION: "None"
+      # SETTING_LOCAL_UPLOADS_DIR: "None"
+      # SETTING_S3_AUTH_UPLOADS_BUCKET: ""
+      # SETTING_S3_AVATAR_BUCKET: ""
+      # SETTING_S3_ENDPOINT_URL: "None"
+      # SETTING_S3_REGION: "None"
     volumes:
       - "zulip:/data:rw"
     ulimits:
       nofile:
         soft: 1000000
         hard: 1048576
-
 volumes:
   zulip:
   postgresql-14:
