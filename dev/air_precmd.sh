@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e pipefail 
+
 echo "Running go mod tidy..."
 go mod tidy
 
