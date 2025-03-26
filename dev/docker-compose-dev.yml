@@ -1,8 +1,8 @@
 services:
   go-zulip:
     build:
-      context: ../
-      dockerfile: ./dev/Dockerfile.dev
+      context: ${DEV_PATH}/../
+      dockerfile: ./dev/dev.Dockerfile
     environment:
       - CGO_ENABLED=1
       - ZULIP_SITE=https://localhost
@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     working_dir: /go-zulip
     volumes:
-      - ../:/go-zulip
+      - ${DEV_PATH}/../:/go-zulip
       - dev-cache:/go/pkg/mod
     ports:
       - "80:80"
