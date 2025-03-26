@@ -1,5 +1,5 @@
-FROM caddy:2.8.4-alpine AS caddy
-FROM golang:1.24.0-alpine AS dev
+FROM caddy:2.9.1-alpine AS caddy
+FROM golang:1.24.1-alpine AS dev
 
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
 
