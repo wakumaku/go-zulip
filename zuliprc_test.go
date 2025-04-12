@@ -14,6 +14,11 @@ func TestZuliprcParser(t *testing.T) {
 email=user@localhost
 key=apikey
 site=https://localhost
+
+[bot]
+email=bot@localhost
+key=botapikey
+site=https://localhost
 `
 
 	f, err := os.CreateTemp("", "zuliprc")
@@ -31,10 +36,10 @@ site=https://localhost
 	assert.Equal(t, "apikey", apiSection.APIKey)
 	assert.Equal(t, "https://localhost", apiSection.Site)
 
-	unknownSection := z["unknown"]
-	assert.Equal(t, "", unknownSection.Email)
-	assert.Equal(t, "", unknownSection.APIKey)
-	assert.Equal(t, "", unknownSection.Site)
+	botSection := z["bot"]
+	assert.Equal(t, "bot@localhost", botSection.Email)
+	assert.Equal(t, "botapikey", botSection.APIKey)
+	assert.Equal(t, "https://localhost", botSection.Site)
 }
 
 func TestZuliprcParseFileNotFound(t *testing.T) {
