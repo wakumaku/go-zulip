@@ -540,5 +540,20 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Contains(t, respGetUserPresenceAll.Presences, userBEmail)
 	assert.Equal(t, "active", respGetUserPresenceAll.Presences[userBEmail].Aggregated.Status)
 
+	// Disable Presence for User B
+	respUpdateSettingsPresence, err := userBUserSvc.UpdateSettings(ctx,
+		users.PresenceEnabled(false),
+	)
+	assert.NoError(t, err)
+	assert.Equal(t, respUpdateSettingsPresence.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respUpdateSettingsPresence.Result(), zulip.ResultSuccess)
+
+	// Admin gets User B presence and checks that the presence is disabled
+	respGetUserBPresence, err := adminUserSvc.GetUserPresence(ctx, userBEmail)
+	assert.NoError(t, err)
+	assert.Equal(t, respGetUserBPresence.HTTPCode(), http.StatusOK)
+	assert.Equal(t, respGetUserBPresence.Result(), zulip.ResultSuccess)
+	assert.Equal(t, "offline", respGetUserBPresence.Presence.Aggregated.Status)
+
 	// spew.Dump("ok")
 }

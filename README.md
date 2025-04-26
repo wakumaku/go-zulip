@@ -191,7 +191,7 @@ Check [/examples](examples) folder.
 	* [x] Update your presence
 	* Get attachments
 	* Delete an attachment
-	* Update settings
+	* [x] Update settings
 	* Get user groups
 	* Create a user group
 	* Update a user group
