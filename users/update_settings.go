@@ -469,6 +469,7 @@ type updateSettingsOptions struct {
 
 type UpdateSettingsOption func(*updateSettingsOptions)
 
+// Email Asks the server to initiate a confirmation sequence to change the user's email address.
 func Email(value string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.email.fieldName = "email"
@@ -476,6 +477,7 @@ func Email(value string) UpdateSettingsOption {
 	}
 }
 
+// SetFullName A new display name for the user.
 func SetFullName(value string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.fullName.fieldName = "full_name"
@@ -483,6 +485,7 @@ func SetFullName(value string) UpdateSettingsOption {
 	}
 }
 
+// SetPassword The user's new Zulip password. The old_password parameter must be included in the request.
 func SetPassword(newPassword, oldPassword string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.newPassword.fieldName = "new_password"
@@ -492,6 +495,7 @@ func SetPassword(newPassword, oldPassword string) UpdateSettingsOption {
 	}
 }
 
+// TwentyFourHourTime Whether time should be displayed in 24-hour notation.
 func TwentyFourHourTime(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.twentyFourHourTime.fieldName = "twenty_four_hour_time"
@@ -499,6 +503,8 @@ func TwentyFourHourTime(value bool) UpdateSettingsOption {
 	}
 }
 
+// WebMarkReadOnScrollPolicy Whether or not to mark messages as read when the user scrolls through their feed.
+// Always, OnlyInConversationViews, Never
 func WebMarkReadOnScrollPolicy(value webMarkReadOnScrollPolicy) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webMarkReadOnScrollPolicy.fieldName = "web_mark_read_on_scroll_policy"
@@ -506,6 +512,8 @@ func WebMarkReadOnScrollPolicy(value webMarkReadOnScrollPolicy) UpdateSettingsOp
 	}
 }
 
+// WebChannelDefaultView Web/desktop app setting controlling the default navigation behavior when clicking on a channel link.
+// TopTopicInTheChannel, ChannelFeed
 func WebChannelDefaultView(value webChannelDefaultView) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webChannelDefaultView.fieldName = "web_channel_default_view"
@@ -513,6 +521,7 @@ func WebChannelDefaultView(value webChannelDefaultView) UpdateSettingsOption {
 	}
 }
 
+// StarredMessageCounts Whether clients should display the number of starred messages.
 func StarredMessageCounts(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.starredMessageCounts.fieldName = "starred_message_counts"
@@ -520,6 +529,7 @@ func StarredMessageCounts(value bool) UpdateSettingsOption {
 	}
 }
 
+// ReceivesTypingNotifications Whether the user is configured to receive typing notifications from other users.
 func ReceivesTypingNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.receivesTypingNotifications.fieldName = "receives_typing_notifications"
@@ -527,6 +537,7 @@ func ReceivesTypingNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// WebSuggestUpdateTimezone Whether the user should be shown an alert, offering to update their profile time zone.
 func WebSuggestUpdateTimezone(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webSuggestUpdateTimezone.fieldName = "web_suggest_update_timezone"
@@ -534,6 +545,7 @@ func WebSuggestUpdateTimezone(value bool) UpdateSettingsOption {
 	}
 }
 
+// FluidLayoutWidth Whether to use the maximum available screen width for the web app's center panel on wide screens.
 func FluidLayoutWidth(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.fluidLayoutWidth.fieldName = "fluid_layout_width"
@@ -541,6 +553,7 @@ func FluidLayoutWidth(value bool) UpdateSettingsOption {
 	}
 }
 
+// HighContrastMode This setting is reserved for use to control variations in Zulip's design to help visually impaired users.
 func HighContrastMode(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.highContrastMode.fieldName = "high_contrast_mode"
@@ -548,6 +561,7 @@ func HighContrastMode(value bool) UpdateSettingsOption {
 	}
 }
 
+// WebFontSizePx User-configured primary font-size for the web application, in pixels.
 func WebFontSizePx(value int) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webFontSizePx.fieldName = "web_font_size_px"
@@ -555,6 +569,7 @@ func WebFontSizePx(value int) UpdateSettingsOption {
 	}
 }
 
+// WebLineHeightPercent User-configured primary line-height for the web application, in percent.
 func WebLineHeightPercent(value int) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webLineHeightPercent.fieldName = "web_line_height_percent"
@@ -562,6 +577,8 @@ func WebLineHeightPercent(value int) UpdateSettingsOption {
 	}
 }
 
+// ColorScheme Controls which color theme to use.
+// Automatic, DarkTheme, LightTheme
 func ColorScheme(value colorScheme) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.colorScheme.fieldName = "color_scheme"
@@ -569,6 +586,7 @@ func ColorScheme(value colorScheme) UpdateSettingsOption {
 	}
 }
 
+// EnableDraftsSynchronization A boolean parameter to control whether synchronizing drafts is enabled for the user.
 func EnableDraftsSynchronization(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableDraftsSynchronization.fieldName = "enable_drafts_synchronization"
@@ -576,6 +594,7 @@ func EnableDraftsSynchronization(value bool) UpdateSettingsOption {
 	}
 }
 
+// TranslateEmoticons Whether to translate emoticons to emoji in messages the user sends.
 func TranslateEmoticons(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.translateEmoticons.fieldName = "translate_emoticons"
@@ -583,6 +602,7 @@ func TranslateEmoticons(value bool) UpdateSettingsOption {
 	}
 }
 
+// DisplayEmojiReactionUsers Whether to display the names of reacting users on a message.
 func DisplayEmojiReactionUsers(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.displayEmojiReactionUsers.fieldName = "display_emoji_reaction_users"
@@ -590,6 +610,7 @@ func DisplayEmojiReactionUsers(value bool) UpdateSettingsOption {
 	}
 }
 
+// DefaultLanguage What default language to use for the account.
 func DefaultLanguage(value string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.defaultLanguage.fieldName = "default_language"
@@ -597,6 +618,8 @@ func DefaultLanguage(value string) UpdateSettingsOption {
 	}
 }
 
+// WebHomeView The home view used when opening a new Zulip web app window.
+// RecentTopics, Inbox, AllMessages
 func WebHomeView(value webHomeView) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webHomeView.fieldName = "web_home_view"
@@ -604,6 +627,7 @@ func WebHomeView(value webHomeView) UpdateSettingsOption {
 	}
 }
 
+// WebEscapeNavigatesToHomeView Whether the escape key navigates to the configured home view.
 func WebEscapeNavigatesToHomeView(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webEscapeNavigatesToHomeView.fieldName = "web_escape_navigates_to_home_view"
@@ -611,6 +635,7 @@ func WebEscapeNavigatesToHomeView(value bool) UpdateSettingsOption {
 	}
 }
 
+// LeftSideUserlist Whether the users list on the left sidebar in narrow windows.
 func LeftSideUserlist(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.leftSideUserlist.fieldName = "left_side_userlist"
@@ -618,6 +643,8 @@ func LeftSideUserlist(value bool) UpdateSettingsOption {
 	}
 }
 
+// Emojiset The user's configured emoji set, used to display emoji to the user everywhere they appear in the UI.
+// Google, GoogleBlob, Twitter, Text
 func Emojiset(value emojiset) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.emojiset.fieldName = "emojiset"
@@ -625,6 +652,8 @@ func Emojiset(value emojiset) UpdateSettingsOption {
 	}
 }
 
+// DemoteInactiveStreams Whether to demote inactive channels in the left sidebar.
+// Automatic, Always, Never
 func DemoteInactiveStreams(value demoteInactiveStreams) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.demoteInactiveStreams.fieldName = "demote_inactive_streams"
@@ -632,6 +661,8 @@ func DemoteInactiveStreams(value demoteInactiveStreams) UpdateSettingsOption {
 	}
 }
 
+// UserListStyle The style selected by the user for the right sidebar user list.
+// Compact, WithStatus, WithAvatarAndStatus
 func UserListStyle(value userListStyle) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.userListStyle.fieldName = "user_list_style"
@@ -639,6 +670,8 @@ func UserListStyle(value userListStyle) UpdateSettingsOption {
 	}
 }
 
+// WebAnimateImagePreviews Controls how animated images should be played in the message feed in the web/desktop application.
+// Always, OnHover, Never
 func WebAnimateImagePreviews(value webAnimateImagePreviews) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webAnimateImagePreviews.fieldName = "web_animate_image_previews"
@@ -646,6 +679,8 @@ func WebAnimateImagePreviews(value webAnimateImagePreviews) UpdateSettingsOption
 	}
 }
 
+// WebStreamUnreadsCountDisplayPolicy Configuration for which channels should be displayed with a numeric unread count in the left sidebar.
+// AllChannels, UnmutedChannelsAndTopics, NoChannels
 func WebStreamUnreadsCountDisplayPolicy(value webStreamUnreadsCountDisplayPolicy) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webStreamUnreadsCountDisplayPolicy.fieldName = "web_stream_unreads_count_display_policy"
@@ -653,6 +688,7 @@ func WebStreamUnreadsCountDisplayPolicy(value webStreamUnreadsCountDisplayPolicy
 	}
 }
 
+// HideAiFeatures Controls whether the user wants AI features like topic summarization to be hidden in all Zulip clients.
 func HideAiFeatures(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.hideAiFeatures.fieldName = "hide_ai_features"
@@ -660,6 +696,7 @@ func HideAiFeatures(value bool) UpdateSettingsOption {
 	}
 }
 
+// Timezone The IANA identifier of the user's profile time zone.
 func Timezone(value string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.timezone.fieldName = "timezone"
@@ -667,6 +704,7 @@ func Timezone(value string) UpdateSettingsOption {
 	}
 }
 
+// EnableStreamDesktopNotifications Enable visual desktop notifications for channel messages.
 func EnableStreamDesktopNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableStreamDesktopNotifications.fieldName = "enable_stream_desktop_notifications"
@@ -674,6 +712,7 @@ func EnableStreamDesktopNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableStreamEmailNotifications Enable email notifications for channel messages.
 func EnableStreamEmailNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableStreamEmailNotifications.fieldName = "enable_stream_email_notifications"
@@ -681,6 +720,7 @@ func EnableStreamEmailNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableStreamPushNotifications Enable mobile notifications for channel messages.
 func EnableStreamPushNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableStreamPushNotifications.fieldName = "enable_stream_push_notifications"
@@ -688,6 +728,7 @@ func EnableStreamPushNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableStreamAudibleNotifications Enable audible desktop notifications for channel messages.
 func EnableStreamAudibleNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableStreamAudibleNotifications.fieldName = "enable_stream_audible_notifications"
@@ -695,6 +736,7 @@ func EnableStreamAudibleNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// NotificationSound Notification sound name.
 func NotificationSound(value string) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.notificationSound.fieldName = "notification_sound"
@@ -702,6 +744,7 @@ func NotificationSound(value string) UpdateSettingsOption {
 	}
 }
 
+// EnableDesktopNotifications Enable visual desktop notifications for direct messages and @-mentions.
 func EnableDesktopNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableDesktopNotifications.fieldName = "enable_desktop_notifications"
@@ -709,6 +752,7 @@ func EnableDesktopNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableSounds Enable audible desktop notifications for direct messages and @-mentions.
 func EnableSounds(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableSounds.fieldName = "enable_sounds"
@@ -716,6 +760,7 @@ func EnableSounds(value bool) UpdateSettingsOption {
 	}
 }
 
+// EmailNotificationsBatchingPeriodSeconds The duration (in seconds) for which the server should wait to batch email notifications before sending them.
 func EmailNotificationsBatchingPeriodSeconds(value int) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.emailNotificationsBatchingPeriodSeconds.fieldName = "email_notifications_batching_period_seconds"
@@ -723,6 +768,7 @@ func EmailNotificationsBatchingPeriodSeconds(value int) UpdateSettingsOption {
 	}
 }
 
+// EnableOfflineEmailNotifications Enable email notifications for direct messages and @-mentions received when the user is offline.
 func EnableOfflineEmailNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableOfflineEmailNotifications.fieldName = "enable_offline_email_notifications"
@@ -730,6 +776,7 @@ func EnableOfflineEmailNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableOfflinePushNotifications Enable mobile notifications for direct messages and @-mentions received when the user is offline.
 func EnableOfflinePushNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableOfflinePushNotifications.fieldName = "enable_offline_push_notifications"
@@ -737,6 +784,7 @@ func EnableOfflinePushNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableOnlinePushNotifications Enable mobile notifications for direct messages and @-mentions received when the user is online.
 func EnableOnlinePushNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableOnlinePushNotifications.fieldName = "enable_online_push_notifications"
@@ -744,6 +792,7 @@ func EnableOnlinePushNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableFollowedTopicDesktopNotifications Enable visual desktop notifications for messages sent to followed topics.
 func EnableFollowedTopicDesktopNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableFollowedTopicDesktopNotifications.fieldName = "enable_followed_topic_desktop_notifications"
@@ -751,6 +800,7 @@ func EnableFollowedTopicDesktopNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableFollowedTopicEmailNotifications Enable email notifications for messages sent to followed topics.
 func EnableFollowedTopicEmailNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableFollowedTopicEmailNotifications.fieldName = "enable_followed_topic_email_notifications"
@@ -758,6 +808,7 @@ func EnableFollowedTopicEmailNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableFollowedTopicPushNotifications Enable push notifications for messages sent to followed topics.
 func EnableFollowedTopicPushNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableFollowedTopicPushNotifications.fieldName = "enable_followed_topic_push_notifications"
@@ -765,6 +816,7 @@ func EnableFollowedTopicPushNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableFollowedTopicAudibleNotifications Enable audible desktop notifications for messages sent to followed topics.
 func EnableFollowedTopicAudibleNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableFollowedTopicAudibleNotifications.fieldName = "enable_followed_topic_audible_notifications"
@@ -772,6 +824,7 @@ func EnableFollowedTopicAudibleNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableDigestEmails Enable digest emails when the user is away.
 func EnableDigestEmails(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableDigestEmails.fieldName = "enable_digest_emails"
@@ -779,6 +832,7 @@ func EnableDigestEmails(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableMarketingEmails Enable marketing emails. Has no function outside Zulip Cloud.
 func EnableMarketingEmails(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableMarketingEmails.fieldName = "enable_marketing_emails"
@@ -786,6 +840,7 @@ func EnableMarketingEmails(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableLoginEmails Enable email notifications for new logins to account.
 func EnableLoginEmails(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableLoginEmails.fieldName = "enable_login_emails"
@@ -793,6 +848,7 @@ func EnableLoginEmails(value bool) UpdateSettingsOption {
 	}
 }
 
+// MessageContentInEmailNotifications Include the message's content in email notifications for new messages.
 func MessageContentInEmailNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.messageContentInEmailNotifications.fieldName = "message_content_in_email_notifications"
@@ -800,6 +856,7 @@ func MessageContentInEmailNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// PMContentInDesktopNotifications Include content of direct messages in desktop notifications.
 func PMContentInDesktopNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.pmContentInDesktopNotifications.fieldName = "pm_content_in_desktop_notifications"
@@ -807,6 +864,7 @@ func PMContentInDesktopNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// WildcardMentionsNotify Whether wildcard mentions (e.g., @all) should send notifications like a personal mention.
 func WildcardMentionsNotify(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.wildcardMentionsNotify.fieldName = "wildcard_mentions_notify"
@@ -814,6 +872,7 @@ func WildcardMentionsNotify(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnableFollowedTopicWildcardMentionsNotify Whether wildcard mentions (e.g., @all) in messages sent to followed topics should send notifications like a personal mention.
 func EnableFollowedTopicWildcardMentionsNotify(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enableFollowedTopicWildcardMentionsNotify.fieldName = "enable_followed_topic_wildcard_mentions_notify"
@@ -821,6 +880,8 @@ func EnableFollowedTopicWildcardMentionsNotify(value bool) UpdateSettingsOption 
 	}
 }
 
+// DesktopIconCountDisplay Unread count badge (appears in desktop sidebar and browser tab).
+// AllUnreadMessages, DMsMentionsAndFollowedTopics, DMsAndMentions, None
 func DesktopIconCountDisplay(value desktopIconCountDisplay) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.desktopIconCountDisplay.fieldName = "desktop_icon_count_display"
@@ -828,6 +889,8 @@ func DesktopIconCountDisplay(value desktopIconCountDisplay) UpdateSettingsOption
 	}
 }
 
+// RealmNameInEmailNotificationsPolicy Whether to include organization name in subject of message notification emails.
+// Automatic, Always, Never
 func RealmNameInEmailNotificationsPolicy(value realmNameInEmailNotificationsPolicy) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.realmNameInEmailNotificationsPolicy.fieldName = "realm_name_in_email_notifications_policy"
@@ -835,6 +898,8 @@ func RealmNameInEmailNotificationsPolicy(value realmNameInEmailNotificationsPoli
 	}
 }
 
+// AutomaticallyFollowTopicsPolicy Which topics to follow automatically.
+// TopicsTheUserParticipatesIn, TopicsTheUserSendsAMessageTo, TopicsTheUserStarts, Never
 func AutomaticallyFollowTopicsPolicy(value automaticallyFollowTopicsPolicy) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.automaticallyFollowTopicsPolicy.fieldName = "automatically_follow_topics_policy"
@@ -842,6 +907,8 @@ func AutomaticallyFollowTopicsPolicy(value automaticallyFollowTopicsPolicy) Upda
 	}
 }
 
+// AutomaticallyUnmuteTopicsInMutedStreamsPolicy Which topics to unmute automatically in muted channels.
+// TopicsTheUserParticipatesIn, TopicsTheUserSendsAMessageTo, TopicsTheUserStarts, Never
 func AutomaticallyUnmuteTopicsInMutedStreamsPolicy(value automaticallyFollowTopicsPolicy) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.automaticallyUnmuteTopicsInMutedStreamsPolicy.fieldName = "automatically_unmute_topics_in_muted_streams_policy"
@@ -849,6 +916,7 @@ func AutomaticallyUnmuteTopicsInMutedStreamsPolicy(value automaticallyFollowTopi
 	}
 }
 
+// AutomaticallyFollowTopicsWhereMentioned Whether the server will automatically mark the user as following topics where the user is mentioned.
 func AutomaticallyFollowTopicsWhereMentioned(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.automaticallyFollowTopicsWhereMentioned.fieldName = "automatically_follow_topics_where_mentioned"
@@ -856,6 +924,7 @@ func AutomaticallyFollowTopicsWhereMentioned(value bool) UpdateSettingsOption {
 	}
 }
 
+// PresenceEnabled Display the presence status to other users when online.
 func PresenceEnabled(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.presenceEnabled.fieldName = "presence_enabled"
@@ -863,6 +932,7 @@ func PresenceEnabled(value bool) UpdateSettingsOption {
 	}
 }
 
+// EnterSends Whether pressing Enter in the compose box sends a message (or saves a message edit).
 func EnterSends(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.enterSends.fieldName = "enter_sends"
@@ -870,6 +940,7 @@ func EnterSends(value bool) UpdateSettingsOption {
 	}
 }
 
+// SendPrivateTypingNotifications Whether typing notifications should be sent when composing direct messages.
 func SendPrivateTypingNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.sendPrivateTypingNotifications.fieldName = "send_private_typing_notifications"
@@ -877,6 +948,7 @@ func SendPrivateTypingNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// SendStreamTypingNotifications Whether typing notifications should be sent when composing channel messages.
 func SendStreamTypingNotifications(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.sendStreamTypingNotifications.fieldName = "send_stream_typing_notifications"
@@ -884,6 +956,7 @@ func SendStreamTypingNotifications(value bool) UpdateSettingsOption {
 	}
 }
 
+// SendReadReceipts Whether other users are allowed to see whether you've read messages.
 func SendReadReceipts(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.sendReadReceipts.fieldName = "send_read_receipts"
@@ -891,6 +964,7 @@ func SendReadReceipts(value bool) UpdateSettingsOption {
 	}
 }
 
+// AllowPrivateDataExport Whether organization administrators are allowed to export your private data.
 func AllowPrivateDataExport(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.allowPrivateDataExport.fieldName = "allow_private_data_export"
@@ -898,6 +972,8 @@ func AllowPrivateDataExport(value bool) UpdateSettingsOption {
 	}
 }
 
+// EmailAddressVisibility The policy this user has selected for which other users in this organization can see their real email address.
+// Everyone, MembersOnly, AdministratorsOnly, Nobody, ModeratorsOnly
 func EmailAddressVisibility(value emailAddressVisibility) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.emailAddressVisibility.fieldName = "email_address_visibility"
@@ -905,6 +981,7 @@ func EmailAddressVisibility(value emailAddressVisibility) UpdateSettingsOption {
 	}
 }
 
+// WebNavigateToSentMessage Web/desktop app setting for whether the user's view should automatically go to the conversation where they sent a message.
 func WebNavigateToSentMessage(value bool) UpdateSettingsOption {
 	return func(args *updateSettingsOptions) {
 		args.webNavigateToSentMessage.fieldName = "web_navigate_to_sent_message"
