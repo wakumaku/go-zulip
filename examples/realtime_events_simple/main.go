@@ -35,6 +35,7 @@ func main() {
 			events.SubmessageType,
 			events.TypingType,
 			events.UpdateMessageType,
+			events.DeleteMessageType,
 		),
 		realtime.AllPublicStreams(true),
 	)
