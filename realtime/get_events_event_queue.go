@@ -67,6 +67,8 @@ func (g *GetEventsEventQueueResponse) UnmarshalJSON(data []byte) error {
 			ev = &events.Typing{}
 		case events.UpdateMessageType:
 			ev = &events.UpdateMessage{}
+		case events.DeleteMessageType:
+			ev = &events.DeleteMessage{}
 		default:
 			ev = &events.Unknown{}
 		}
