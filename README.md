@@ -242,7 +242,7 @@ Check [/examples](examples) folder.
 		* [x] CustomProfileFields
 		* DefaultStreamGroups
 		* DefaultStreams
-		* DeleteMessage
+		* [x] DeleteMessage
 		* Drafts: add, remove, update
 		* HasZoomToken
 		* [x] Heartbeat
