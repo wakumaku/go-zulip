@@ -1,6 +1,6 @@
 # go-zulip
 
-### Golang Client Library for Zulip (9.4, 10.1)
+### Golang Client Library for Zulip (9.4, 10.1, 10.4)
 
 `go-zulip` is a Golang client library designed to interact with Zulip's REST API. It allows you to send messages, receive real-time events, and perform various other operations with ease.
 
