@@ -30,7 +30,8 @@ func main() {
 	}
 
 	msgs := messages.NewService(client)
-	resp, err := msgs.SendMessage(context.TODO(), recipient.ToChannel("general"), "Hello from go-zulip!", messages.ToTopic("test"))
+	ctx := context.Background()
+	resp, err := msgs.SendMessage(ctx, recipient.ToChannel("general"), "Hello from go-zulip!", messages.ToTopic("test"))
 	if err != nil {
 		log.Fatalf("Error sending message: %v", err)
 	}

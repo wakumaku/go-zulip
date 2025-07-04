@@ -36,8 +36,10 @@ func main() {
 	msgBot2 := messages.NewService(bot2)
 	msgBot3 := messages.NewService(bot3)
 
+	ctx := context.Background()
+
 	// Send a message to a channel/topic for each bot
-	resp, err := msgBot1.SendMessageToChannelTopic(context.TODO(), recipient.ToChannel("general"), "greetings", "I'm bot 1!")
+	resp, err := msgBot1.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "I'm bot 1!")
 	if err != nil {
 		log.Fatalf("[bot1] Error sending message: %v", err)
 	}
@@ -45,7 +47,7 @@ func main() {
 		log.Fatalf("[bot1] Error response: %v", resp)
 	}
 
-	resp, err = msgBot2.SendMessageToChannelTopic(context.TODO(), recipient.ToChannel("general"), "greetings", "I'm bot 2!")
+	resp, err = msgBot2.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "I'm bot 2!")
 	if err != nil {
 		log.Fatalf("[bot2] Error sending message: %v", err)
 	}
@@ -53,7 +55,7 @@ func main() {
 		log.Fatalf("[bot2] Error response: %v", resp)
 	}
 
-	resp, err = msgBot3.SendMessageToChannelTopic(context.TODO(), recipient.ToChannel("general"), "greetings", "I'm bot 3!")
+	resp, err = msgBot3.SendMessageToChannelTopic(ctx, recipient.ToChannel("general"), "greetings", "I'm bot 3!")
 	if err != nil {
 		log.Fatalf("[bot3] Error sending message: %v", err)
 	}
