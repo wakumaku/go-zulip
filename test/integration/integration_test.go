@@ -34,6 +34,10 @@ func TestIntegrationSuite(t *testing.T) {
 	zulipAPIKey := os.Getenv("ZULIP_API_KEY")
 	zulipSite := os.Getenv("ZULIP_SITE")
 
+	if zulipEmail == "" || zulipAPIKey == "" || zulipSite == "" {
+		t.Skip("ZULIP_EMAIL, ZULIP_API_KEY, and ZULIP_SITE environment variables must be set for integration tests")
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
