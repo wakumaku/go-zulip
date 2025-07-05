@@ -41,7 +41,7 @@ linters:
     # - gochecksumtype
     # - gocognit
     # - goconst
-    # - gocritic
+    - gocritic
     # - gocyclo
     # - godot
     # - godox

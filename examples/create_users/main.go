@@ -49,7 +49,8 @@ func main() {
 		zulip.WithHTTPClient(&insecureClient),
 	)
 	if err != nil {
-		log.Fatalf("failed to create zulip client: %v", err)
+		log.Printf("failed to create zulip client: %v\n", err)
+		return
 	}
 
 	// Service to create users
@@ -57,11 +58,13 @@ func main() {
 	// Create the user
 	createUserResp, err := usersSvc.CreateUser(ctx, userEmail, userPassword, userName)
 	if err != nil {
-		log.Fatalf("failed to create user: %v", err)
+		log.Printf("failed to create user: %v\n", err)
+		return
 	}
 
 	if createUserResp.IsError() {
-		log.Fatalf("zulip API error creating user: %v", createUserResp.Msg())
+		log.Printf("zulip API error creating user: %v\n", createUserResp.Msg())
+		return
 	}
 
 	// Service to fetch API Key
@@ -69,11 +72,13 @@ func main() {
 	// Fetch the API Key
 	fetchAPIKeyResp, err := specialtySvc.FetchAPIKeyProduction(ctx, userEmail, userPassword)
 	if err != nil {
-		log.Fatalf("failed to fetch API Key: %v", err)
+		log.Printf("failed to fetch API Key: %v\n", err)
+		return
 	}
 
 	if fetchAPIKeyResp.IsError() {
-		log.Fatalf("zulip API error fetching API Key: %v", fetchAPIKeyResp.Msg())
+		log.Printf("zulip API error fetching API Key: %v\n", fetchAPIKeyResp.Msg())
+		return
 	}
 
 	log.Println("User created successfully")

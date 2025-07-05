@@ -94,7 +94,8 @@ func main() {
 			}
 
 			for _, ev := range evs.Events {
-				if ev.EventType() == events.MessageType {
+				switch ev.EventType() {
+				case events.MessageType:
 					message := ev.(*events.Message)
 					if message.Message.DisplayRecipient.IsChannel {
 						log.Printf("#%s [%s]: %s", message.Message.DisplayRecipient.Channel, message.Message.SenderFullName, message.Message.Content)
@@ -106,26 +107,26 @@ func main() {
 
 						log.Printf("@%s: %s", strings.Join(users, ", @"), message.Message.Content)
 					}
-				} else if ev.EventType() == events.AlertWordsType {
+				case events.AlertWordsType:
 					alertWords := ev.(*events.AlertWords)
 					log.Printf("!AlertWords ID: %d, Words: %s", alertWords.ID, alertWords.AlertWords)
-				} else if ev.EventType() == events.RealmUserType {
+				case events.RealmUserType:
 					realmUser := ev.(*events.RealmUser)
 					log.Printf("@RealmUser ID: %d, Op: %s, FullName: %s", realmUser.ID, realmUser.Op, realmUser.Person.FullName)
-				} else if ev.EventType() == events.PresenceType {
+				case events.PresenceType:
 					presence := ev.(*events.Presence)
 					log.Printf("*Presence Email: %s, Status: %s", presence.Email, presence.Presence.Website.Status)
-				} else if ev.EventType() == events.RealmEmojiType {
+				case events.RealmEmojiType:
 					realmEmoji := ev.(*events.RealmEmoji)
 					log.Printf(":RealmEmoji event ID: %d", realmEmoji.ID)
 					// list emojis
 					for id, emoji := range realmEmoji.RealmEmoji {
 						log.Printf("  %s: %s, %s", id, emoji.Name, emoji.SourceURL)
 					}
-				} else if ev.EventType() == events.TypingType {
+				case events.TypingType:
 					typing := ev.(*events.Typing)
 					log.Printf("...typing: : %d . %s -> %s", typing.ID, typing.Op, typing.Sender.Email)
-				} else {
+				default:
 					log.Printf("#%d %s", ev.EventID(), ev.EventType())
 				}
 

@@ -92,7 +92,8 @@ func main() {
 	})
 
 	if err := errGrp.Wait(); err != nil {
-		log.Fatalf("failed to run talking bots: %v", err)
+		log.Printf("failed to run talking bots: %v\n", err)
+		return
 	}
 
 	log.Println("Shutting down talking bots")
