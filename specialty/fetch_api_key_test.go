@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/alecthomas/assert/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/wakumaku/go-zulip/specialty"
 )
 
