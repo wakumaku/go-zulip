@@ -1,0 +1,29 @@
+services:
+  go-zulip:
+    build:
+      dockerfile: ./Dockerfile.dev
+    environment:
+      - CGO_ENABLED=1
+      - ZULIP_SITE=https://localhost
+    command: >
+      /bin/sh -c "
+      /usr/bin/caddy reverse-proxy --from https://localhost --to https://zulip --insecure &
+      go tool air -c ./.air.toml
+      "
+    restart: unless-stopped
+    working_dir: /go-zulip
+    volumes:
+      - ./:/go-zulip
+      - dev-cache:/go/pkg/mod
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - zulip
+      - database
+      - memcached
+      - rabbitmq
+      - redis
+
+volumes:
+  dev-cache:
