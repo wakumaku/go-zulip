@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 	"github.com/wakumaku/go-zulip/narrow"
 )
@@ -33,7 +34,7 @@ func TestUpdatePersonalMessageFlagsNarrow(t *testing.T) {
 		messages.FlagRead,
 		messages.UpdatePersonalMessageFlagsNarrowIncludeAnchor(),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, 35, resp.FirstProcessedID)
 	assert.Equal(t, 55, resp.LastProcessedID)
 	assert.Equal(t, 11, resp.ProcessedCount)

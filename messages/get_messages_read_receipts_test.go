@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 )
 
@@ -22,7 +23,7 @@ func TestGetMessagesReadReceipts(t *testing.T) {
 
 	messagesSvc := messages.NewService(client)
 	resp, err := messagesSvc.GetMessagesReadReceipts(context.Background(), 42)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, []int{3, 7, 9}, resp.UserIDs)
 
 	// validate method & path

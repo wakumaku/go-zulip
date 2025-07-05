@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNarrower(t *testing.T) {
@@ -63,13 +64,13 @@ func TestNarrower(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			actual, err := tc.narrower.MarshalJSON()
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			assert.JSONEq(t, tc.expected, string(actual))
 
 			if tc.expectedEvent != "" {
 				eventJSON, err := tc.narrower.MarshalEvent()
-				assert.NoError(t, err)
-				assert.Equal(t, tc.expectedEvent, string(eventJSON))
+				require.NoError(t, err)
+				assert.JSONEq(t, tc.expectedEvent, string(eventJSON))
 			}
 		})
 	}
@@ -118,6 +119,6 @@ func TestNarrowerBasic(t *testing.T) {
 	assert.Equal(t, expectedNarrowersString, nfs.String())
 
 	currentNarrowersJSON, err := nfs.MarshalJSON()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.JSONEq(t, expectedNarrowersJSON, string(currentNarrowersJSON))
 }

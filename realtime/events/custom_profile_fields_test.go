@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -100,7 +101,7 @@ func TestCustomProfileFields(t *testing.T) {
 
 	v := events.CustomProfileFields{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 0, v.EventID())
 	assert.Equal(t, events.CustomProfileFieldsType, v.EventType())
@@ -108,8 +109,8 @@ func TestCustomProfileFields(t *testing.T) {
 
 	assert.Len(t, v.Fields, 8)
 	assert.True(t, v.Fields[0].EditableByUser)
-	assert.Equal(t, "", v.Fields[0].FieldData)
-	assert.Equal(t, "", v.Fields[0].Hint)
+	assert.Empty(t, v.Fields[0].FieldData)
+	assert.Empty(t, v.Fields[0].Hint)
 	assert.Equal(t, 1, v.Fields[0].ID)
 	assert.Equal(t, "Phone number", v.Fields[0].Name)
 	assert.Equal(t, 1, v.Fields[0].Order)

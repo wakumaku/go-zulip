@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/users"
 )
 
@@ -27,7 +28,7 @@ func TestGetUserPresence(t *testing.T) {
 	userSvc := users.NewService(client)
 
 	resp, err := userSvc.GetUserPresence(context.Background(), "test@example.com")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "active", resp.Presence.Aggregated.Status)
 	assert.Equal(t, 1590000000, resp.Presence.Aggregated.Timestamp)
 	assert.Equal(t, "active", resp.Presence.Website.Status)

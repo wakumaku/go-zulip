@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 	"github.com/wakumaku/go-zulip/narrow"
 )
@@ -111,21 +112,21 @@ func TestGetMessages(t *testing.T) {
 		messages.ApplyMarkdownMessage(true),
 		messages.MessageIDs([]int{16, 21}),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 21, resp.Anchor)
-	assert.Equal(t, true, resp.FoundAnchor)
-	assert.Equal(t, true, resp.FoundNewest)
-	assert.Equal(t, 2, len(resp.Messages))
+	assert.True(t, resp.FoundAnchor)
+	assert.True(t, resp.FoundNewest)
+	assert.Len(t, resp.Messages, 2)
 	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.Messages[0].AvatarURL)
 	assert.Equal(t, "populate_db", resp.Messages[0].Client)
 	assert.Equal(t, "<p>Security experts agree that relational algorithms are an interesting new topic in the field of networking, and scholars concur.</p>", resp.Messages[0].Content)
 	assert.Equal(t, "text/html", resp.Messages[0].ContentType)
 	assert.Equal(t, 16, resp.Messages[0].ID)
-	assert.Equal(t, false, resp.Messages[0].IsMeMessage)
+	assert.False(t, resp.Messages[0].IsMeMessage)
 	assert.Equal(t, 27, resp.Messages[0].RecipientID)
-	assert.Equal(t, 1, len(resp.Messages[0].Flags))
+	assert.Len(t, resp.Messages[0].Flags, 1)
 	assert.Equal(t, "read", resp.Messages[0].Flags[0])
 	assert.Equal(t, "hamlet@zulip.com", resp.Messages[0].DisplayRecipient.Users[0].Email)
 	assert.Equal(t, "King Hamlet", resp.Messages[0].DisplayRecipient.Users[0].FullName)

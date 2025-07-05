@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/invitations"
 )
 
@@ -18,7 +19,7 @@ func TestCreateReusableInvitationLink(t *testing.T) {
 	service := invitations.NewService(client)
 
 	resp, err := service.CreateReusableInvitationLink(context.Background(), invitations.StreamIds([]int{1, 2}))
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 	assert.Equal(t, "https://example.zulipchat.com/join/yddhtzk4jgl7rsmazc5fyyyy/", resp.InviteLink)
 

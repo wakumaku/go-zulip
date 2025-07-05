@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -36,27 +37,27 @@ func TestUpdateMessage(t *testing.T) {
 
 	v := events.UpdateMessage{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 0, v.EventID())
 	assert.Equal(t, events.UpdateMessageType, v.EventType())
 	assert.Equal(t, "update_message", v.EventOp())
 
-	assert.Equal(t, 0, len(v.Flags))
+	assert.Empty(t, v.Flags)
 	assert.Equal(t, 58, v.MessageID)
-	assert.Equal(t, 2, len(v.MessageIDs))
+	assert.Len(t, v.MessageIDs, 2)
 	assert.Equal(t, "hello", *v.OrigContent)
 	assert.Equal(t, "<p>hello</p>", *v.OrigRenderedContent)
 	assert.Equal(t, "test", *v.OrigSubject)
 	assert.Equal(t, "change_all", *v.PropagateMode)
 	assert.Equal(t, "<p>new content</p>", *v.RenderedContent)
-	assert.Equal(t, false, v.RenderingOnly)
+	assert.False(t, v.RenderingOnly)
 	assert.Equal(t, 5, *v.StreamID)
 	assert.Equal(t, "Verona", *v.StreamName)
 	assert.Equal(t, "new_topic", *v.Subject)
-	assert.Equal(t, 0, len(v.TopicLinks))
+	assert.Empty(t, v.TopicLinks)
 	assert.Equal(t, "new content", *v.Content)
 	assert.Equal(t, 1594825451, v.EditTimestamp)
-	assert.Equal(t, false, *v.IsMeMessage)
+	assert.False(t, *v.IsMeMessage)
 	assert.Equal(t, 10, *v.UserID)
 }

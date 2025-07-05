@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 )
 
@@ -22,17 +23,17 @@ func TestUpdatePersonalMessageFlags(t *testing.T) {
 
 	messagesSvc := messages.NewService(client)
 	resp, err := messagesSvc.UpdatePersonalMessageFlags(context.Background(), []int{4, 18, 15}, messages.OperationAdd, messages.FlagRead)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
-	assert.Equal(t, resp.Messages, []int{4, 18, 15})
+	assert.Equal(t, []int{4, 18, 15}, resp.Messages)
 
 	// validate method & payload
 	assert.Equal(t, http.MethodPost, client.(*mockClient).method)
 
-	expedtedParams := map[string]interface{}{
+	expectedParams := map[string]interface{}{
 		"messages": "[4,18,15]",
 		"op":       messages.OperationAdd,
 		"flag":     messages.FlagRead,
 	}
-	assert.Equal(t, expedtedParams, client.(*mockClient).paramsSent)
+	assert.Equal(t, expectedParams, client.(*mockClient).paramsSent)
 }

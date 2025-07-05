@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/users"
 )
 
@@ -62,14 +63,14 @@ func TestGetUserMe(t *testing.T) {
 	userSvc := users.NewService(client)
 
 	resp, err := userSvc.GetUserMe(context.Background())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, 5, resp.UserID)
 	assert.Equal(t, "Iago", resp.FullName)
-	assert.Equal(t, true, resp.IsAdmin)
-	assert.Equal(t, false, resp.IsBillingAdmin)
-	assert.Equal(t, false, resp.IsBot)
-	assert.Equal(t, false, resp.IsGuest)
-	assert.Equal(t, false, resp.IsOwner)
+	assert.True(t, resp.IsAdmin)
+	assert.False(t, resp.IsBillingAdmin)
+	assert.False(t, resp.IsBot)
+	assert.False(t, resp.IsGuest)
+	assert.False(t, resp.IsOwner)
 	assert.Equal(t, 30, resp.MaxMessageId)
 	assert.Equal(t, "https://secure.gravatar.com/avatar/af4f06322c177ef4e1e9b2c424986b54?d=identicon&version=1", resp.AvatarUrl)
 	assert.Equal(t, 1, resp.AvatarVersion)

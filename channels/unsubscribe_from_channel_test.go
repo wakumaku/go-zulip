@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/channels"
 )
 
@@ -21,7 +22,7 @@ func TestUnsubscribeFromChannel(t *testing.T) {
 	channelSvc := channels.NewService(client)
 
 	resp, err := channelSvc.UnsubscribeFromChannel(context.Background(), []string{"testing-help"}, channels.Principals([]int{1, 2}))
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 
 	// validate the parameters sent are correct

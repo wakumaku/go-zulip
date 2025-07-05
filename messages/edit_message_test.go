@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 )
 
@@ -44,13 +45,13 @@ func TestEditMessage(t *testing.T) {
 		messages.NewContent("new content"),
 		messages.SetStreamID(100),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
-	assert.Equal(t, 1, len(resp.DetachedUploads))
+	assert.Len(t, resp.DetachedUploads, 1)
 	assert.Equal(t, 1687984706000, resp.DetachedUploads[0].CreateTime)
 	assert.Equal(t, 3, resp.DetachedUploads[0].ID)
-	assert.Equal(t, 0, len(resp.DetachedUploads[0].Messages))
+	assert.Empty(t, resp.DetachedUploads[0].Messages)
 	assert.Equal(t, "1253601-1.jpg", resp.DetachedUploads[0].Name)
 	assert.Equal(t, "2/5d/BD5NRptFxPDKY3RUKwhhup8r/1253601-1.jpg", resp.DetachedUploads[0].PathId)
 	assert.Equal(t, 1339060, resp.DetachedUploads[0].Size)

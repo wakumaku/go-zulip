@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/messages"
 )
@@ -29,8 +30,8 @@ func TestRemoveEmojiReaction(t *testing.T) {
 		messages.RemoveEmojiReactionEmojiCode("1f604"),
 		messages.RemoveEmojiReactionReactionType(zulip.UnicodeEmojiType),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	// validate the parameters sent are correct
 	assert.Equal(t, "/api/v1/messages/105/reactions", client.(*mockClient).path)

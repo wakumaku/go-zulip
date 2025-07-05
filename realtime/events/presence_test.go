@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -27,7 +28,7 @@ func TestPresence(t *testing.T) {
 
 	v := events.Presence{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 0, v.EventID())
 	assert.Equal(t, events.PresenceType, v.EventType())

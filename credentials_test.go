@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 )
 
@@ -16,7 +17,7 @@ func TestCredentials(t *testing.T) {
 	credentials := zulip.Credentials(expectedSite, expectedEmail, expectedAPIKey)
 
 	c, err := credentials()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, expectedSite, c.Site)
 	assert.Equal(t, expectedEmail, c.Email)
 	assert.Equal(t, expectedAPIKey, c.APIKey)
@@ -30,15 +31,15 @@ site=https://localhost
 `
 
 	f, err := os.CreateTemp("", "zuliprc")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	_, err = f.WriteString(fileContent)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	credentials := zulip.CredentialsFromZuliprc(f.Name(), "api")
 
 	c, err := credentials()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "user@localhost", c.Email)
 	assert.Equal(t, "apikey", c.APIKey)
 	assert.Equal(t, "https://localhost", c.Site)

@@ -17,12 +17,12 @@ linters:
     # - decorder
     # - depguard
     # - dogsled
-    # - dupl
+    - dupl
     # - dupword
     # - durationcheck
     # - embeddedstructfieldcheck
     # - err113
-    # - errcheck
+    - errcheck
     # - errchkjson
     # - errname
     # - errorlint
@@ -92,11 +92,11 @@ linters:
     # - sloglint
     # - spancheck
     # - sqlclosecheck
-    - staticcheck
+    # - staticcheck
     # - tagalign
     # - tagliatelle
     # - testableexamples
-    # - testifylint
+    - testifylint
     # - testpackage
     # - thelper
     # - tparallel
@@ -110,7 +110,7 @@ linters:
     # - whitespace
     # - wrapcheck
     - wsl_v5
-    - zerologlint
+    # - zerologlint
   settings:
     wsl_v5:
       allow-first-in-block: true

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -33,14 +34,14 @@ func TestRealmEmoji(t *testing.T) {
 
 	v := events.RealmEmoji{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 0, v.EventID())
 	assert.Equal(t, events.RealmEmojiType, v.EventType())
 	assert.Equal(t, "update", v.EventOp())
 
 	assert.Equal(t, 11, v.RealmEmoji["1"].AuthorID)
-	assert.Equal(t, false, v.RealmEmoji["1"].Deactivated)
+	assert.False(t, v.RealmEmoji["1"].Deactivated)
 	assert.Equal(t, "1", v.RealmEmoji["1"].ID)
 	assert.Equal(t, "green_tick", v.RealmEmoji["1"].Name)
 	assert.Equal(t, "/user_avatars/2/emoji/images/1.png", v.RealmEmoji["1"].SourceURL)

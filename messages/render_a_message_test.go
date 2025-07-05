@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 )
 
@@ -22,8 +23,8 @@ func TestRenderAMessage(t *testing.T) {
 	}
 
 	resp, err := messagesSvc.RenderAMessage(context.Background(), "**foo**")
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	// validate the parameters sent are correct
 	assert.Equal(t, "/api/v1/messages/render", client.(*mockClient).path)

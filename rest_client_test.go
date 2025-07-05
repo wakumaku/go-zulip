@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 )
 
@@ -69,7 +70,7 @@ func TestRestClientDoRequest(t *testing.T) {
 	client, err := zulip.NewClient(zulip.Credentials(baseURL, email, apiKey),
 		zulip.WithCustomUserAgent(expectedUserAgent),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	msg := map[string]any{
 		"key": "value", // will become url.Values.Encode() format
@@ -81,7 +82,7 @@ func TestRestClientDoRequest(t *testing.T) {
 		zulip.WithTimeout(10*time.Second),
 	)
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, zulip.ResultSuccess, resp.Result())
 
 	assert.Equal(t, expectedMethod, requestRecorder.method)
@@ -144,7 +145,7 @@ func TestRestClientDoRequestFile(t *testing.T) {
 	client, err := zulip.NewClient(zulip.Credentials(baseURL, email, apiKey),
 		zulip.WithCustomUserAgent(expectedUserAgent),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	fileName := "file.txt"
 	msg := bytes.NewReader([]byte("file content"))
@@ -155,7 +156,7 @@ func TestRestClientDoRequestFile(t *testing.T) {
 		zulip.WithTimeout(10*time.Second),
 	)
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, zulip.ResultSuccess, resp.Result())
 
 	assert.Equal(t, expectedMethod, requestRecorder.method)

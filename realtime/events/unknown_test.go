@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -16,7 +17,7 @@ func TestUnknown(t *testing.T) {
 
 	v := events.Unknown{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, -1, v.EventID())
 	assert.Equal(t, events.UnknownType, v.EventType())

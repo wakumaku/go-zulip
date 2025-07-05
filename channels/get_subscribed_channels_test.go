@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/channels"
 )
 
@@ -66,7 +67,7 @@ func TestGetSubscribedChannels(t *testing.T) {
 	resp, err := channelSvc.GetSubscribedChannels(context.Background(),
 		channels.IncludeSubscribersList(true),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Len(t, resp.Subscriptions, 2)
 	assert.Equal(t, "Denmark", resp.Subscriptions[0].Name)
 	assert.Equal(t, "Scotland", resp.Subscriptions[1].Name)

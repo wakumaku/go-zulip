@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 	"github.com/wakumaku/go-zulip/messages/recipient"
 )
@@ -34,8 +35,8 @@ func TestSendMessageToChannel(t *testing.T) {
 		messages.ToTopic("topic"), // repeated, it doesnt make sense on real usage when using ToChannelTopic
 		messages.ReadBySender(true),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 42, resp.ID)
 	assert.Equal(t, 2, resp.AutomaticNewVisibilityPolicy)
@@ -49,8 +50,8 @@ func TestSendMessageToChannel(t *testing.T) {
 		recipient.ToChannel("channel"), "topic",
 		"the message",
 		messages.ReadBySender(true))
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 42, resp.ID)
 	assert.Equal(t, 2, resp.AutomaticNewVisibilityPolicy)
@@ -82,8 +83,8 @@ func TestSendMessageToUserIDs(t *testing.T) {
 		"the message",
 		messages.ReadBySender(true),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 45, resp.ID)
 	assert.Equal(t, 2, resp.AutomaticNewVisibilityPolicy)
@@ -115,8 +116,8 @@ func TestSendMessageToUserName(t *testing.T) {
 		"the message",
 		messages.ReadBySender(true),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 50, resp.ID)
 	assert.Equal(t, 2, resp.AutomaticNewVisibilityPolicy)
@@ -148,8 +149,8 @@ func TestSendMessageToUserNames(t *testing.T) {
 		"the message",
 		messages.ReadBySender(true),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	assert.Equal(t, 55, resp.ID)
 	assert.Equal(t, 2, resp.AutomaticNewVisibilityPolicy)

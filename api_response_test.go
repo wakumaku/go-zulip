@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAPIResponseMarshalling(t *testing.T) {
@@ -44,10 +45,10 @@ func TestAPIResponseMarshalling(t *testing.T) {
 
 	for _, c := range cases {
 		er := APIResponseBase{}
-		assert.NoError(t, json.Unmarshal([]byte(c.input), &er))
+		require.NoError(t, json.Unmarshal([]byte(c.input), &er))
 
 		erJSON, err := json.Marshal(er)
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.JSONEq(t, c.input, string(erJSON))
 	}
 }

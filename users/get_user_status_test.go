@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/users"
 )
@@ -24,7 +25,7 @@ func TestGetUserStatus(t *testing.T) {
 	userSvc := users.NewService(client)
 
 	resp, err := userSvc.GetUserStatus(context.Background(), 1)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "1f697", resp.Status.EmojiCode)
 	assert.Equal(t, "car", resp.Status.EmojiName)
 	assert.Equal(t, zulip.ReactionType("unicode_emoji"), resp.Status.ReactionType)

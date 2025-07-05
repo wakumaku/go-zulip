@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/org"
 )
 
@@ -19,17 +20,17 @@ func TestUploadCustomEmoji(t *testing.T) {
 
 	// Create a temporary file for testing
 	tempFile, err := os.CreateTemp("", "test-emoji-*.png")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer func() { _ = os.Remove(tempFile.Name()) }()
 
 	// Write some test data to the file
 	_, err = tempFile.Write([]byte("test emoji data"))
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	_ = tempFile.Close()
 
 	resp, err := service.UploadCustomEmoji(context.Background(), "test-emoji", tempFile.Name())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 }

@@ -5,16 +5,17 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
 func TestGetEventsEventQueueResponse(t *testing.T) {
 	data, err := os.ReadFile("testdata/events.json")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	g := GetEventsEventQueueResponse{}
 	err = g.UnmarshalJSON(data)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Len(t, g.Events, 13)
 

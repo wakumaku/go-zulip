@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/channels"
 )
 
@@ -38,7 +39,7 @@ func TestSubscribeToChannel(t *testing.T) {
 			},
 		},
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 
 	assert.Equal(t, "testing-help", resp.AlreadySubscribed["1"][0])

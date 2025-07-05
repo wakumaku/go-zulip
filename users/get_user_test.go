@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/users"
 )
@@ -68,10 +69,10 @@ func TestGetUser(t *testing.T) {
 		users.IncludeCustomProfileFields(true),
 	)
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarUrl)
 	assert.Equal(t, "King Hamlet", resp.User.FullName)
-	assert.Equal(t, false, resp.User.IsAdmin)
+	assert.False(t, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)
 	assert.Equal(t, "hamlet@zulip.com", resp.User.Email)
 	assert.Equal(t, zulip.MemberRole, resp.User.Role) // 400
@@ -138,11 +139,11 @@ func TestGetUserByEmail(t *testing.T) {
 		users.ClientGravatar(true),
 		users.IncludeCustomProfileFields(true),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarUrl)
 	assert.Equal(t, "King Hamlet", resp.User.FullName)
-	assert.Equal(t, false, resp.User.IsAdmin)
+	assert.False(t, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)
 	assert.Equal(t, "hamlet@zulip.com", resp.User.Email)
 	assert.Equal(t, zulip.MemberRole, resp.User.Role) // 400

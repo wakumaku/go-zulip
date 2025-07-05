@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip"
 	"github.com/wakumaku/go-zulip/users"
 )
@@ -23,7 +24,7 @@ func TestUpdateStatus(t *testing.T) {
 		users.StatusReactionType("unicode_emoji"),
 		users.StatusText("on vacation"),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 
 	// validate the parameters sent are correct

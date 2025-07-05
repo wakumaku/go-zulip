@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -19,7 +20,7 @@ func TestAlertWords(t *testing.T) {
 
 	v := events.AlertWords{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 0, v.EventID())
 	assert.Equal(t, events.AlertWordsType, v.EventType())

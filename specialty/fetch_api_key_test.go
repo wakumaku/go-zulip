@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/specialty"
 )
 
@@ -20,7 +21,7 @@ func TestFetchAPIKey(t *testing.T) {
 	service := specialty.NewService(client)
 
 	resp, err := service.FetchAPIKeyProduction(context.Background(), "iago@zulip.com", "password")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 	assert.Equal(t, "gjA04ZYcqXKalvYMA8OeXSfzUOLrtbZv", resp.APIKey)
 
@@ -41,7 +42,7 @@ func TestFetchAPIKeyDevelopment(t *testing.T) {
 }`)
 	service := specialty.NewService(client)
 	resp, err := service.FetchAPIKeyDevelopment(context.Background(), "iago@zulip.com")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 	assert.Equal(t, "gjA04ZYcqXKalvYMA8OeXSfzUOLrtbZv", resp.APIKey)
 

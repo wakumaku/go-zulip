@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/realtime/events"
 )
 
@@ -38,20 +39,20 @@ func TestMessage(t *testing.T) {
 
 	v := events.Message{}
 	err := json.Unmarshal([]byte(eventExample), &v)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	assert.Equal(t, 1, v.EventID())
 	assert.Equal(t, events.MessageType, v.EventType())
 	assert.Equal(t, "message", v.EventOp())
 
-	assert.Equal(t, 0, len(v.Flags))
+	assert.Empty(t, v.Flags)
 	assert.Equal(t, 31, v.Message.ID)
 	assert.Equal(t, "test suite", v.Message.Client)
 	assert.Equal(t, "<p>First message ...<a href=\"user_uploads/2/ce/2Xpnnwgh8JWKxBXtTfD6BHKV/zulip.txt\">zulip.txt</a></p>", v.Message.Content)
 	assert.Equal(t, "text/html", v.Message.ContentType)
 	assert.Equal(t, "Denmark", v.Message.DisplayRecipient.Channel)
 	assert.Equal(t, 31, v.Message.ID)
-	assert.Equal(t, false, v.Message.IsMeMessage)
-	assert.Equal(t, 0, len(v.Message.Reactions))
+	assert.False(t, v.Message.IsMeMessage)
+	assert.Empty(t, v.Message.Reactions)
 	assert.Equal(t, 23, v.Message.RecipientID)
 }

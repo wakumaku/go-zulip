@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/messages"
 )
 
@@ -22,7 +23,7 @@ func TestUploadFile(t *testing.T) {
 
 	// create a temporary file to upload
 	f, err := os.CreateTemp("", "zulip.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer func() { _ = os.Remove(f.Name()) }()
 
@@ -33,8 +34,8 @@ func TestUploadFile(t *testing.T) {
 	resp, err := messagesSvc.UploadFile(context.Background(),
 		f.Name(),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	// becuse file name is generated, we can't compare it directly
 	assert.Contains(t, f.Name(), resp.FileName)
@@ -57,7 +58,7 @@ func TestUploadFileFromBytes(t *testing.T) {
 
 	// create a temporary file to upload
 	f, err := os.CreateTemp("", "zulip.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer func() { _ = os.Remove(f.Name()) }()
 
@@ -69,8 +70,8 @@ func TestUploadFileFromBytes(t *testing.T) {
 		f.Name(),
 		[]byte("hello world"),
 	)
-	assert.NoError(t, err)
-	assert.Equal(t, true, resp.IsSuccess())
+	require.NoError(t, err)
+	assert.True(t, resp.IsSuccess())
 
 	// becuse file name is generated, we can't compare it directly
 	assert.Contains(t, f.Name(), resp.FileName)

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/users"
 )
 
@@ -24,7 +25,7 @@ func TestCreateUser(t *testing.T) {
 	}
 
 	resp, err := userSvc.CreateUser(context.Background(), "hello@world.test", "password", "Hello World")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, 25, resp.UserID)
 
 	// validate the parameters sent are correct

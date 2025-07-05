@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/users"
 )
 
@@ -80,7 +81,7 @@ func TestUpdateSettings(t *testing.T) {
 		users.EmailAddressVisibility(users.EmailAddressVisibilityEveryone),
 		users.WebNavigateToSentMessage(true),
 	)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "success", resp.Result())
 
 	// validate the parameters sent are correct

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/wakumaku/go-zulip/users"
 )
 
@@ -33,7 +34,7 @@ func TestGetUserPresenceAll(t *testing.T) {
 	userSvc := users.NewService(client)
 
 	resp, err := userSvc.GetUserPresenceAll(context.Background())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	iago := resp.Presences["iago@zulip.com"]
 	assert.Equal(t, "active", iago.Aggregated.Status)
