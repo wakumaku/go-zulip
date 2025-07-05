@@ -1,3 +1,9 @@
+// Package narrow provides functionality for creating message search filters in Zulip.
+// This includes operators and operands for filtering messages by various criteria
+// such as sender, channel, topic, message content, and message properties.
+// Narrow filters are used in message queries and event queue registration.
+//
+// See https://zulip.com/api/ for the complete API documentation.
 package narrow
 
 import (

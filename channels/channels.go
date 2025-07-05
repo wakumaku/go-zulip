@@ -1,3 +1,16 @@
+// Package channels provides functionality for managing Zulip channels (streams).
+//
+// Implemented features:
+//   - Get subscribed channels
+//   - Subscribe to channels (creates channels if they don't exist)
+//   - Unsubscribe from channels
+//   - Get all channels
+//   - Get channel by ID
+//   - Get channel ID
+//   - Get channel subscribers
+//   - Get subscription status
+//
+// See https://zulip.com/api/ for the complete API documentation.
 package channels
 
 import "github.com/wakumaku/go-zulip"
