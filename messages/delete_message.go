@@ -17,6 +17,7 @@ func (svc *Service) DeleteMessage(ctx context.Context, id int) (*DeleteMessageRe
 		method = http.MethodDelete
 		path   = "/api/v1/messages"
 	)
+
 	patchPath := fmt.Sprintf("%s/%d", path, id)
 
 	resp := DeleteMessageResponse{}

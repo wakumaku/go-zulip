@@ -36,6 +36,7 @@ func (svc *Service) GetMessagesReadReceipts(ctx context.Context, messageID int) 
 		method = http.MethodGet
 		path   = "/api/v1/messages/{message_id}/read_receipts"
 	)
+
 	patchPath := strings.Replace(path, "{message_id}", fmt.Sprintf("%d", messageID), 1)
 
 	resp := GetMessagesReadReceipts{}

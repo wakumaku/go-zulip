@@ -1005,192 +1005,255 @@ func (svc *Service) UpdateSettings(ctx context.Context, opts ...UpdateSettingsOp
 	if options.email.value != nil {
 		msg[options.email.fieldName] = *options.email.value
 	}
+
 	if options.fullName.value != nil {
 		msg[options.fullName.fieldName] = *options.fullName.value
 	}
+
 	if options.oldPassword.value != nil {
 		msg[options.oldPassword.fieldName] = *options.oldPassword.value
 	}
+
 	if options.newPassword.value != nil {
 		msg[options.newPassword.fieldName] = *options.newPassword.value
 	}
+
 	if options.twentyFourHourTime.value != nil {
 		msg[options.twentyFourHourTime.fieldName] = *options.twentyFourHourTime.value
 	}
+
 	if options.webMarkReadOnScrollPolicy.value != nil {
 		msg[options.webMarkReadOnScrollPolicy.fieldName] = *options.webMarkReadOnScrollPolicy.value
 	}
+
 	if options.webChannelDefaultView.value != nil {
 		msg[options.webChannelDefaultView.fieldName] = *options.webChannelDefaultView.value
 	}
+
 	if options.starredMessageCounts.value != nil {
 		msg[options.starredMessageCounts.fieldName] = *options.starredMessageCounts.value
 	}
+
 	if options.receivesTypingNotifications.value != nil {
 		msg[options.receivesTypingNotifications.fieldName] = *options.receivesTypingNotifications.value
 	}
+
 	if options.webSuggestUpdateTimezone.value != nil {
 		msg[options.webSuggestUpdateTimezone.fieldName] = *options.webSuggestUpdateTimezone.value
 	}
+
 	if options.fluidLayoutWidth.value != nil {
 		msg[options.fluidLayoutWidth.fieldName] = *options.fluidLayoutWidth.value
 	}
+
 	if options.highContrastMode.value != nil {
 		msg[options.highContrastMode.fieldName] = *options.highContrastMode.value
 	}
+
 	if options.webFontSizePx.value != nil {
 		msg[options.webFontSizePx.fieldName] = *options.webFontSizePx.value
 	}
+
 	if options.webLineHeightPercent.value != nil {
 		msg[options.webLineHeightPercent.fieldName] = *options.webLineHeightPercent.value
 	}
+
 	if options.colorScheme.value != nil {
 		msg[options.colorScheme.fieldName] = *options.colorScheme.value
 	}
+
 	if options.enableDraftsSynchronization.value != nil {
 		msg[options.enableDraftsSynchronization.fieldName] = *options.enableDraftsSynchronization.value
 	}
+
 	if options.translateEmoticons.value != nil {
 		msg[options.translateEmoticons.fieldName] = *options.translateEmoticons.value
 	}
+
 	if options.displayEmojiReactionUsers.value != nil {
 		msg[options.displayEmojiReactionUsers.fieldName] = *options.displayEmojiReactionUsers.value
 	}
+
 	if options.defaultLanguage.value != nil {
 		msg[options.defaultLanguage.fieldName] = *options.defaultLanguage.value
 	}
+
 	if options.webHomeView.value != nil {
 		msg[options.webHomeView.fieldName] = *options.webHomeView.value
 	}
+
 	if options.webEscapeNavigatesToHomeView.value != nil {
 		msg[options.webEscapeNavigatesToHomeView.fieldName] = *options.webEscapeNavigatesToHomeView.value
 	}
+
 	if options.leftSideUserlist.value != nil {
 		msg[options.leftSideUserlist.fieldName] = *options.leftSideUserlist.value
 	}
+
 	if options.emojiset.value != nil {
 		msg[options.emojiset.fieldName] = *options.emojiset.value
 	}
+
 	if options.demoteInactiveStreams.value != nil {
 		msg[options.demoteInactiveStreams.fieldName] = *options.demoteInactiveStreams.value
 	}
+
 	if options.userListStyle.value != nil {
 		msg[options.userListStyle.fieldName] = *options.userListStyle.value
 	}
+
 	if options.webAnimateImagePreviews.value != nil {
 		msg[options.webAnimateImagePreviews.fieldName] = *options.webAnimateImagePreviews.value
 	}
+
 	if options.webStreamUnreadsCountDisplayPolicy.value != nil {
 		msg[options.webStreamUnreadsCountDisplayPolicy.fieldName] = *options.webStreamUnreadsCountDisplayPolicy.value
 	}
+
 	if options.hideAiFeatures.value != nil {
 		msg[options.hideAiFeatures.fieldName] = *options.hideAiFeatures.value
 	}
+
 	if options.timezone.value != nil {
 		msg[options.timezone.fieldName] = *options.timezone.value
 	}
+
 	if options.enableStreamDesktopNotifications.value != nil {
 		msg[options.enableStreamDesktopNotifications.fieldName] = *options.enableStreamDesktopNotifications.value
 	}
+
 	if options.enableStreamEmailNotifications.value != nil {
 		msg[options.enableStreamEmailNotifications.fieldName] = *options.enableStreamEmailNotifications.value
 	}
+
 	if options.enableStreamPushNotifications.value != nil {
 		msg[options.enableStreamPushNotifications.fieldName] = *options.enableStreamPushNotifications.value
 	}
+
 	if options.enableStreamAudibleNotifications.value != nil {
 		msg[options.enableStreamAudibleNotifications.fieldName] = *options.enableStreamAudibleNotifications.value
 	}
+
 	if options.notificationSound.value != nil {
 		msg[options.notificationSound.fieldName] = *options.notificationSound.value
 	}
+
 	if options.enableDesktopNotifications.value != nil {
 		msg[options.enableDesktopNotifications.fieldName] = *options.enableDesktopNotifications.value
 	}
+
 	if options.enableSounds.value != nil {
 		msg[options.enableSounds.fieldName] = *options.enableSounds.value
 	}
+
 	if options.emailNotificationsBatchingPeriodSeconds.value != nil {
 		msg[options.emailNotificationsBatchingPeriodSeconds.fieldName] = *options.emailNotificationsBatchingPeriodSeconds.value
 	}
+
 	if options.enableOfflineEmailNotifications.value != nil {
 		msg[options.enableOfflineEmailNotifications.fieldName] = *options.enableOfflineEmailNotifications.value
 	}
+
 	if options.enableOfflinePushNotifications.value != nil {
 		msg[options.enableOfflinePushNotifications.fieldName] = *options.enableOfflinePushNotifications.value
 	}
+
 	if options.enableOnlinePushNotifications.value != nil {
 		msg[options.enableOnlinePushNotifications.fieldName] = *options.enableOnlinePushNotifications.value
 	}
+
 	if options.enableFollowedTopicDesktopNotifications.value != nil {
 		msg[options.enableFollowedTopicDesktopNotifications.fieldName] = *options.enableFollowedTopicDesktopNotifications.value
 	}
+
 	if options.enableFollowedTopicEmailNotifications.value != nil {
 		msg[options.enableFollowedTopicEmailNotifications.fieldName] = *options.enableFollowedTopicEmailNotifications.value
 	}
+
 	if options.enableFollowedTopicPushNotifications.value != nil {
 		msg[options.enableFollowedTopicPushNotifications.fieldName] = *options.enableFollowedTopicPushNotifications.value
 	}
+
 	if options.enableFollowedTopicAudibleNotifications.value != nil {
 		msg[options.enableFollowedTopicAudibleNotifications.fieldName] = *options.enableFollowedTopicAudibleNotifications.value
 	}
+
 	if options.enableDigestEmails.value != nil {
 		msg[options.enableDigestEmails.fieldName] = *options.enableDigestEmails.value
 	}
+
 	if options.enableMarketingEmails.value != nil {
 		msg[options.enableMarketingEmails.fieldName] = *options.enableMarketingEmails.value
 	}
+
 	if options.enableLoginEmails.value != nil {
 		msg[options.enableLoginEmails.fieldName] = *options.enableLoginEmails.value
 	}
+
 	if options.messageContentInEmailNotifications.value != nil {
 		msg[options.messageContentInEmailNotifications.fieldName] = *options.messageContentInEmailNotifications.value
 	}
+
 	if options.pmContentInDesktopNotifications.value != nil {
 		msg[options.pmContentInDesktopNotifications.fieldName] = *options.pmContentInDesktopNotifications.value
 	}
+
 	if options.wildcardMentionsNotify.value != nil {
 		msg[options.wildcardMentionsNotify.fieldName] = *options.wildcardMentionsNotify.value
 	}
+
 	if options.enableFollowedTopicWildcardMentionsNotify.value != nil {
 		msg[options.enableFollowedTopicWildcardMentionsNotify.fieldName] = *options.enableFollowedTopicWildcardMentionsNotify.value
 	}
+
 	if options.desktopIconCountDisplay.value != nil {
 		msg[options.desktopIconCountDisplay.fieldName] = *options.desktopIconCountDisplay.value
 	}
+
 	if options.realmNameInEmailNotificationsPolicy.value != nil {
 		msg[options.realmNameInEmailNotificationsPolicy.fieldName] = *options.realmNameInEmailNotificationsPolicy.value
 	}
+
 	if options.automaticallyFollowTopicsPolicy.value != nil {
 		msg[options.automaticallyFollowTopicsPolicy.fieldName] = *options.automaticallyFollowTopicsPolicy.value
 	}
+
 	if options.automaticallyUnmuteTopicsInMutedStreamsPolicy.value != nil {
 		msg[options.automaticallyUnmuteTopicsInMutedStreamsPolicy.fieldName] = *options.automaticallyUnmuteTopicsInMutedStreamsPolicy.value
 	}
+
 	if options.automaticallyFollowTopicsWhereMentioned.value != nil {
 		msg[options.automaticallyFollowTopicsWhereMentioned.fieldName] = *options.automaticallyFollowTopicsWhereMentioned.value
 	}
+
 	if options.presenceEnabled.value != nil {
 		msg[options.presenceEnabled.fieldName] = *options.presenceEnabled.value
 	}
+
 	if options.enterSends.value != nil {
 		msg[options.enterSends.fieldName] = *options.enterSends.value
 	}
+
 	if options.sendPrivateTypingNotifications.value != nil {
 		msg[options.sendPrivateTypingNotifications.fieldName] = *options.sendPrivateTypingNotifications.value
 	}
+
 	if options.sendStreamTypingNotifications.value != nil {
 		msg[options.sendStreamTypingNotifications.fieldName] = *options.sendStreamTypingNotifications.value
 	}
+
 	if options.sendReadReceipts.value != nil {
 		msg[options.sendReadReceipts.fieldName] = *options.sendReadReceipts.value
 	}
+
 	if options.allowPrivateDataExport.value != nil {
 		msg[options.allowPrivateDataExport.fieldName] = *options.allowPrivateDataExport.value
 	}
+
 	if options.emailAddressVisibility.value != nil {
 		msg[options.emailAddressVisibility.fieldName] = *options.emailAddressVisibility.value
 	}
+
 	if options.webNavigateToSentMessage.value != nil {
 		msg[options.webNavigateToSentMessage.fieldName] = *options.webNavigateToSentMessage.value
 	}

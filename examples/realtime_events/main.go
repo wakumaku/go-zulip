@@ -41,9 +41,10 @@ func main() {
 	realtimeSvc := realtime.NewService(z)
 
 	const maxBackoffRetrySeconds = 30
-	backoffRetrySeconds := 1
-	for {
 
+	backoffRetrySeconds := 1
+
+	for {
 		if backoffRetrySeconds > 1 {
 			log.Printf("Reconnecting in %d seconds ...\n", backoffRetrySeconds)
 			time.Sleep(time.Duration(backoffRetrySeconds) * time.Second)
@@ -102,21 +103,18 @@ func main() {
 						for _, user := range message.Message.DisplayRecipient.Users {
 							users = append(users, user.FullName)
 						}
+
 						log.Printf("@%s: %s", strings.Join(users, ", @"), message.Message.Content)
 					}
-
 				} else if ev.EventType() == events.AlertWordsType {
 					alertWords := ev.(*events.AlertWords)
 					log.Printf("!AlertWords ID: %d, Words: %s", alertWords.ID, alertWords.AlertWords)
-
 				} else if ev.EventType() == events.RealmUserType {
 					realmUser := ev.(*events.RealmUser)
 					log.Printf("@RealmUser ID: %d, Op: %s, FullName: %s", realmUser.ID, realmUser.Op, realmUser.Person.FullName)
-
 				} else if ev.EventType() == events.PresenceType {
 					presence := ev.(*events.Presence)
 					log.Printf("*Presence Email: %s, Status: %s", presence.Email, presence.Presence.Website.Status)
-
 				} else if ev.EventType() == events.RealmEmojiType {
 					realmEmoji := ev.(*events.RealmEmoji)
 					log.Printf(":RealmEmoji event ID: %d", realmEmoji.ID)
@@ -124,11 +122,9 @@ func main() {
 					for id, emoji := range realmEmoji.RealmEmoji {
 						log.Printf("  %s: %s, %s", id, emoji.Name, emoji.SourceURL)
 					}
-
 				} else if ev.EventType() == events.TypingType {
 					typing := ev.(*events.Typing)
 					log.Printf("...typing: : %d . %s -> %s", typing.ID, typing.Op, typing.Sender.Email)
-
 				} else {
 					log.Printf("#%d %s", ev.EventID(), ev.EventType())
 				}

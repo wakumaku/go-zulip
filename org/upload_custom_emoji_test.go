@@ -20,12 +20,14 @@ func TestUploadCustomEmoji(t *testing.T) {
 	// Create a temporary file for testing
 	tempFile, err := os.CreateTemp("", "test-emoji-*.png")
 	assert.NoError(t, err)
-	defer os.Remove(tempFile.Name())
+
+	defer func() { _ = os.Remove(tempFile.Name()) }()
 
 	// Write some test data to the file
 	_, err = tempFile.Write([]byte("test emoji data"))
 	assert.NoError(t, err)
-	tempFile.Close()
+
+	_ = tempFile.Close()
 
 	resp, err := service.UploadCustomEmoji(context.Background(), "test-emoji", tempFile.Name())
 	assert.NoError(t, err)

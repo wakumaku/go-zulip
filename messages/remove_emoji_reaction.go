@@ -27,7 +27,9 @@ func RemoveEmojiReactionEmojiName(emojiName string) RemoveEmojiReactionOption {
 		if strings.TrimSpace(emojiName) == "" {
 			return errors.New("emoji name is empty")
 		}
+
 		o.emojiName = emojiName
+
 		return nil
 	}
 }
@@ -37,7 +39,9 @@ func RemoveEmojiReactionEmojiCode(emojiCode string) RemoveEmojiReactionOption {
 		if strings.TrimSpace(emojiCode) == "" {
 			return errors.New("emoji code is empty")
 		}
+
 		o.emojiCode = emojiCode
+
 		return nil
 	}
 }
@@ -54,6 +58,7 @@ func (svc *Service) RemoveEmojiReaction(ctx context.Context, messageID int, opti
 		method = http.MethodDelete
 		path   = "/api/v1/messages/{message_id}/reactions"
 	)
+
 	patchPath := strings.Replace(path, "{message_id}", fmt.Sprintf("%d", messageID), 1)
 
 	msg := map[string]any{}

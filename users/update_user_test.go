@@ -38,6 +38,7 @@ func TestUpdateUser(t *testing.T) {
 		"profile_data": `[{"id":4,"value":"0"},{"id":5,"value":"1909-04-05"}]`,
 		"new_email":    "newemail@xxx.com",
 	}
+
 	assert.Equal(t, "/api/v1/users/11", client.(*mockClient).path)
 	assert.Equal(t, msg, client.(*mockClient).paramsSent)
 }
@@ -71,6 +72,7 @@ func TestUpdateUserByEmail(t *testing.T) {
 		"profile_data": `[{"id":4,"value":"0"},{"id":5,"value":"1909-04-05"}]`,
 		"new_email":    "newemail@xxx.com",
 	}
+
 	assert.Equal(t, "/api/v1/users/test@tester.com", client.(*mockClient).path)
 	assert.Equal(t, msg, client.(*mockClient).paramsSent)
 }

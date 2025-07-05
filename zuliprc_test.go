@@ -23,7 +23,8 @@ site=https://localhost
 
 	f, err := os.CreateTemp("", "zuliprc")
 	assert.NoError(t, err)
-	defer os.Remove(f.Name())
+
+	defer func() { _ = os.Remove(f.Name()) }()
 
 	_, err = f.WriteString(fileContent)
 	assert.NoError(t, err)

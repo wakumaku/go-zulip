@@ -76,9 +76,11 @@ func TestRestClientDoRequest(t *testing.T) {
 	}
 
 	var resp zulip.APIResponseBase
+
 	err = client.DoRequest(context.TODO(), expectedMethod, expectedEndpoint, msg, &resp,
 		zulip.WithTimeout(10*time.Second),
 	)
+
 	assert.NoError(t, err)
 	assert.Equal(t, zulip.ResultSuccess, resp.Result())
 
@@ -148,9 +150,11 @@ func TestRestClientDoRequestFile(t *testing.T) {
 	msg := bytes.NewReader([]byte("file content"))
 
 	var resp zulip.APIResponseBase
+
 	err = client.DoFileRequest(context.TODO(), expectedMethod, expectedEndpoint, fileName, msg, &resp,
 		zulip.WithTimeout(10*time.Second),
 	)
+
 	assert.NoError(t, err)
 	assert.Equal(t, zulip.ResultSuccess, resp.Result())
 

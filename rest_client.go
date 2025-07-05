@@ -53,7 +53,9 @@ func WithHTTPClient(client *http.Client) ClientOption {
 		if client == nil {
 			return errors.New("http client is nil")
 		}
+
 		o.httpClient = client
+
 		return nil
 	}
 }
@@ -70,7 +72,9 @@ func WithLogger(logger *slog.Logger) ClientOption {
 		if logger == nil {
 			return errors.New("logger is nil")
 		}
+
 		o.logger = logger
+
 		return nil
 	}
 }
@@ -129,6 +133,7 @@ func (c *Client) DoRequest(ctx context.Context, method, path string, data map[st
 	}
 
 	formDataEncoded := formData.Encode()
+
 	var body io.Reader
 	if method != http.MethodGet {
 		body = strings.NewReader(formDataEncoded)
@@ -165,7 +170,8 @@ func (c *Client) DoRequest(ctx context.Context, method, path string, data map[st
 	if err != nil {
 		return fmt.Errorf("send request: %w", err)
 	}
-	defer resp.Body.Close()
+
+	defer func() { _ = resp.Body.Close() }()
 
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
 		return fmt.Errorf("cannot read response body: %s", err)
@@ -198,8 +204,8 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 	}
 
 	var requestBody bytes.Buffer
-	writer := multipart.NewWriter(&requestBody)
 
+	writer := multipart.NewWriter(&requestBody)
 	h := make(textproto.MIMEHeader)
 	h.Set("Content-Disposition",
 		fmt.Sprintf(`form-data; name="%s"; filename="%s"`,
@@ -210,6 +216,7 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 	if mimeType == "" {
 		mimeType = "application/octet-stream"
 	}
+
 	h.Set("Content-Type", mimeType)
 
 	part, err := writer.CreatePart(h)
@@ -255,7 +262,8 @@ func (c *Client) DoFileRequest(ctx context.Context, method, path string, fileNam
 	if err != nil {
 		return fmt.Errorf("send request: %w", err)
 	}
-	defer resp.Body.Close()
+
+	defer func() { _ = resp.Body.Close() }()
 
 	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
 		return fmt.Errorf("cannot read response body: %w", err)

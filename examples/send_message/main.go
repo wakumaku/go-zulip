@@ -14,6 +14,7 @@ func main() {
 
 	// Initialize client
 	credentials := zulip.Credentials("https://chat.zulip.org", "email@zulip.org", "0123456789")
+
 	c, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatal(err)
@@ -21,6 +22,7 @@ func main() {
 
 	// Send a message to a channel/topic
 	msgSvc := messages.NewService(c)
+
 	sendMessageResponse, err := msgSvc.SendMessageToChannelTopic(ctx,
 		recipient.ToChannel("general"), "greetings",
 		"Hello Zulip!",

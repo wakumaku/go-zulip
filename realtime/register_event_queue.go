@@ -132,8 +132,6 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		path   = "/api/v1/register"
 	)
 
-	msg := map[string]any{}
-
 	// default options
 	opts := registerEventQueueOptions{
 		applyMarkdown:            false,
@@ -151,6 +149,8 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 	for _, opt := range options {
 		opt(&opts)
 	}
+
+	msg := map[string]any{}
 
 	if opts.applyMarkdown {
 		msg["apply_markdown"] = opts.applyMarkdown
@@ -177,6 +177,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		if err != nil {
 			return nil, fmt.Errorf("marshaling event types: %w", err)
 		}
+
 		msg["event_types"] = string(eventTypes)
 	}
 
@@ -189,6 +190,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		if err != nil {
 			return nil, fmt.Errorf("marshaling client capabilities: %w", err)
 		}
+
 		msg["client_capabilities"] = string(clientCapabilities)
 	}
 
@@ -197,6 +199,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		if err != nil {
 			return nil, fmt.Errorf("marshaling fetch event types: %w", err)
 		}
+
 		msg["fetch_event_types"] = string(fetchEventTypes)
 	}
 
@@ -205,6 +208,7 @@ func (svc *Service) RegisterEvetQueue(ctx context.Context, options ...RegisterEv
 		if err != nil {
 			return nil, fmt.Errorf("marshaling narrow: %w", err)
 		}
+
 		msg["narrow"] = string(narrowJSON)
 	}
 

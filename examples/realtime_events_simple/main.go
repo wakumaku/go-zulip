@@ -16,6 +16,7 @@ func main() {
 
 	// Initialize client
 	credentials := zulip.Credentials("https://chat.zulip.org", "email@zulip.org", "0123456789")
+
 	c, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatal(err)
@@ -72,6 +73,7 @@ func main() {
 					for _, user := range event.Message.DisplayRecipient.Users {
 						users = append(users, user.FullName)
 					}
+
 					logEntry = fmt.Sprintf("@%s: %s", strings.Join(users, ", @"), event.Message.Content)
 				}
 

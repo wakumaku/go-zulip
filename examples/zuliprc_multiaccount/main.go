@@ -43,6 +43,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("[bot1] Error sending message: %v", err)
 	}
+
 	if resp.IsError() {
 		log.Fatalf("[bot1] Error response: %v", resp)
 	}
@@ -51,6 +52,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("[bot2] Error sending message: %v", err)
 	}
+
 	if resp.IsError() {
 		log.Fatalf("[bot2] Error response: %v", resp)
 	}
@@ -59,6 +61,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("[bot3] Error sending message: %v", err)
 	}
+
 	if resp.IsError() {
 		log.Fatalf("[bot3] Error response: %v", resp)
 	}

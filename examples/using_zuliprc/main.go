@@ -19,11 +19,13 @@ func main() {
 	if !ok {
 		log.Fatalf("No 'api' section found in zuliprc file")
 	}
+
 	log.Printf("Email: %s", apiSection.Email)
 	log.Printf("API Key: %s", apiSection.APIKey)
 	log.Printf("Site: %s", apiSection.Site)
 
 	credentials := zulip.Credentials(apiSection.Site, apiSection.Email, apiSection.APIKey)
+
 	client, err := zulip.NewClient(credentials)
 	if err != nil {
 		log.Fatalf("Error creating client: %v", err)
@@ -31,10 +33,12 @@ func main() {
 
 	msgs := messages.NewService(client)
 	ctx := context.Background()
+
 	resp, err := msgs.SendMessage(ctx, recipient.ToChannel("general"), "Hello from go-zulip!", messages.ToTopic("test"))
 	if err != nil {
 		log.Fatalf("Error sending message: %v", err)
 	}
+
 	if resp.IsError() {
 		log.Fatalf("Error response: %v", resp)
 	}

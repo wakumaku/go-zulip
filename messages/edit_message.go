@@ -57,8 +57,10 @@ func MoveToTopic(name string) EditMessageOption {
 		if strings.TrimSpace(name) == "" {
 			return errors.New("topic 'name' is empty")
 		}
+
 		o.topic.fieldName = "topic"
 		o.topic.value = &name
+
 		return nil
 	}
 }
@@ -68,6 +70,7 @@ func SetPropagateMode(change PropagateMode) EditMessageOption {
 	return func(o *editMessageOptions) error {
 		o.propagateMode.fieldName = "propagate_mode"
 		o.propagateMode.value = &change
+
 		return nil
 	}
 }
@@ -77,6 +80,7 @@ func SendNotificationToOldThread(yes bool) EditMessageOption {
 	return func(o *editMessageOptions) error {
 		o.sendNotificationToOldThread.fieldName = "send_notification_to_old_thread"
 		o.sendNotificationToOldThread.value = &yes
+
 		return nil
 	}
 }
@@ -86,6 +90,7 @@ func SendNotificationToNewThread(yes bool) EditMessageOption {
 	return func(o *editMessageOptions) error {
 		o.sendNotificationToNewThread.fieldName = "send_notification_to_new_thread"
 		o.sendNotificationToNewThread.value = &yes
+
 		return nil
 	}
 }
@@ -95,6 +100,7 @@ func NewContent(content string) EditMessageOption {
 	return func(o *editMessageOptions) error {
 		o.content.fieldName = "content"
 		o.content.value = &content
+
 		return nil
 	}
 }
@@ -104,6 +110,7 @@ func SetStreamID(id int) EditMessageOption {
 	return func(o *editMessageOptions) error {
 		o.streamID.fieldName = "stream_id"
 		o.streamID.value = &id
+
 		return nil
 	}
 }

@@ -40,6 +40,7 @@ func (svc *Service) GetUserStatus(ctx context.Context, id int) (*GetUserStatusRe
 		path   = "/api/v1/users/%d/status"
 		method = http.MethodGet
 	)
+
 	pathPatch := fmt.Sprintf(path, id)
 
 	resp := GetUserStatusResponse{}

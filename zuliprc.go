@@ -28,6 +28,7 @@ func ParseZuliprc(file string) (Zuliprc, error) {
 	}
 
 	r := bytes.NewReader(f)
+
 	return parseZuliprcContent(r)
 }
 
@@ -40,6 +41,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 	currentSection := "unknown"
 
 	z := Zuliprc{}
+
 	for s.Scan() {
 		line := strings.TrimSpace(s.Text())
 		if line == "" {
@@ -50,6 +52,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 			section := rxSection.FindStringSubmatch(line)[1]
 			z[section] = SectionData{}
 			currentSection = strings.TrimSpace(section)
+
 			continue
 		}
 
@@ -59,6 +62,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 			val := kv[2]
 
 			sectionData := z[currentSection]
+
 			switch strings.TrimSpace(key) {
 			case "email":
 				sectionData.Email = strings.TrimSpace(val)
@@ -67,6 +71,7 @@ func parseZuliprcContent(b io.Reader) (Zuliprc, error) {
 			case "site":
 				sectionData.Site = strings.TrimSpace(val)
 			}
+
 			z[currentSection] = sectionData
 		}
 	}

@@ -33,17 +33,19 @@ func (g *GetEventsEventQueueResponse) UnmarshalJSON(data []byte) error {
 	}
 
 	for _, e := range eventsMap.Events {
-
 		var itemType events.EventType
-		if etype, ok := e["type"]; ok {
-			it, ok := etype.(string)
-			if !ok {
-				return errors.New("type is not a string")
-			}
-			itemType = events.EventType(it)
-		} else {
+
+		etype, ok := e["type"]
+		if !ok {
 			return errors.New("type field not found")
 		}
+
+		it, ok := etype.(string)
+		if !ok {
+			return errors.New("type is not a string")
+		}
+
+		itemType = events.EventType(it)
 
 		var ev events.Event
 		switch itemType {

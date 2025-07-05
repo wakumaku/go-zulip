@@ -61,6 +61,7 @@ func (svc *Service) GetUser(ctx context.Context, id int, options ...GetUserOptio
 	const (
 		path = "/api/v1/users"
 	)
+
 	pathPatch := fmt.Sprintf("%s/%d", path, id)
 
 	return svc.getUser(ctx, pathPatch, options...)
@@ -70,6 +71,7 @@ func (svc *Service) GetUserByEmail(ctx context.Context, email string, options ..
 	const (
 		path = "/api/v1/users"
 	)
+
 	pathPatch := fmt.Sprintf("%s/%s", path, email)
 
 	return svc.getUser(ctx, pathPatch, options...)

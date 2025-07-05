@@ -45,7 +45,8 @@ func (svc *Service) UploadFile(ctx context.Context, filePath string) (*UploadFil
 	if err != nil {
 		return nil, fmt.Errorf("cannot open file: %v", err)
 	}
-	defer file.Close()
+
+	defer func() { _ = file.Close() }()
 
 	resp := UploadFileResponse{}
 	if err := svc.client.DoFileRequest(ctx, method, path, file.Name(), file, &resp); err != nil {

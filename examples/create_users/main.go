@@ -59,6 +59,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to create user: %v", err)
 	}
+
 	if createUserResp.IsError() {
 		log.Fatalf("zulip API error creating user: %v", createUserResp.Msg())
 	}
@@ -70,6 +71,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to fetch API Key: %v", err)
 	}
+
 	if fetchAPIKeyResp.IsError() {
 		log.Fatalf("zulip API error fetching API Key: %v", fetchAPIKeyResp.Msg())
 	}

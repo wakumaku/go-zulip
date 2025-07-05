@@ -21,6 +21,7 @@ func (mc *mockClient) DoRequest(ctx context.Context, method, path string, data m
 	mc.method = method
 	mc.path = path
 	mc.paramsSent = data
+
 	return json.Unmarshal([]byte(mc.response), response)
 }
 
@@ -30,6 +31,7 @@ func (mc *mockClient) DoFileRequest(ctx context.Context, method, path string, fi
 	mc.paramsSent = map[string]any{
 		"filename": fileName,
 	}
+
 	return json.Unmarshal([]byte(mc.response), response)
 }
 

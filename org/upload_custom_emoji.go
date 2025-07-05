@@ -29,13 +29,15 @@ func (svc *Service) UploadCustomEmoji(ctx context.Context, name, filePath string
 		method = http.MethodPost
 		path   = "/api/v1/realm/emoji/%s"
 	)
+
 	patchPath := fmt.Sprintf(path, name)
 
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("cannot open file: %v", err)
 	}
-	defer file.Close()
+
+	defer func() { _ = file.Close() }()
 
 	resp := UploadCustomEmojiResponse{}
 	if err := svc.client.DoFileRequest(ctx, method, patchPath, file.Name(), file, &resp); err != nil {
@@ -50,6 +52,7 @@ func (svc *Service) UploadCustomEmojiFromBytes(ctx context.Context, name, fileNa
 		method = http.MethodPost
 		path   = "/api/v1/realm/emoji/%s"
 	)
+
 	patchPath := fmt.Sprintf(path, name)
 
 	resp := UploadCustomEmojiResponse{}
@@ -65,6 +68,7 @@ func (svc *Service) UploadCustomEmojiFromReader(ctx context.Context, name, fileN
 		method = http.MethodPost
 		path   = "/api/v1/realm/emoji/%s"
 	)
+
 	patchPath := fmt.Sprintf(path, name)
 
 	resp := UploadCustomEmojiResponse{}

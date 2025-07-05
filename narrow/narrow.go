@@ -107,6 +107,7 @@ func (n Filter) MarshalEvent() ([]byte, error) {
 		operator, operand := item.Operator, item.Operand
 		out = append(out, []string{string(operator), fmt.Sprintf("%v", operand)})
 	}
+
 	return json.Marshal(out)
 }
 

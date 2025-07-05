@@ -55,6 +55,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	if queue.IsError() {
 		panic(queue.Msg())
 	}
@@ -65,6 +66,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 		if evs.IsError() {
 			panic(evs.Msg())
 		}
@@ -78,6 +80,7 @@ func main() {
 				if e.Message.IsMeMessage {
 					continue
 				}
+
 				if e.Message.SenderID == parrot.UserID {
 					continue
 				}
@@ -91,6 +94,7 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
+
 				if resp.IsError() {
 					panic(resp.Msg())
 				}

@@ -88,6 +88,7 @@ func (svc *Service) UpdateUser(ctx context.Context, id int, options ...UpdateUse
 	const (
 		path = "/api/v1/users"
 	)
+
 	patchPath := fmt.Sprintf("%s/%d", path, id)
 
 	return svc.updateUser(ctx, patchPath, options...)
@@ -97,6 +98,7 @@ func (svc *Service) UpdateUserByEmail(ctx context.Context, email string, options
 	const (
 		path = "/api/v1/users"
 	)
+
 	patchPath := fmt.Sprintf("%s/%s", path, email)
 
 	return svc.updateUser(ctx, patchPath, options...)
@@ -127,6 +129,7 @@ func (svc *Service) updateUser(ctx context.Context, patchPath string, options ..
 		if err != nil {
 			return nil, err
 		}
+
 		msg[opts.profileData.fieldName] = string(jsonData)
 	}
 

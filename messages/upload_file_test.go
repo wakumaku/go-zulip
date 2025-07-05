@@ -23,7 +23,8 @@ func TestUploadFile(t *testing.T) {
 	// create a temporary file to upload
 	f, err := os.CreateTemp("", "zulip.txt")
 	assert.NoError(t, err)
-	defer os.Remove(f.Name())
+
+	defer func() { _ = os.Remove(f.Name()) }()
 
 	msg := map[string]any{
 		"filename": f.Name(),
@@ -57,7 +58,8 @@ func TestUploadFileFromBytes(t *testing.T) {
 	// create a temporary file to upload
 	f, err := os.CreateTemp("", "zulip.txt")
 	assert.NoError(t, err)
-	defer os.Remove(f.Name())
+
+	defer func() { _ = os.Remove(f.Name()) }()
 
 	msg := map[string]any{
 		"filename": f.Name(),

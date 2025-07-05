@@ -86,7 +86,7 @@ func (svc *Service) CreateReusableInvitationLink(ctx context.Context, options ..
 	}
 
 	if opts.StreamIds != nil {
-		msg["stream_ids"] = strings.Replace(fmt.Sprint(*opts.StreamIds), " ", ",", -1)
+		msg["stream_ids"] = strings.ReplaceAll(fmt.Sprint(*opts.StreamIds), " ", ",")
 	}
 
 	if opts.IncludeRealmDefaultSubscriptions != nil {

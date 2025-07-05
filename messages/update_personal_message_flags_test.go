@@ -28,6 +28,7 @@ func TestUpdatePersonalMessageFlags(T *testing.T) {
 
 	// validate method & payload
 	assert.Equal(T, http.MethodPost, client.(*mockClient).method)
+
 	expedtedParams := map[string]interface{}{
 		"messages": "[4,18,15]",
 		"op":       messages.OperationAdd,

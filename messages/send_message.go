@@ -51,8 +51,10 @@ func ToTopic(name string) SendMessageOption {
 		if strings.TrimSpace(name) == "" {
 			return errors.New("topic 'name' is empty")
 		}
+
 		o.topic.fieldName = "topic"
 		o.topic.value = &name
+
 		return nil
 	}
 }
@@ -63,6 +65,7 @@ func ReadBySender(asRead bool) SendMessageOption {
 	return func(o *sendMessageOptions) error {
 		o.readBySender.fieldName = "read_by_sender"
 		o.readBySender.value = &asRead
+
 		return nil
 	}
 }
@@ -107,12 +110,14 @@ func (svc *Service) SendMessage(ctx context.Context, to recipient.Recipient, con
 		toRecipient   any
 		recipientType string
 	)
+
 	switch t := to.(type) {
 	case recipient.Direct:
 		v, err := json.Marshal(t.To())
 		if err != nil {
 			return nil, err
 		}
+
 		toRecipient = string(v)
 		recipientType = toDirect
 	case recipient.Channel:

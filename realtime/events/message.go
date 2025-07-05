@@ -53,6 +53,7 @@ func (dr *DisplayRecipient) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &displayRecipient); err == nil {
 		dr.IsChannel = true
 		dr.Channel = displayRecipient
+
 		return nil
 	}
 
@@ -60,6 +61,7 @@ func (dr *DisplayRecipient) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &displayRecipientObject); err == nil {
 		dr.IsChannel = false
 		dr.Users = displayRecipientObject
+
 		return nil
 	}
 

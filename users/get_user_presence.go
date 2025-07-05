@@ -44,6 +44,7 @@ func (svc *Service) GetUserPresence(ctx context.Context, userIDorEmail string) (
 		path   = "/api/v1/users/%s/presence"
 		method = http.MethodGet
 	)
+
 	pathPatch := fmt.Sprintf(path, userIDorEmail)
 
 	resp := GetUserPresenceResponse{}

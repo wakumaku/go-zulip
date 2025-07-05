@@ -32,6 +32,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 		if err != nil {
 			return fmt.Errorf("failed to subscribe to channel: %v", err)
 		}
+
 		return fmt.Errorf("failed to subscribe to channel: %v", subscriptionResponse.Msg())
 	}
 
@@ -40,6 +41,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 	if err != nil {
 		return fmt.Errorf("failed to get user me: %v", err)
 	}
+
 	if respUserMe.IsError() {
 		return fmt.Errorf("zulip API error getting user me: %v", respUserMe.Msg())
 	}
@@ -58,6 +60,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 	if err != nil {
 		return fmt.Errorf("failed to register event queue: %v", err)
 	}
+
 	if queueRegisterResp.IsError() {
 		return fmt.Errorf("zulip API error registering event queue: %v", queueRegisterResp.Msg())
 	}
@@ -75,6 +78,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			if ctx.Err() != nil {
 				return ctx.Err()
 			}
+
 			return nil
 
 		case <-time.After(10 * time.Second):
@@ -83,16 +87,19 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			if err != nil {
 				return fmt.Errorf("failed to upload file: %v", err)
 			}
+
 			if uploadedFile.IsError() {
 				return fmt.Errorf("zulip API error uploading file: %v", uploadedFile.Msg())
 			}
 
 			helloThere := fmt.Sprintf("Hello there! Am I alone in #**%s**? My name is @**%s**",
 				channel, botName)
+
 			sendMsgResp, err := b.MessageSVC.SendMessageToChannelTopic(ctx, recipient.ToChannel(channel), topic, helloThere)
 			if err != nil {
 				return fmt.Errorf("failed to send message: %v", err)
 			}
+
 			if sendMsgResp.IsError() {
 				return fmt.Errorf("zulip API error sending message: %v", sendMsgResp.Msg())
 			}
@@ -102,6 +109,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			if err != nil {
 				return fmt.Errorf("failed to send image message: %v", err)
 			}
+
 			if sendImgResp.IsError() {
 				return fmt.Errorf("zulip API error sending image message: %v", sendImgResp.Msg())
 			}
@@ -114,6 +122,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 				// log.Printf("Bot ID: %d - Messages channel closed", botID)
 				return nil
 			}
+
 			if e.Message.SenderID == botID {
 				// log.Printf("Bot ID: %d - Ignoring self message", botID)
 				continue
@@ -129,6 +138,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 				if err != nil {
 					return fmt.Errorf("failed to add reaction: %v", err)
 				}
+
 				if reactionResp.IsError() {
 					return fmt.Errorf("zulip API error adding reaction: %v", reactionResp.Msg())
 				}
@@ -139,6 +149,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			if responseMessage == "" {
 				continue
 			}
+
 			if responseMessage == "SLEEP" {
 				time.Sleep(5 * time.Second)
 				continue
@@ -148,6 +159,7 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 			if err != nil {
 				return fmt.Errorf("failed to send message: %v", err)
 			}
+
 			if sendMsgResp.IsError() {
 				return fmt.Errorf("zulip API error sending message: %v", sendMsgResp.Msg())
 			}
@@ -202,6 +214,7 @@ func (b *Bot) messageEvents(ctx context.Context, queueID string, lastMessageID i
 				log.Printf("failed to get events from event queue: %v", err)
 				return
 			}
+
 			if eventsResp.IsError() {
 				log.Printf("zulip API error getting events from event queue: %v", eventsResp.Msg())
 				return

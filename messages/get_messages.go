@@ -97,6 +97,7 @@ func (d *DisplayRecipient) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &displayRecipient); err == nil {
 		d.IsChannel = true
 		d.Channel = displayRecipient
+
 		return nil
 	}
 
@@ -104,6 +105,7 @@ func (d *DisplayRecipient) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &displayRecipientObject); err == nil {
 		d.IsChannel = false
 		d.Users = displayRecipientObject
+
 		return nil
 	}
 
@@ -243,6 +245,7 @@ func (svc *Service) GetMessages(ctx context.Context, options ...GetMessageOption
 		if err != nil {
 			return nil, fmt.Errorf("marshaling narrow: %w", err)
 		}
+
 		msg[opts.narrow.fieldName] = string(narrowJSON)
 	}
 

@@ -20,6 +20,7 @@ func (mc *mockClient) DoRequest(ctx context.Context, method, path string, data m
 	mc.method = method
 	mc.path = path
 	mc.paramsSent = data
+
 	return json.Unmarshal([]byte(mc.response), response)
 }
 

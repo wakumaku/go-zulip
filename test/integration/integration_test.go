@@ -103,6 +103,7 @@ func TestIntegrationSuite(t *testing.T) {
 		zulip.WithLogger(debugLogger),
 	)
 	assert.NoError(t, err)
+
 	adminInvitationSvc := invitations.NewService(adminClient)
 	respCreateReusableLink, err := adminInvitationSvc.CreateReusableInvitationLink(ctx,
 		invitations.IncludeRealmDefaultSubscriptions(true),
@@ -322,12 +323,14 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// the user is subscribed to the general channel by default
 	generalChannelFound := false
+
 	for _, subscription := range respGetSubscribedChannels.Subscriptions {
 		if subscription.Name == "general" {
 			generalChannelFound = true
 			break
 		}
 	}
+
 	assert.True(t, generalChannelFound, "User should be subscribed to the general channel by default")
 
 	// subscribe to a new channel and resubscribe to the general channel (just to test the API response containing more info)
@@ -356,12 +359,14 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// the user is subscribed to the newChannelName too
 	newChannelFound := false
+
 	for _, subscription := range respGetSubscribedChannels.Subscriptions {
 		if subscription.Name == newChannelName {
 			newChannelFound = true
 			break
 		}
 	}
+
 	assert.True(t, newChannelFound, "User should be subscribed to the "+newChannelName+" channel")
 
 	// User A subscribes to a new channel
@@ -383,12 +388,14 @@ func TestIntegrationSuite(t *testing.T) {
 	assert.Equal(t, respGetSubscribedChannelsUserA.Result(), zulip.ResultSuccess)
 
 	unsubscriberChannelFound := false
+
 	for _, subscription := range respGetSubscribedChannelsUserA.Subscriptions {
 		if subscription.Name == "unsubscriber" {
 			unsubscriberChannelFound = true
 			break
 		}
 	}
+
 	assert.False(t, unsubscriberChannelFound, "User should not be subscribed to the unsubscriber channel")
 
 	// 3 People private chat: Admin, User A, User B

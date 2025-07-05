@@ -52,6 +52,7 @@ func (svc *Service) FetchSingleMessage(ctx context.Context, messageID int, optio
 		method = http.MethodGet
 		path   = "/api/v1/messages"
 	)
+
 	patchPath := fmt.Sprintf("%s/%d", path, messageID)
 
 	msg := map[string]any{}
