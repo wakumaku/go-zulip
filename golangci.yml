@@ -8,8 +8,7 @@ linters:
   enable:
     - asasalint
     - asciicheck
-    - gofmt
-    - goimports
+    - gofumpt
     - gomodguard
     - goprintffuncname
     - gosimple

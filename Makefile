@@ -53,11 +53,10 @@ lint: ## Run linters
 
 fmt: ## Format code
 	@if docker compose -p $(PROJECT_NAME) ps | grep -q $(DEV_SERVICE); then \
-		docker compose -p $(PROJECT_NAME) exec $(DEV_SERVICE) sh -c "go fmt ./... && go tool goimports -w ."; \
+		docker compose -p $(PROJECT_NAME) exec $(DEV_SERVICE) go tool gofumpt -w .; \
 	else \
 		echo "Development environment not running. Start with 'make dev-setup' first."; \
-		go fmt ./...; \
-		go tool goimports -w .; \
+		go tool gofumpt -w .; \
 	fi
 
 # Build targets

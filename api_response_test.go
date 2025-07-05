@@ -50,5 +50,4 @@ func TestAPIResponseMarshalling(t *testing.T) {
 		assert.NoError(t, err)
 		assert.JSONEq(t, c.input, string(erJSON))
 	}
-
 }

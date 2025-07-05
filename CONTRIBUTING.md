@@ -28,7 +28,7 @@ Thank you for your interest in contributing to go-zulip! This document provides 
 ## Development Environment Setup
 
 The project uses a Docker-based development environment that provides:
-- Go 1.24 with all required tools (`golangci-lint`, `goimports`, `air`)
+- Go 1.24 with all required tools (`golangci-lint`, `gofumpt`, `air`)
 - A complete Zulip server instance for integration testing
 - Automatic file watching and test execution
 - Consistent development environment across different machines
@@ -182,7 +182,7 @@ The development environment includes `air` (file watcher) that automatically:
 
 This project follows standard Go conventions:
 
-- **Formatting**: Use `make fmt` (runs `go fmt` and `goimports`)
+- **Formatting**: Use `make fmt` (runs `gofumpt`)
 - **Linting**: Use `make lint` (runs `golangci-lint` with project configuration)
 - **Testing**: Add tests for all new functionality
 - **Documentation**: Update documentation and examples as needed
