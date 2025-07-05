@@ -1,5 +1,0 @@
-services:
-  go-zulip:
-    environment:
-      - ZULIP_EMAIL=zulip@zulip.org
-      - ZULIP_API_KEY=REPLACE_WITH_SECURE_ZULIP_API_KEY
