@@ -2,10 +2,14 @@
     "go.useLanguageServer": true,
     "gopls": {
         "formatting.gofumpt": true,
-        "staticcheck": true,
+        "ui.semanticTokens": true,
     },
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
-        "--fast"
+        "--path-mode=abs",
+        "--fast-only",
+        "--issues-exit-code=0",
+        "-c",
+        ".golangci.yml",
     ],
 }

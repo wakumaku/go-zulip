@@ -92,7 +92,7 @@ linters:
     # - sloglint
     # - spancheck
     # - sqlclosecheck
-    # - staticcheck
+    - staticcheck
     # - tagalign
     # - tagliatelle
     # - testableexamples
