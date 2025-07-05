@@ -1,6 +1,6 @@
 # Makefile for go-zulip
 
-.PHONY: test test-unit test-integration test-coverage lint fmt build clean help dev-setup dev-up dev-down dev-exec
+.PHONY: test test-unit test-integration test-coverage lint fmt build clean help dev-setup dev-up dev-down dev-exec dev
 
 # Docker environment
 DEV_COMPOSE_FILES := -f docker-compose-dev-env.yml -f docker-compose-dev.yml -f docker-compose-zulip.yml
@@ -102,6 +102,8 @@ dev-exec: ## Execute a command in the development container (usage: make dev-exe
 
 dev-logs: ## Show development environment logs
 	@docker compose -p $(PROJECT_NAME) logs --follow --tail 100
+
+dev: dev-up dev-logs ## Start development environment and show logs
 
 # CI targets (for local development with Docker)
 ci: tidy lint test-unit ## Run CI pipeline
