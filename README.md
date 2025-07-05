@@ -291,14 +291,12 @@ Check [/examples](examples) folder.
 	* Remove an FCM registration token
 	* Create BigBlueButton video call
 
-### Developing
+### Developing and Contributing
 
-Check [/dev](dev) folder and read the SETUP.md file.
+This project provides a complete Docker-based development environment for easy contribution and testing with Go 1.24, automatic file watching, and a full Zulip server for integration testing.
+
+For development setup, testing guidelines, pull request process, and contribution workflow, see **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
 ### Documentation
 
 For detailed documentation on all available methods and features, please refer to the [GoDoc](https://pkg.go.dev/github.com/wakumaku/go-zulip).
-
-### Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request on GitHub.
