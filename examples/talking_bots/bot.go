@@ -65,8 +65,8 @@ func (b *Bot) Run(ctx context.Context, channel, topic string) error {
 		return fmt.Errorf("zulip API error registering event queue: %v", queueRegisterResp.Msg())
 	}
 
-	queueID := queueRegisterResp.QueueId
-	lastMessageID := queueRegisterResp.LastEventId
+	queueID := queueRegisterResp.QueueID
+	lastMessageID := queueRegisterResp.LastEventID
 
 	log.Printf("Bot ID: %d - %s (%s) is ready", botID, botName, botEmail)
 

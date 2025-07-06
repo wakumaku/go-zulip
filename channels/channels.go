@@ -27,10 +27,10 @@ func NewService(c zulip.RESTClient) *Service {
 type ChannelInfo struct {
 	CanAddSubscribersGroup     int    `json:"can_add_subscribers_group"`     // 10,
 	CanRemoveSubscribersGroup  int    `json:"can_remove_subscribers_group"`  // 10,
-	CreatorId                  int    `json:"creator_id"`                    // null,
+	CreatorID                  int    `json:"creator_id"`                    // null,
 	DateCreated                int    `json:"date_created"`                  // 1691057093,
 	Description                string `json:"description"`                   // "A private channel",
-	FirstMessageId             int    `json:"first_message_id"`              // 18,
+	FirstMessageID             int    `json:"first_message_id"`              // 18,
 	HistoryPublicToSubscribers bool   `json:"history_public_to_subscribers"` // false,
 	InviteOnly                 bool   `json:"invite_only"`                   // true,
 	IsAnnouncementOnly         bool   `json:"is_announcement_only"`          // false,
@@ -41,7 +41,7 @@ type ChannelInfo struct {
 	MessageRetentionDays       int    `json:"message_retention_days"`        // null,
 	Name                       string `json:"name"`                          // "management",
 	RenderedDescription        string `json:"rendered_description"`          // "<p>A private channel</p>",
-	StreamId                   int    `json:"stream_id"`                     // 2,
+	StreamID                   int    `json:"stream_id"`                     // 2,
 	StreamPostPolicy           int    `json:"stream_post_policy"`            // 1,
 	StreamWeeklyTraffic        int    `json:"stream_weekly_traffic"`         // null
 }

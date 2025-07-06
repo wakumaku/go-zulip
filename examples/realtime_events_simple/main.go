@@ -48,15 +48,15 @@ func main() {
 		log.Fatalf("%s: %s", queue.Msg(), queue.Code())
 	}
 
-	log.Printf("QueueId: %s", queue.QueueId)
+	log.Printf("QueueId: %s", queue.QueueID)
 	log.Println("Waiting for events...")
 
-	lastEventID := queue.LastEventId
+	lastEventID := queue.LastEventID
 
 	// Infinite loop polling for new events
 	for {
 		// Long polling HTTP Request
-		eventsFromQueue, err := realtimeSvc.GetEventsEventQueue(ctx, queue.QueueId, realtime.LastEventID(lastEventID))
+		eventsFromQueue, err := realtimeSvc.GetEventsEventQueue(ctx, queue.QueueID, realtime.LastEventID(lastEventID))
 		if err != nil {
 			log.Fatalf("error getting events from queue: %s", err)
 		}

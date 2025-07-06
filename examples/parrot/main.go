@@ -60,9 +60,9 @@ func main() {
 		panic(queue.Msg())
 	}
 
-	lastEventID := queue.LastEventId
+	lastEventID := queue.LastEventID
 	for {
-		evs, err := rtimeSvc.GetEventsEventQueue(ctx, queue.QueueId, realtime.LastEventID(lastEventID))
+		evs, err := rtimeSvc.GetEventsEventQueue(ctx, queue.QueueID, realtime.LastEventID(lastEventID))
 		if err != nil {
 			panic(err)
 		}

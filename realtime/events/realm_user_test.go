@@ -42,9 +42,9 @@ func TestRealmUser(t *testing.T) {
 	assert.Equal(t, events.RealmUserType, v.EventType())
 	assert.Equal(t, "add", v.EventOp())
 
-	assert.Equal(t, "https://secure.gravatar.com/avatar/c6b5578d4964bd9c5fae593c6868912a?d=identicon&version=1", v.Person.AvatarUrl)
+	assert.Equal(t, "https://secure.gravatar.com/avatar/c6b5578d4964bd9c5fae593c6868912a?d=identicon&version=1", v.Person.AvatarURL)
 	assert.Equal(t, 1, v.Person.AvatarVersion)
 	assert.Equal(t, "2020-07-15T15:04:02.030833+00:00", v.Person.DateJoined)
 	assert.Empty(t, v.Person.DeliveryEmail)
-	assert.Equal(t, 38, v.Person.UserId)
+	assert.Equal(t, 38, v.Person.UserID)
 }

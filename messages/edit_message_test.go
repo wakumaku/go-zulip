@@ -53,7 +53,7 @@ func TestEditMessage(t *testing.T) {
 	assert.Equal(t, 3, resp.DetachedUploads[0].ID)
 	assert.Empty(t, resp.DetachedUploads[0].Messages)
 	assert.Equal(t, "1253601-1.jpg", resp.DetachedUploads[0].Name)
-	assert.Equal(t, "2/5d/BD5NRptFxPDKY3RUKwhhup8r/1253601-1.jpg", resp.DetachedUploads[0].PathId)
+	assert.Equal(t, "2/5d/BD5NRptFxPDKY3RUKwhhup8r/1253601-1.jpg", resp.DetachedUploads[0].PathID)
 	assert.Equal(t, 1339060, resp.DetachedUploads[0].Size)
 
 	// validate the parameters sent are correct

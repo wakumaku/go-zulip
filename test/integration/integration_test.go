@@ -249,7 +249,7 @@ func TestIntegrationSuite(t *testing.T) {
 	}
 
 	// receive the message via event
-	respGetEvents, err := adminRealtimeSvc.GetEventsEventQueue(ctx, respRegister.QueueId)
+	respGetEvents, err := adminRealtimeSvc.GetEventsEventQueue(ctx, respRegister.QueueID)
 	require.NoError(t, err)
 	assert.Equal(t, http.StatusOK, respGetEvents.HTTPCode())
 	assert.Equal(t, zulip.ResultSuccess, respGetEvents.Result())
@@ -271,7 +271,7 @@ func TestIntegrationSuite(t *testing.T) {
 		messages.NumBefore(1),
 		messages.NumAfter(1),
 		messages.NarrowMessage(narrow.NewFilter().
-			Add(narrow.New(narrow.Id, messageToBeGetLater.ID)),
+			Add(narrow.New(narrow.ID, messageToBeGetLater.ID)),
 		),
 		messages.ApplyMarkdownMessage(false),
 	)
@@ -441,7 +441,7 @@ func TestIntegrationSuite(t *testing.T) {
 
 	// Admin marks the message as read but applying a narrow
 	markAsReadNarrow := narrow.NewFilter().
-		Add(narrow.New(narrow.Id, respCreatePrivateChat.ID)).              // the message ID
+		Add(narrow.New(narrow.ID, respCreatePrivateChat.ID)).              // the message ID
 		Add(narrow.New(narrow.Operator("is"), narrow.Operand("private"))). // private messages
 		Add(narrow.New(narrow.DmIncluding, narrow.Operand(userAID)))       // including User A in the conversation
 

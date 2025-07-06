@@ -19,9 +19,9 @@ type RegisterEventQueueResponse struct {
 type registerEventQueueData struct {
 	ZulipFeatureLevel int    `json:"zulip_feature_level"`
 	ZulipMergeBase    string `json:"zulip_merge_base"`
-	MaxMessageId      int    `json:"max_message_id"`
-	LastEventId       int    `json:"last_event_id"`
-	QueueId           string `json:"queue_id"`
+	MaxMessageID      int    `json:"max_message_id"`
+	LastEventID       int    `json:"last_event_id"`
+	QueueID           string `json:"queue_id"`
 	ZulipVersion      string `json:"zulip_version"`
 }
 
@@ -42,10 +42,10 @@ type ClientCapability string
 const (
 	NotificationSettingsNull   ClientCapability = "notification_settings_null"
 	BulkMessageDeletion        ClientCapability = "bulk_message_deletion"
-	UserAvatarUrlFieldOptional ClientCapability = "user_avatar_url_field_optional"
+	UserAvatarURLFieldOptional ClientCapability = "user_avatar_url_field_optional"
 	StreamTypingNotifications  ClientCapability = "stream_typing_notifications"
 	UserSettingsObject         ClientCapability = "user_settings_object"
-	LinkifierUrlTemplate       ClientCapability = "linkifier_url_template"
+	LinkifierURLTemplate       ClientCapability = "linkifier_url_template"
 	UserListIncomplete         ClientCapability = "user_list_incomplete"
 	IncludeDeactivatedGroups   ClientCapability = "include_deactivated_groups"
 	ArchivedChannels           ClientCapability = "archived_channels"

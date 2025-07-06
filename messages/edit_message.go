@@ -126,7 +126,7 @@ type editMessageResponseData struct {
 		ID         int    `json:"id"`
 		Messages   []any  `json:"messages"`
 		Name       string `json:"name"`
-		PathId     string `json:"path_id"`
+		PathID     string `json:"path_id"`
 		Size       int    `json:"size"`
 	} `json:"detached_uploads"`
 }

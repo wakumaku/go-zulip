@@ -112,6 +112,9 @@ linters:
     - wsl_v5
     # - zerologlint
   settings:
+    staticcheck:
+      checks:
+       - all
     wsl_v5:
       allow-first-in-block: true
       allow-whole-block: false

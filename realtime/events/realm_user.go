@@ -12,7 +12,7 @@ type RealmUser struct {
 }
 
 type Person struct {
-	AvatarUrl      string                      `json:"avatar_url"`       // "avatar_url": "https://secure.gravatar.com/avatar/c6b5578d4964bd9c5fae593c6868912a?d=identicon&version=1",
+	AvatarURL      string                      `json:"avatar_url"`       // "avatar_url": "https://secure.gravatar.com/avatar/c6b5578d4964bd9c5fae593c6868912a?d=identicon&version=1",
 	AvatarVersion  int                         `json:"avatar_version"`   // "avatar_version": 1,
 	DateJoined     string                      `json:"date_joined"`      // "date_joined": "2020-07-15T15:04:02.030833+00:00",
 	DeliveryEmail  string                      `json:"delivery_email"`   // "delivery_email": null,
@@ -27,7 +27,7 @@ type Person struct {
 	ProfileData    map[string]any              `json:"profile_data"`     // "profile_data": {},
 	Role           zulip.OrganizationRoleLevel `json:"role"`             // "role": 400,
 	Timezone       string                      `json:"timezone"`         // "timezone": "",
-	UserId         int                         `json:"user_id"`          // "user_id": 38
+	UserID         int                         `json:"user_id"`          // "user_id": 38
 }
 
 func (e *RealmUser) EventID() int {

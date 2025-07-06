@@ -109,7 +109,7 @@ func TestGetUsers(t *testing.T) {
 
 	assert.Len(t, resp.Members, 3)
 
-	assert.Equal(t, "https://secure.gravatar.com/avatar/818c212b9f8830dfef491b3f7da99a14?d=identicon&version=1", resp.Members[0].AvatarUrl)
+	assert.Equal(t, "https://secure.gravatar.com/avatar/818c212b9f8830dfef491b3f7da99a14?d=identicon&version=1", resp.Members[0].AvatarURL)
 	assert.Equal(t, "aaron", resp.Members[0].FullName)
 	assert.False(t, resp.Members[0].IsAdmin)
 	assert.Equal(t, 7, resp.Members[0].UserID)

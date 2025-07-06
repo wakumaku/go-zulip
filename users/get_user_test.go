@@ -70,7 +70,7 @@ func TestGetUser(t *testing.T) {
 	)
 
 	require.NoError(t, err)
-	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarUrl)
+	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarURL)
 	assert.Equal(t, "King Hamlet", resp.User.FullName)
 	assert.False(t, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)
@@ -141,7 +141,7 @@ func TestGetUserByEmail(t *testing.T) {
 	)
 	require.NoError(t, err)
 
-	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarUrl)
+	assert.Equal(t, "https://secure.gravatar.com/avatar/6d8cad0fd00256e7b40691d27ddfd466?d=identicon&version=1", resp.User.AvatarURL)
 	assert.Equal(t, "King Hamlet", resp.User.FullName)
 	assert.False(t, resp.User.IsAdmin)
 	assert.Equal(t, 10, resp.User.UserID)

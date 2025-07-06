@@ -25,7 +25,7 @@ type Operand any
 // Operators List
 const (
 	// Search for only the message with ID 12345
-	Id Operator = "id"
+	ID Operator = "id"
 	// Search for the conversation that contains the message with ID 12345.
 	With     Operator = "with"
 	Near     Operator = "near"
@@ -87,14 +87,14 @@ func NewFilter() Filter {
 }
 
 // Add adds a new narrow item to the filter and returns the updated filter
-func (nf Filter) Add(narrow Narrow) Filter {
-	return append(nf, narrow)
+func (f Filter) Add(narrow Narrow) Filter {
+	return append(f, narrow)
 }
 
 // String returns a string representation of the Filter
-func (nf *Filter) String() string {
-	ns := make([]string, len(*nf))
-	for i, n := range *nf {
+func (f *Filter) String() string {
+	ns := make([]string, len(*f))
+	for i, n := range *f {
 		ns[i] = n.String()
 	}
 
@@ -102,14 +102,14 @@ func (nf *Filter) String() string {
 }
 
 // MarshalJSON returns the JSON encoding of the Filter
-func (n Filter) MarshalJSON() ([]byte, error) {
-	return json.Marshal([]Narrow(n))
+func (f Filter) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]Narrow(f))
 }
 
 // MarshalEvent returns the JSON encoding of the Filter for events
-func (n Filter) MarshalEvent() ([]byte, error) {
-	out := make([][]string, 0, len(n))
-	for _, item := range n {
+func (f Filter) MarshalEvent() ([]byte, error) {
+	out := make([][]string, 0, len(f))
+	for _, item := range f {
 		operator, operand := item.Operator, item.Operand
 		out = append(out, []string{string(operator), fmt.Sprintf("%v", operand)})
 	}

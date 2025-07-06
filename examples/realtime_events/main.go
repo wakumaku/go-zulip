@@ -82,12 +82,12 @@ func main() {
 			continue
 		}
 
-		log.Printf("QueueId: %s", q.QueueId)
+		log.Printf("QueueId: %s", q.QueueID)
 		log.Println("Waiting for events...")
 
-		lastEventID := q.LastEventId
+		lastEventID := q.LastEventID
 		for {
-			evs, err := realtimeSvc.GetEventsEventQueue(ctx, q.QueueId, realtime.LastEventID(lastEventID))
+			evs, err := realtimeSvc.GetEventsEventQueue(ctx, q.QueueID, realtime.LastEventID(lastEventID))
 			if err != nil {
 				log.Printf("error getting events from queue: %s", err)
 				break

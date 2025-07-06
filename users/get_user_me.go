@@ -16,7 +16,7 @@ type GetUserMeResponse struct {
 type getUserMeResponseData struct {
 	UserID         int                         `json:"user_id"`
 	Role           zulip.OrganizationRoleLevel `json:"role"`
-	AvatarUrl      string                      `json:"avatar_url"`
+	AvatarURL      string                      `json:"avatar_url"`
 	AvatarVersion  int                         `json:"avatar_version"`
 	DateJoined     string                      `json:"date_joined"`
 	DeliveryEmail  string                      `json:"delivery_email"`
@@ -28,7 +28,7 @@ type getUserMeResponseData struct {
 	IsBot          bool                        `json:"is_bot"`
 	IsGuest        bool                        `json:"is_guest"`
 	IsOwner        bool                        `json:"is_owner"`
-	MaxMessageId   int                         `json:"max_message_id"`
+	MaxMessageID   int                         `json:"max_message_id"`
 	ProfileData    map[string]struct {
 		Value         string `json:"value"`
 		RenderedValue string `json:"rendered_value,omitempty"`

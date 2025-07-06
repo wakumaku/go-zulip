@@ -14,7 +14,7 @@ type DeleteEventQueueResponse struct {
 }
 
 type deleteEventQueueData struct {
-	QueueId string `json:"queue_id"`
+	QueueID string `json:"queue_id"`
 }
 
 func (d *DeleteEventQueueResponse) UnmarshalJSON(b []byte) error {

@@ -1,3 +1,6 @@
+// Package recipient is a package that provides types and functions for handling
+// recipients in Zulip messages. It defines interfaces and concrete types for
+// representing both channel and direct message recipients.
 package recipient
 
 // Recipient For channel messages, either the name or integer ID of the

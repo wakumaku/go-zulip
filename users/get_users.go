@@ -34,7 +34,7 @@ type getUsersResponseData struct {
 			Value         string `json:"value"`
 			RenderedValue string `json:"rendered_value,omitempty"`
 		} `json:"profile_data"`
-		AvatarUrl     string `json:"avatar_url"`
+		AvatarURL     string `json:"avatar_url"`
 		AvatarVersion int    `json:"avatar_version"`
 	} `json:"members"`
 }
