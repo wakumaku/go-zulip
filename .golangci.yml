@@ -56,7 +56,7 @@ linters:
     # - iface
     # - importas
     # - inamedparam
-    # - ineffassign
+    - ineffassign
     # - interfacebloat
     # - intrange
     # #- ireturn
@@ -65,7 +65,7 @@ linters:
     # - maintidx
     # - makezero
     # - mirror
-    # - misspell
+    - misspell
     # - mnd
     # - musttag
     # - nakedret
@@ -100,8 +100,8 @@ linters:
     # - testpackage
     # - thelper
     # - tparallel
-    # - unconvert
-    # - unparam
+    - unconvert
+    - unparam
     # - unused
     # - usestdlibvars
     # - usetesting
