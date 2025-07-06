@@ -2,5 +2,5 @@ package zulip
 
 const (
 	DefaultUserAgentName = "go-zulip"
-	Version              = "v0.1.2-alpha"
+	Version              = "v0.2.0-beta"
 )
